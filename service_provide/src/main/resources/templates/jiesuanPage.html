@@ -18,7 +18,54 @@
     var ii = 0;
     $(function () {
         jiesuan();
+        getListFf();
     });
+
+    function getListFf() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/cg/getListFf",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           if (a!=null) {
+                               var aa="A,B,C,D,E,F,G";
+                               var zimu=aa.split(",");
+                               console.log(a);
+                               var content="";
+                               var num=1;
+                               $.each(a, function (index, obj) {
+                                   var s=obj.questionKey;
+                                   var qkey=s.split(',');
+                                   content+="<tr>";
+                                   content+="<td>";
+                                   content+="<b>"+num+"</b>、<b>"+obj.question+"</b>( )<br>";
+                                   for(var i=0;i<qkey.length;i++){
+                                       content+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='"+zimu[i]+"' type='radio' name='s"+obj.id+"'> &nbsp;&nbsp;"+zimu[i]+"、";
+                                       content+=qkey[i]+"<br>";
+                                   }
+                                   content+="<b>解析:正确答案</b> &nbsp <font color='red'><b>"+obj.answerKey+"</b></font>&nbsp "+obj.keyWhy+"";
+                                   content+="</td>";
+                                   content+="</tr>";
+                                   num++;
+                               });
+                               $("#table").html(content);
+                           }
+
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
 
     function jiesuan() {
        var a= $("#jiesuan").val();
@@ -29,10 +76,12 @@
     function toCg() {
         window.location.href="/wenz/toView?viewName=createLight";
     }
+
 </script>
 <body>
+<input id="listFf" type="hidden" th:value="${session?.listFf}">
 <input type="hidden" id="jiesuan"  th:value="${param?.a}">
-<div class="row" style="width: 450px;height: 800px;">
+<div class="row" style="width: 600px;height: 800px;">
     <h2>
         <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
             <div class="panel-heading">
@@ -44,9 +93,9 @@
     </h2>
 
     <h3>
-        <div id="content" style="margin-top: 150px;margin-left: 110px"></div>
+        <div id="content" style="margin-top: 70px;margin-left: 110px"></div>
         <h4>
-        <div style="margin-left: 145px;margin-top: 20px">
+        <div style="margin-left: 165px;margin-top: 20px">
             <button onclick="toCg()" class="layui-btn layui-btn-normal layui-btn-radius">重新返回闯关</button>
         </div>
           <div style="margin-left: 120px;margin-top: 20px">
@@ -55,6 +104,16 @@
         </h4>
     </h3>
 
+    <div style="margin-left: 40px"><font size="5px">错题解析</font></div>
+    <hr>
+    <div style="margin-left: 40px;margin-top: 20px">
+        <!--table start-->
+        <div style="margin-left: 20px;margin-top: 10px">
+                <table id="table" width="500px" border="1px"></table>
+        </div>
+        <!--table end-->
+        <div style="margin-top: 50px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    </div>
 
 </div>
 
