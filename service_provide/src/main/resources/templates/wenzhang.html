@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        queryWen();
+        $("#s1").css("background", "#DCDCDC");
+    })
+
+    function queryWen() {
+        var titleVal = $("#titleVal").val();
+        /*ajax   start*/
+        $.ajax({
+            url: "/wenz/queryWen",
+            type: "POST",
+            data: {title: titleVal},
+            beforeSend: function () {
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    , shade: 0.01
+                });
+            },
+            success: function (a) {
+                $("#title").html(a.title);
+                $("#name").html(a.name);
+                $("#img1").prop("src", a.img);
+                $("#music").attr("href", a.music);
+                console.log($("#music").attr("src", a.music))
+                $("#content").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + a.content);
+                console.log(a);
+            },
+            error: function () {
+                layer.msg("ajax失败");
+            }, complete: function () {
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+    }
+
+    function toView(viewName) {
+        var titleVal = $("#titleVal").val();
+        /*ajax   start*/
+        $.ajax({
+            url: "/wenz/setTitleVal",
+            type: "POST",
+            data: {title: titleVal},
+            beforeSend: function () {
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    , shade: 0.01
+                });
+            },
+            success: function (a) {
+                window.location.href = "/wenz/toView?viewName=" + viewName + "&title=" + titleVal;
+            },
+            error: function () {
+                layer.msg("ajax失败");
+            }, complete: function () {
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+
+    }
+
+    function toViewName(indexView) {
+        window.location.href = "/wenz/toView?viewName=" + indexView;
+    }
+</script>
+<body>
+<div style="margin-left: 20px">
+    <font size="4px"><a href='javascript:void(0)' onclick=toViewName("index-home")>返回</a></font>
+</div>
+<input type="hidden" id="titleVal" th:value="${param?.title}">
+<div class="row" style="width: 450px;height: 800px;">
+    <h3>
+        <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
+            <div class="panel-heading">
+                <div style="margin-left: 130px">
+                    <div id="title"></div>
+                </div>
+            </div>
+        </div>
+    </h3>
+    <h4>
+        <div id="name" style="margin-top: 25px;margin-left: 70px"></div>
+    </h4>
+    <div id="img" style="margin-top: 10px;margin-left: 90px">
+        <img width="300px" src="" id="img1">
+    </div>
+    <div style="margin-top: 5px;margin-left: 60px">
+        <audio controls="controls" id="music" src=""></audio>
+    </div>
+    <div class="panel panel-default" style="margin-left:50px">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                介绍:
+            </h3>
+        </div>
+        <div id="content" style="margin-top: 5px;margin-left: 15px;margin-right: 10px"></div>
+    </div>
+    <div style="background-color: #D3D3D3;width: 450px;height: 100px;margin-left: 50px">
+        <div style="float: left;margin-left: 15px ;margin-top: 15px">
+            <a href='javascript:void(0)' onclick=toView("wenxian")>
+                <div><img width="70px" height="60px" src="/js/img/20181204133700.jpg"></div>
+                <div>临床文献</div>
+            </a>
+        </div>
+        <div style="float: left;margin-left:15px ;margin-top: 15px">
+            <a href='javascript:void(0)' onclick=toView()>
+                <div><img width="70px" height="60px" src="/js/img/20181204133826.jpg"></div>
+                <div>专家灼见</div>
+            </a>
+        </div>
+        <div style="float: left;margin-left:15px ;margin-top: 15px">
+            <a href='javascript:void(0)' onclick=toView()>
+                <div><img width="70px" height="60px" src="/js/img/20181220190304.png"></div>
+                <div>病例荟萃</div>
+            </a>
+        </div>
+        <div style="float: left;margin-left:15px ;margin-top: 15px">
+            <a href='javascript:void(0)' onclick=toView()>
+                <div><img width="70px" height="60px" src="/js/img/20190107163920.jpg"></div>
+                <div>实用工具</div>
+            </a>
+        </div>
+        <div style="float: left;margin-left:15px ;margin-top: 15px">
+            <a href='javascript:void(0)' onclick=toView()>
+                <div><img width="70px" height="60px" src="/js/img/20190107163940.png"></div>
+                <div>常见Q&A</div>
+            </a>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

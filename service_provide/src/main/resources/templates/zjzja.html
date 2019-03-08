@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>专家灼见</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="/rdzx/css/menu.css" media="all">
+    <script type="text/javascript" src="/rdzx/js/jquery-1.9.1.js" ></script>
+    <script type="text/javascript" src="/rdzx/js/jquery.masonry.min.js" ></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <script src="../static/bootstrap-star-rating-master/js/star-rating.js"></script>
+    <link rel="stylesheet" href="../static/bootstrap-star-rating-master/css/star-rating.css">
+</head>
+<body>
+<div class="container" style="margin-left: -10px;">
+    <div style="width: 550px;height: 62px;">
+        <center>
+            <button type="button" class="btn btn-default btn-lg" onclick="fanhui()">返回</button>
+            <button type="button" class="btn btn-default btn-lg" onclick="showDK()">大咖在线</button>
+            <button type="button" class="btn btn-default btn-lg" onclick="querySpeciaListToHtml()">大家观点</button>
+            <button type="button" class="btn btn-default btn-lg">大会直播</button>
+        </center>
+    </div>
+    <div class="Sbox" id="show1">
+    </div>
+
+</div>
+</body>
+<script>
+    $(function () {
+        querySpeciaListToHtml()
+    })
+    function fanhui() {
+        location.href="http://localhost:2001/home/ToPage?name=index-home#";
+    }
+    function showDK() {
+        /*ajax   start*/
+                $.ajax({
+                   url:"/home/getMaster",
+                   beforeSend:function(){
+                          ii = layer.msg('加载中', {
+                          icon: 16
+                          ,shade: 0.01
+                          });
+                    },
+                   success:function(a){
+                       var content = "";
+                    $.each(a,function (index ,obj){
+                        content +="<div style='margin-top: 15px;border-radius: 10px;width: 500px;height: 240px;background-color: #5bc0de;margin-left: 35px;'>";
+                        content +="<a href='http://localhost:2001/home/todaka?id="+obj.id+"'><img src='"+obj.url+"' width='455px' height='175px' style='margin-left: 22px;    margin-top: 13px;'></a><br>";
+                        content +="<div style='margin-left: 32px; margin-top: 13px;'><a href='http://localhost:2001/home/todaka?id="+obj.id+"'><font size='4'>"+obj.name+"</font></a></div></div>";
+                    })
+                       $(".Sbox").html(content);
+                   },
+                   error:function(){
+                      layer.msg("ajax失败");
+                   },complete:function(){
+                         layer.close(ii);
+                    }
+               });
+             /*ajax   end*/
+    }
+    function querySpeciaListToHtml() {
+        $.ajax({
+            url: '/query/querExprent',
+            success: function (result) {
+                var html = "";
+                for (var i = 0; i < result.length; i++) {
+                    html += "<div class='list' ondblclick='getDetails(" + result[i].id + ")' style='width:550px;height:180px;background: oldlace;margin-left:1px'>"
+                    html += "<div class='img'  style='width:180px;height:180px;float:left'><img width='130' height='150'  src=" + result[i].dt_img + " ></div>"
+                    html += "<div  style='float:left;margin-left: -37px'><h4>" + result[i].gd_title + "</h4></div><br/><br/>"
+                    html += "<div  style='float:left;margin-left: -37px' >" + result[i].dt_name + "&nbsp;-&nbsp;" + result[i].dt_zc + " </div><br/><br/>"
+                    html += "<div  style='float:left;margin-left: -37px'>" + result[i].dt_addr + "</div><br/><br/>"
+                    html += "<div  style='float:left;margin-left: -37px'>" + result[i].gd_browse + "人观看&nbsp;&nbsp;&nbsp;&nbsp;获得" + result[i].gd_zeid + "奖章" + "</div><br/>"
+                    html += "</div><br/>"
+                }
+                $(".Sbox").html(html)
+            }
+        })
+    }
+
+    function getDetails(id) {
+        location.href = "/query/queryDjgd?id=" + id;
+    }
+</script>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>作者简介</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        getjj();
+    });
+
+    function getjj() {
+        var tmp = $("#tmp").val();
+        var der = tmp == 0 ? "赞美专家" : "权威专家";
+        $("#font1").html(der);
+        $("#href1").prop("href", "http://localhost:2001/home/to?tmp=" + tmp);
+        /*ajax   start*/
+        var id = $("#id1").val();
+        $.ajax({
+            url: "/home/getJJ",
+            data: {id: id},
+            beforeSend: function () {
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    , shade: 0.01
+                });
+            },
+            success: function (a) {
+                $("#name1").html(a.dt_name);
+                $("#name2").html("营养学教授 | " + a.dt_addr);
+                $("#jianjie").html(a.dt_jj);
+                $("#img1").prop("src", a.dt_img);
+                $("#model1").html(a.dt_modle);
+            },
+            error: function () {
+                layer.msg("ajax失败");
+            }, complete: function () {
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+    }
+</script>
+<body>
+<input type="hidden" th:value="${id}" id="id1"/>
+<input type="hidden" th:value="${tmp}" id="tmp"/>
+<div class="row" style="width: 600px;height: 800px;">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="href1" class="navbar-brand" href="">&nbsp;&nbsp;&nbsp;返回</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航条-->
+    <div style="padding-left:230px">
+        <font size="6" id="font1"></font><br/><br/>
+    </div>
+    <div style="margin-left: 60px;">
+        <font size="7" color="#6495ed" id="name1"></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font
+            size="4" color="aqua" id="name2"></font>
+    </div>
+    <div style="width: 450px;margin-left: 77px;margin-top: 25px;"><font style="margin-left: 37px;" id="jianjie"
+                                                                        size="4"></font></div>
+    <div><img id="img1" style="border-radius: 10px;margin-top: 30px;margin-left: 93px;" src="" height="400px"
+              width=400px/></div>
+    <div style="margin-left: 75px;margin-top: 20px;"><font size="5"><b>研究项目</b></font></div>
+    <div style="width: 450px;margin-left: 77px;margin-top: 25px;"><font id="model1" size="4"></font></div>
+    <div style="margin-left: 125px;margin-top: 25px;"><font size="5" color="#6495ed">送星 ⭐ ⭐ ⭐ ⭐
+        ⭐ </font>&nbsp;&nbsp;<input class="btn btn-primary" style="border-radius: 50px;" type="button" value="  提交  ">
+    </div>
+    <br/><br/><br/>
+</div>
+</body>
+</html>

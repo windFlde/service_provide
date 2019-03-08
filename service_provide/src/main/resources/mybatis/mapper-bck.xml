@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.BckMapper">
+    <select id="queryExample" resultType="Example">
+         SELECT e.*,d.* FROM `t_ example` e,t_docutor_expert d where e.em_zeid = d.id ORDER BY e.em_createtime DESC
+
+    </select>
+
+    <select id="queryExampleById" resultType="Example">
+         SELECT e.*,d.* FROM `t_ example` e,t_docutor_expert d where e.em_zeid = d.id and e.id = #{id}
+    </select>
+
+    <update id="updateById">
+        update `t_ example` set em_browse = em_browse + 1 where id = #{id}
+    </update>
+</mapper>

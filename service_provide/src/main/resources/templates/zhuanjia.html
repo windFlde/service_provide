@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>专家页面</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function (){
+        loadzhuanjia();
+    });
+    function getJJ(id,tmp) {
+        location.href="/home/tojj?id="+id+"&tmp="+tmp;
+    }
+    function getwenzhang(id,tmp) {
+        location.href="/home/towenzhang?id="+id+"&tmp="+tmp;
+    }
+    function loadzhuanjia() {
+        var tmp = $("#tmp").val();
+        $("#tmp2").val(tmp);
+        var der = tmp==0?"赞美专家":"权威专家";
+        $("#font1").html(der);
+        /*ajax   start*/
+                $.ajax({
+                   url:"/home/getAllzhuanjia",
+                   data:{tmp:tmp},
+                   beforeSend:function(){
+                          ii = layer.msg('加载中', {
+                          icon: 16
+                          ,shade: 0.01
+                          });
+                    },
+                   success:function(a){
+                       var content = "";
+                       var q = 0;
+                    $.each(a,function (index,obj) {
+                        q = q+1;
+                        content += q%2==0?" ":"<div class='row'>";
+                        var w = q%2==0?"6px":"24px";
+                        content += "<div class='col-md-6'><div style='width: 230px;height: 355px;background-color: #9acfea;margin-top: 24px;margin-left:"+w+";border-radius: 10px;'>";
+                        content += "<img style='margin-left: 14px;border-radius: 10px;margin-top: 11px;' src='"+obj.dt_img+"' height='200px' width=200px/>";
+                        content +="<div style='margin-left: 14px;'>";
+                        content +="<font size='5' color='#6495ed'>"+obj.dt_name+"</font><br><font size='3' color='#6495ed'>营养学教授</font><br><font size='3'>"+obj.dt_addr+"</font>";
+                        content +="<div><input class=\"btn btn-primary btn-sm\"style=\"border-radius: 10px;margin-left: 29px;\" onclick='getJJ("+obj.id+","+$("#tmp2").val()+")' type='button'value='个人简介'><input style=\"border-radius: 10px;\" onclick='getwenzhang("+obj.id+","+$("#tmp2").val()+")' class=\"btn btn-default btn-sm\" type='button' value=\"精选文章\"></div>";
+                        content +="</div></div></div>";
+                        content += q%2==0?"</div>":" ";
+                        $("#div1").html(content);
+                    })
+                   },
+                   error:function(){
+                      layer.msg("ajax失败");
+                   },complete:function(){
+                         layer.close(ii);
+                    }
+               });
+             /*ajax   end*/
+    }
+</script>
+<body>
+<input type="hidden" th:value="${tmp}" id="tmp"/>
+<input type="hidden" id="tmp2"/>
+<div class="row" style="width: 600px;height: 800px;">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:2001/home/ToPage?name=index-home">&nbsp;&nbsp;&nbsp;返回</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航条-->
+    <div style="padding-left:230px">
+        <font size="6" id="font1"></font><br/><br/>
+    </div>
+    <div id="div1" style="width: 550px;height: 800px;margin-left: 30px;">
+    </div>
+</div>
+</body>
+</html>

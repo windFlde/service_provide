@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <link rel="shortcut icon" type="image/icon" href="/images/jd.ico">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <script src="/js/layui/layui.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        jiesuan();
+    });
+
+    function jiesuan() {
+       var a= $("#jiesuan").val();
+        var content="恭喜你答对了<font color='red'>"+a+"</font>道,获得积分"+a*2+"!";
+        $("#content").html(content);
+    }
+
+    function toCg() {
+        window.location.href="/wenz/toView?viewName=createLight";
+    }
+</script>
+<body>
+<input type="hidden" id="jiesuan"  th:value="${param?.a}">
+<div class="row" style="width: 450px;height: 800px;">
+    <h2>
+        <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
+            <div class="panel-heading">
+                <div style="margin-left: 130px">
+                    闯关测试
+                </div>
+            </div>
+        </div>
+    </h2>
+
+    <h3>
+        <div id="content" style="margin-top: 150px;margin-left: 110px"></div>
+        <h4>
+        <div style="margin-left: 145px;margin-top: 20px">
+            <button onclick="toCg()" class="layui-btn layui-btn-normal layui-btn-radius">重新返回闯关</button>
+        </div>
+          <div style="margin-left: 120px;margin-top: 20px">
+              *全部答对可额外获得200积分!
+          </div>
+        </h4>
+    </h3>
+
+
+</div>
+
+</body>
+</html>

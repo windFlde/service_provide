@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.HotspotMapper">
+
+    <!--List<Hotspot> queryHotspot();-->
+    <select id="queryHotspot" resultType="Hotspot">
+
+        select * from t_hottop
+    </select>
+
+    <!--Hotspot queryHotspotChildren(Hotspot hotspot);-->
+    <select id="queryHotspotChildren" resultType="Hotspot">
+
+        select * from t_hottop where id=#{id}
+    </select>
+
+    <!--void updateRdzxOne(Integer id);-->
+    <update id="updateRdzxOne">
+
+        update t_hottop set rd_browse=rd_browse+1 where id=#{id}
+    </update>
+</mapper>

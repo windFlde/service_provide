@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>专家在线</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    var img = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4101395094,4199371826&fm=26&gp=0.jpg";
+    var ii = 0;
+    $(function (){
+        var tmp = $("#tmp").val();
+        $("#href1").prop("href","http://localhost:2001/home/todaka?id="+tmp);
+
+        var asd2 = "<sapn><div style='background-color: #b8eecf;width: 200px;margin-left: 70px; margin-top: 15px; border-radius: 10px;padding-block-start: 10px;padding-block-end: 5px;padding-left: 15px;'>";
+        asd2 +="<font  size='3'>请说您想问的？老铁帮你一一解答</font></div>";
+        asd2 +="<img class='img-circle' style='width: 52px;margin-top: -80px;margin-left: 10px;' src='"+img+"'></sapn>"
+        $("#say1").append(asd2);
+    });
+
+    function sendsay(){
+        var shuchu = $("#shuchu").val();
+        var content = "<span><div style='background-color: #b8eecf;width: 200px;margin-left: 240px; margin-top: 15px; border-radius: 10px;padding-block-start: 10px;padding-block-end: 5px;'>";
+            content +="<font size='3' style='margin-left: 13px;'>"+shuchu+"</font></div>";
+            content +="<img class='img-circle' style='margin-left: 448px;width: 52px;margin-top: -60px;' src=''+img+'></span>";
+            $("#say1").append(content);
+        /*ajax   start*/
+                $.ajax({
+                    url:"/home/sendSay",
+                    type:"GET",
+                    data:{info:$("#shuchu").val()},
+                   beforeSend:function(){
+                          ii = layer.msg('加载中', {
+                          icon: 16
+                          ,shade: 0.01
+                          });
+                    },
+                   success:function(a){
+                       $("#shuchu").val(" ");
+                   var asd = "<sapn><div style='background-color: #b8eecf;width: 200px;margin-left: 70px; margin-top: 15px; border-radius: 10px;padding-block-start: 10px;padding-block-end: 5px;padding-left: 15px;'>";
+                    asd +="<font  size='3' >"+a.text+"</font></div>";
+                    asd +="<img class='img-circle' style='width: 52px;margin-top: -60px;margin-left: 10px;' src='"+img+"'></sapn>"
+                    $("#say1").append(asd);
+                   },
+                   error:function(){
+                      layer.msg("ajax失败");
+                   },complete:function(){
+                        layer.close(ii);
+                    }
+               });
+             /*ajax   end*/
+    }
+        function keyLogin(){
+            if (event.keyCode==13)  //回车键的键值为13
+                sendsay();
+        }
+</script>
+<body style="margin-left: 17px;" onkeypress="keyLogin()">
+<input type="hidden" th:value="${tmp}" id="tmp"/>
+<div class="row" style="width: 600px;height: 800px;">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="href1" class="navbar-brand" href="">&nbsp;&nbsp;&nbsp;返回</a>
+                <div style="padding-left:230px">
+                    <font size="6">专家在线&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><br/><!--http://localhost:2001/home/sendSay?info=你好-->
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#1" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#2">jmeter</a></li>
+                            <li><a href="#3">EJB</a></li>
+                            <li><a href="#4">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#5">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#6">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航条-->
+    <div>
+        <div id="say1" data-spy="scroll" data-target="#navbar-example" data-offset="0" style="border-radius: 10px;background-color: #9acfea;width: 522px;height:475px;overflow:auto; position: relative;margin-left: 50px;">
+
+        </div>
+    </div>
+    <div>
+        <form>
+            <div style="margin-top: 16px;border-radius: 10px;width: 400px; margin-left: 61px;"><input id="shuchu" type="text" class="form-control ;margin-top: 16px; " placeholder="请输入内容">
+                <input onclick="sendsay()" style="border-radius: 10px;margin-left: 415px; margin-top: -55px;" class="btn btn-primary btn-lg"  type='button'value='&nbsp;发送&nbsp;'>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

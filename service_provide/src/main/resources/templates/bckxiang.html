@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+</head>
+<script type="text/javascript">
+    $(function() {
+        query();
+        getPingLun();
+    })
+
+    function query() {
+        var id = $("#nameVal").val();
+        var cont = "";
+        $.ajax({
+            url: '/bck/queryExampleById',
+            data:{id:id},
+            success: function (result) {
+                cont += "<div class='load_div'>";
+                cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='6'>"+result.em_title+"</font><br>";
+                cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='4'>"+result.em_createtime+"&nbsp;&nbsp;&nbsp;&nbsp;共浏览:&nbsp;&nbsp;&nbsp;&nbsp;"+result.em_browse+"</font><br><br>";
+                cont += "<div style='margin-left: 10px' >" +
+                    "<div style='margin-left: 10px;float:left'><img src='"+result.dt_img+"'width='200px' height='200px'></div>" +
+                    "<div style='margin-left: 10px;float:left;width: 280px'><p><font size='5'>"+result.dt_name+"</font></p><p><font size='4'>"+result.dt_zc+"</font></p><p><font size='4'>"+result.dt_addr+"</font></p><p><span>"+result.dt_jj+"</span></p></div>";
+                cont += "<br><br><center><audio controls='controls' style='width: 550px'  src='"+result.em_mp3+"'></audio></center><br>";
+                cont += "<div style='margin-left: 10px'><font size='5'>"+result.em_content+"</font><div><br><br><br>";
+                cont += "<div style='width: 550px;height: 50px;background-color: #F3F3F3;margin-left: 10px'>*感谢您的阅读，如您有任何问题，点击文末右侧留言提问按钮，留下您的问题，作者奖尽快回复您。</div>"
+                cont += "</div><br><br><br>";
+                cont +="<div class='load_div'><div style='width: 550px;height: 150px;margin-left: 10px'><textarea id='name' rows='6' cols='60'></textarea></div>"
+                cont +="<div>" +
+                    "<div style='margin-left: 10px;width: 500px;height: 80px;float: left'><font size='5'>精品留言</font></div>" +
+                    "<div style='margin-left: 10px;height: 80px;float: left'><a onclick='pinglun()'><font size='4'>留言</font></a></div>" +
+                    "</div>"
+                $('#content').html(cont);
+            },
+            error:function(){
+                alert("失败!");
+            }
+        })
+    }
+
+    function back() {
+        window.location.href = "/home/ToPage?name=bingtong";
+    }
+
+    function pinglun(){
+        var name = $("#name").val();
+        $("#name").val("");
+        var id = $("#nameVal").val();
+        if(name==null | name == ""){
+            layer.msg('请输入!!', {time:1000, icon:2});
+        }else{
+        $.ajax({
+            url: '/bck/addPingLun',
+            data: {content: name,em_id:id},
+            success: function () {
+                layer.msg('留言成功!!', {time:1000, icon:1});
+                $('#aa').html("");
+                getPingLun();
+            }
+        })
+        }
+    }
+
+    function getPingLun(){
+        var id = $("#nameVal").val();
+        var contt ="";
+        $.ajax({
+            url: '/bck/queryPingLun',
+            data:{id:id},
+            success: function (result) {
+                $.each(result, function (index, obj) {
+                    contt += "<div style='width: 600px;height: 110px'>";
+                    contt += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
+                    contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p></div><br>";
+                    contt += "</div><br>";
+                })
+                $('#aa').append(contt);
+            }
+        })
+    }
+
+</script>
+<body>
+<style type="text/css">
+    body,div{
+        margin:0;
+        padding:0;
+    }
+    body{
+        width: 600px;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        border: 1px solid #FFFFFF;
+        justify-content: flex-start;
+    }
+    .load_div{
+        width: 600px;
+        height: 450px;
+        border:1px solid #FFFFFF;
+    }
+</style>
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)" onclick="back()">返回</a>
+                <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;病例荟萃</font></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<input type="hidden"  id="nameVal"  th:value="${param?.id}">
+<div id="content">
+
+</div>
+<div id="aa" class="load_div">
+
+</div>
+</body>
+</html>

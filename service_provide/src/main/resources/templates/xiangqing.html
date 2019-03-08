@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        queryXiangQing();
+    });
+
+    function queryXiangQing() {
+        var nameVal = $("#nameVal").val();
+        /*ajax   start*/
+        $.ajax({
+            url: "/wenx/queryXiangQing",
+            type: "POST",
+            data: {name: nameVal},
+            beforeSend: function () {
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    , shade: 0.01
+                });
+            },
+            success: function (a) {
+                console.log(a);
+                $("#name").html(a.name);
+                var timeAndBrowse = "<b>" + a.createTime + "&nbsp&nbsp&nbsp 共浏览: <font color='red'>" + a.browse + "</font>次</b>";
+                $("#timeAndBrowse").html(timeAndBrowse);
+                $("#content").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + a.content);
+            },
+            error: function () {
+                layer.msg("ajax失败");
+            }, complete: function () {
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+    }
+
+    function toView() {
+        var nameVal = $("#nameVal").val();
+        window.location.href = "/wenz/toView?viewName=wenxian&title=" + nameVal;
+    }
+</script>
+<body>
+<div style="margin-left: 20px">
+    <font size="4px"><a href='javascript:void(0)' onclick=toView()>返回</a></font>
+</div>
+<input type="hidden" id="nameVal" th:value="${param?.name}">
+<div class="row" style="width: 450px;height: 800px;">
+    <h2>
+        <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
+            <div class="panel-heading">
+                <div style="margin-left: 130px">
+                    临床文献
+                </div>
+            </div>
+        </div>
+    </h2>
+    <h3>
+        <div id="name" style="margin-left: 40px;margin-top: 40px"></div>
+    </h3>
+    <h4>
+        <div id="timeAndBrowse" style="margin-left: 60px"></div>
+    </h4>
+    <h4>
+        <div id="content" style="margin-left: 40px;margin-top: 20px;"></div>
+    </h4>
+
+
+</div>
+
+</body>
+</html>

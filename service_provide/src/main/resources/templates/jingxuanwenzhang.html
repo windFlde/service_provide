@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>精选文章</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+$(function (){
+    getjingxuanwenzhang();
+});
+function getjingxuanwenzhang(){
+    var tmp = $("#tmp").val();
+    var id = $("#id1").val();
+    $("#href1").prop("href","http://localhost:2001/home/to?tmp="+tmp);
+    /*ajax   start*/
+            $.ajax({
+               url:"/home/getGoodsWord",
+               data:{id:id},
+               beforeSend:function(){
+                      ii = layer.msg('加载中', {
+                      icon: 16
+                      ,shade: 0.01
+                      });
+                },
+               success:function(a){
+                   if (a.length<=0){
+                       layer.alert('这位专家比较懒，请查看其他专家！！', {
+                           skin: 'layui-layer-lan'
+                           ,closeBtn: 0
+                           ,anim: 4 //动画类型
+                       },function () {
+                           location.href="http://localhost:2001/home/to?tmp="+tmp;
+                       });
+                   }
+                   var content = "";
+                $.each(a,function(index,obj){
+                    content += "<div style='border-radius: 10px;background-color: #b8eecf;width:520px;height: 325px;margin-left: 55px;margin-top: 20px;'>";
+                    content +="<a href='javascript:updateBrowse("+obj.id+","+tmp+")'><img style='border-radius: 10px;margin-top: 19px;margin-left: 61px;' src='"+obj.img+"' height='200px' width=400px/></a>";
+                    content +="<div style='margin-left: 80px; margin-top: 24px;'><a href='javascript:updateBrowse("+obj.id+","+tmp+")'  ><font size='5'>"+obj.title+"</font></a></div>";
+                    content +="<div style='margin-top: 3px;margin-left:  80px;'><font size='3' color='#5f9ea0'>"+obj.creaTime+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+obj.browse+"人观看&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;奖章数</font></div></div>";
+                    $("#span1").html(content);
+                });
+               },
+               error:function(){
+                  layer.msg("ajax失败");
+               },complete:function(){
+                     layer.close(ii);
+                }
+           });
+         /*ajax   end*/
+    }
+    function updateBrowse(id,tmp) {
+        /*ajax   start*/
+                $.ajax({
+                   url:"/home/updateBrowse",
+                   data:{id:id},
+                   beforeSend:function(){
+                          ii = layer.msg('加载中', {
+                          icon: 16
+                          ,shade: 0.01
+                          });
+                    },
+                   success:function(a){
+                   },
+                   error:function(){
+                      layer.msg("ajax失败");
+                   },complete:function(){
+                         layer.close(ii);
+                    }
+               });
+        location.href="/home/toneirong?id="+id+"&tmp="+tmp;
+    }
+</script>
+<body>
+<input type="hidden" th:value="${id}" id="id1"/>
+<input type="hidden" th:value="${tmp}" id="tmp"/>
+<div class="row" style="width: 600px;height: 800px;">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="href1" class="navbar-brand" href="">&nbsp;&nbsp;&nbsp;返回</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航条-->
+    <div style="padding-left:230px">
+        <font size="6">精选文章</font><br/>
+    </div>
+    <span id="span1"></span>
+</div>
+</body>
+</html>

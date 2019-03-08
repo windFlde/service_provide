@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>大家观点</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" type="text/css" href="/rdzx/css/menu.css" media="all">
+    <script type="text/javascript" src="/rdzx/js/jquery-1.9.1.js" ></script>
+    <script type="text/javascript" src="/rdzx/js/jquery.masonry.min.js" ></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <script src="../static/bootstrap-star-rating-master/js/star-rating.js"></script>
+    <link rel="stylesheet" href="../static/bootstrap-star-rating-master/css/star-rating.css">
+</head>
+
+</head>
+<body>
+<div class="container">
+    <div class="Sbox">
+
+    </div>
+
+    <div style="margin-left: -80px;width: 550px">
+        <h3>写留言</h3><br/>
+        <div class="form-group">
+            <textarea class="form-control" rows="3" id="message" placeholder="我要留言"></textarea>
+        </div>
+        <div>
+            <font color="#00bfff" size="3">送勋章</font>&nbsp;&nbsp;&nbsp;
+            <input id="input-21e" value="0" type="text" class="rating" data-min=0 data-max=5 data-step=1 data-size="xs"
+                   title="">
+            <hr>
+        </div>
+        <div style="margin-left: 80%">
+            <button type="button" onclick="getMessage()" class="btn btn-info">提交留言</button>
+        </div>
+    </div>
+    <hr>
+    <div class="Comment">
+
+    </div>
+</div>
+
+
+
+<input type="hidden"  id="nameVal"  th:value="${param?.id}">
+
+
+
+</body>
+
+
+
+
+<script>
+    $(function () {
+        getDetailToHtml();
+        getCommentToHtml();
+    })
+    var id = $("#nameVal").val()
+    function getDetailToHtml() {
+        $.ajax({
+            url: "/query/querExprentList",
+            type: "post",
+            data: {id: id},
+            success: function (result) {
+                var html = "";
+                html += "<div class='list' style='margin-left: -80px'>"
+                html += "<div  style='float:left'><h4>" + result.gd_title + "</h4></div><br/><br/>"
+                html += "<div  style='float:left'>" + result.gd_createtime + "&nbsp;&nbsp;&nbsp;&nbsp;" + result.gd_browse + "人观看" + "</div><br/><br/>"
+                html += "<div  style='float:left'><h4 style='color:#00bbee'>观点</h4>" + result.gd_content + " </div><br/><br/><br/>"
+                html += "<div class='img'><img width='550' height='150'  src=" + result.gd_img + " ></div><br/><br/>"
+                html += "<div style='float:left;width: 550px' ><h4 style='color:#00bbee'>详情</h4>" + result.gd_detailed + " </div><br/>"
+                html += "</div><br/><br/><br/><br/><br/><br/><br/>"
+                $(".Sbox").html(html)
+            },
+            error: function () {
+                alert("出错了!!!!");
+            }
+        })
+    }
+    /*function getMessage(){
+        var message = $("#message").val();
+        var star = $("#input-21e").val();
+        if (message.length>0){
+            $.ajax({
+                url: "/cspecialist/addComment",
+                type: "post",
+                data: {message: message,star:star,specialistId:id},
+                success: function (result) {
+                    if (result ==1){
+                        layer.alert('留言成功', {icon: 6});
+                    }
+                },
+            error: function () {
+                    alert("出错了!!!!");
+                }
+            })
+        } else{
+            layer.msg("请填写留言")
+        }
+    }*/
+    /*function getCommentToHtml() {
+        $.ajax({
+            url: "/query/querExprentList",
+            type: "post",
+            data: {specialistId: id},
+            success: function (result) {
+                var html="";
+                for (var i = 0; i < result.length; i++) {
+                    html+="<div class='list' style='width:100%;height:60px;'>"
+                    html+="<div class='img'  style='width:50px;height:50px;float:left'><img width='50' height='50'  src="+result[i].photo+" ></div>"
+                    html+="<div  style='float:left'>&nbsp;&nbsp;"+ result[i].userName +":"+"</div><br/>"
+                        html+="<div  style='float:left'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + result[i].message + "</div><br/><br/>"
+                    html+="</div><br/>"
+                }
+                $(".Comment").html(html)
+            },
+            error: function () {
+                alert("出错了!!!!");
+            }
+        })
+    }*/
+</script>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>文章内容</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+$(function (){
+    getPingLun();
+    getneirong();
+});
+function getneirong() {
+    /*ajax   start*/
+            $.ajax({
+               url:"/home/getneirong",
+                async:false,
+               data:{id:$("#id1").val()},
+               beforeSend:function(){
+                      ii = layer.msg('加载中', {
+                      icon: 16
+                      ,shade: 0.01
+                      });
+                },
+               success:function(a){
+                   var tmp = $("#tmp").val();
+                   var id = $("#id1").val();
+                   $("#href1").prop("href","http://localhost:2001/home/towenzhang?id="+a.zeid+"&tmp="+tmp);
+
+                 $("#title1").html(a.title);
+                 $("#shijian").html(a.creaTime +"&nbsp;&nbsp;&nbsp;共浏览:"+a.browse+"次");
+                 $("#neirong").html(a.content);
+                 $("#cc").html("<div style='width: 550px;height: 150px;margin-left: 50px'><textarea id='name' rows='6' cols='60'></textarea></div><div><div style='margin-left: 50px;width: 400px;height: 80px;float: left'><font size='5'>精品留言</font></div><div style='margin-left: 10px;height: 80px;float: left'><a onclick='pinglun()'><font size='4'>留言</font></a></div></div>");
+               },
+               error:function(){
+                  layer.msg("ajax失败");
+               },complete:function(){
+                     layer.close(ii);
+                }
+           });
+         /*ajax   end*/
+}
+    function pinglun(){
+        var name = $("#name").val();
+        $("#name").val("");
+        var id = $("#id1").val();
+        if(name==null | name == ""){
+            layer.msg('请输入!!', {time:1000, icon:2});
+        }else {
+            $.ajax({
+                url: '/bck/addPingLun2',
+                async: false,
+                data: {content: name, em_id: id},
+                success: function () {
+                    layer.msg('留言成功!!', {time: 1000, icon: 1});
+                    $('#aa').html("");
+                    getPingLun();
+                }
+            })
+        }
+    }
+
+    function getPingLun(){
+        var id = $("#id1").val();
+        var contt ="";
+        $.ajax({
+            url: '/bck/queryPingLun2',
+            async:false,
+            data:{id:id},
+            success: function (result) {
+                $.each(result, function (index, obj) {
+                    contt += "<div style='width: 600px;height: 110px'>";
+                    contt += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
+                    contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p></div><br>";
+                    contt += "</div><br>";
+                })
+                $('#aa').append(contt);
+            }
+        })
+    }
+
+</script>
+<body>
+
+<style type="text/css">
+    body,div{
+        margin:0;
+        padding:0;
+    }
+    body{
+        width: 600px;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        border: 1px solid #FFFFFF;
+        justify-content: flex-start;
+    }
+    .load_div{
+        width: 600px;
+        height: 450px;
+        border:1px solid #FFFFFF;
+    }
+</style>
+
+<input type="hidden" th:value="${id}" id="id1"/>
+<input type="hidden" th:value="${tmp}" id="tmp"/>
+<div class="row" style="width: 600px;height: 700px;">
+    <nav class="navbar navbar-default " role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a id="href1" class="navbar-brand" href="">&nbsp;&nbsp;&nbsp;返回</a>
+            </div>
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航条-->
+    <div style="padding-left:230px">
+        <font size="6">精选文章</font><br/>
+    </div>
+    <div style="margin-left: 62px;margin-top: 20px;"><font id="title1" size="6"></font></div>
+    <div style="margin-left: 65px;margin-top: 20px;"><font id="shijian" size="3"></font></div>
+    <div style="width: 435px;margin-left: 67px;margin-top: 30px;"><font style="margin-left: 35px;" size="4" id="neirong"></font></div>
+    <div id="cc">
+
+    </div>
+</div>
+<div id="aa" class="load_div">
+
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <link rel="shortcut icon" type="image/icon" href="/images/jd.ico">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <script src="/js/layui/layui.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        getQuestion();
+    })
+
+    function getQuestion() {
+        var aa="A,B,C,D,E,F,G";
+        var zimu=aa.split(",");
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/cg/selectMongoDbToDb",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           console.log(a);
+                           var content="";
+                           var num=1;
+                           $.each(a, function (index, obj) {
+                               var s=obj.questionKey;
+                               var qkey=s.split(',');
+                               content+="<tr>";
+                               content+="<td>";
+                               content+="<b>"+num+"</b>、<b>"+obj.question+"</b>( )<br>";
+                               for(var i=0;i<qkey.length;i++){
+                                   content+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input value='"+zimu[i]+"' type='radio' name='s"+obj.id+"'> &nbsp;&nbsp;"+zimu[i]+"、";
+                                   content+=qkey[i]+"<br>";
+                               }
+                               content+="</td>";
+                               content+="</tr>";
+                               num++;
+                           });
+                           $("#table").html(content);
+
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+
+    function toCg() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/cg/queryTtOrFf",
+                       type:"POST",
+                       data:$("#form").serialize(),
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           window.location.href="/wenz/toView?viewName=jiesuanPage&a="+a;
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+
+    function toViewName(indexView) {
+        window.location.href = "/wenz/toView?viewName=" + indexView;
+    }
+</script>
+<body>
+<div style="margin-left: 20px">
+    <font size="4px"><a href='javascript:void(0)' onclick=toViewName("index-home")>返回</a></font>
+</div>
+<div class="row" style="width: 450px;height: 800px;">
+    <h2>
+        <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
+            <div class="panel-heading">
+                <div style="margin-left: 130px">
+                    闯关测试
+                </div>
+            </div>
+        </div>
+    </h2>
+
+    <!--table start-->
+    <div style="margin-left: 50px;margin-top: 30px">
+        <form id="form">
+            <table id="table" border="1px"></table>
+        </form>
+        <div style="margin-left: 120px;margin-top: 5px">
+            <button onclick="toCg()" class="layui-btn layui-btn-normal layui-btn-radius">提交答案</button>
+        </div>
+    </div>
+    <!--table end-->
+
+
+</div>
+
+</body>
+</html>
