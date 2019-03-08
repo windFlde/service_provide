@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <script type="text/javascript">
+
+        $(function(){
+
+            var number=0;
+             $.ajax({
+                     url:'/queryChuangguan',
+                     type:'post',
+                     success:function (data) {
+
+
+                        var conent = "";
+                         conent+="&nbsp;&nbsp;闯关排行榜";
+                         conent+="<ul> ";
+                         $.each(data,function (index,obj) {
+
+                             conent+="<li style='width:50%;float:left'>NO"+(number+1)+".我是"+obj.username+"&nbsp;&nbsp;&nbsp;&nbsp;共闯关"+obj.userCount+"次</li>  ";
+                             number++;
+                             /*console.log(number);*/
+
+                         })
+
+                         conent += "</ul>";
+
+                         $("#chuangguan").html(conent);
+
+                     },error:function () {
+                         alert("ajax访问失败,请查看控制台");
+                     }
+
+                     })
+
+
+
+        })
+
+
+
+
+
+    </script>
+
+    <style type="text/css">
+        body,div{
+            margin:0;
+            padding:0;
+        }
+        body{
+            width: 600px;
+            background-color: #FFFFFF;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            border: 1px solid #FFFFFF;
+            justify-content: flex-start;
+        }
+        img
+        {
+            opacity:0.4;
+            filter:alpha(opacity=40); /*  IE8 及其更早版本 */
+        }
+        img:hover
+        {
+            opacity:1.0;
+            filter:alpha(opacity=100); /* IE8 及其更早版本 */
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+<div style="width:550px;height:80px">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="javascript:history.go(-1)">返回</a>
+            </div>
+            <div>
+                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">冲浪闯关</font></p>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div id="content">
+   <div class='load_div1' style='background-color:#FFFFFF;width:548px;height:150px'>
+       <img src='/images/4.jpg' height='100' width='548'>
+    </div>
+    <div id="chuangguan" class='load_div2' style='background-color:#FFFFFF;width:548px;height:150px'>
+
+    </div>
+    <div  style='background-color:#FFFFFF;width:548px;height:600px'>
+        <div style='float:left'>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/icon.jpg" height='100' width='200' ></a><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>产品疾病知识</font>
+        </div>
+        <div style='float:left'>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/icon_1.jpg" height='100' width='200' ></a><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>问卷调查</font>
+        </div>
+        <div style='float:left'>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/icon_3.jpg" height='100' width='200' ></a><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>互动游戏</font>
+        </div>
+        <div style='float:left'>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/cart_top.png" height='100' width='200' ></a><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>暂无</font>
+        </div>
+
+    </div>
+</div>
+
+
+
+</body>
+</html>
