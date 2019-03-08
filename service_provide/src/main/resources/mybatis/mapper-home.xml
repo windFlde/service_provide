@@ -81,4 +81,11 @@
     <select id="getMaster" resultType="DaKa">
         select * from t_master
     </select>
+
+    <!--List<Integral> getjifenData(String userId);-->
+    <select id="getjifenData" resultType="Integral">
+        select * from t_integral where userId = ${userId}
+    </select>
+
+
 </mapper>
