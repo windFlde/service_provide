@@ -1,10 +1,7 @@
 package com.jk.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jk.bean.DaKa;
-import com.jk.bean.Exprent;
-import com.jk.bean.Say;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 import com.jk.service.HomeService;
 import com.jk.util.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,4 +137,12 @@ public class HomeController {
     public List<DaKa> getMaster(){
         return homeService.getMaster();
     }
+
+    @ResponseBody
+    @RequestMapping("getjifenData")
+    public List<Integral> getjifenData(String userId){
+        return homeService.getjifenData(userId);
+    }
+
+
 }

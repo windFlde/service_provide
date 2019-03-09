@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>我的专区</title>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+</head>
+<script type="text/javascript">
+    var ii = 0;
+$(function (){
+   var id = $("#reUrl1").val();
+   if (id != " "){
+       $("#biaoqian").html("已登录");
+   }
+   var img2 = $("#reUrl3").val();
+   if (img2 != "" ){
+       $("#tupian").prop("src",img2);
+   }
+   var name = $("#reUrl2").val();
+    $("#span2").html("0000"+id);
+    $("#span1").html(name);
+});
+function tomyintegral(name) {
+    location.href="http://localhost:2001/home/ToPage?name="+name;
+}
+</script>
+<body>
+<input type="hidden" id="reUrl1" th:value="${session.user?.id}">
+<input type="hidden" id="reUrl2" th:value="${session.user?.username}">
+<input type="hidden" id="reUrl3" th:value="${session.user?.img}">
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:2001/home/ToPage?name=index-home#">返回</a>
+                <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的专区</font></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航栏-->
+   <div style="background-color: #56eed2;width: 600px;height: 320px;margin-top: -20px;">
+       <div style="margin-left:520px;padding-top:15px;"><font size="3" color="#ffe4c4" id="biaoqian"><a>未登录</a></font></div>
+       <div style="margin-left: 215px;margin-top: 15px;"><img id="tupian" class="img-circle" src="https://erp-impw123.oss-cn-beijing.aliyuncs.com/images/601a697e22974e1ead4036cc8dd2c2da.gif?Expires=4705628597&OSSAccessKeyId=LTAI0TzZsFR2VLsN&Signature=VKklLIraMd2fW%2BIdpJsNP2ul3Tg%3D" width="160px" height="160px"></div>
+       <div style="margin-left: 230px;margin-top: 15px;">
+           <div><font size="4" >昵称：</font><font size="4"><span id="span1">游客状态</span></font></div>
+           <div><font size="4" >ID：</font><font size="4"><span id="span2">000000</span></font></div>
+       </div>
+   </div>
+       <div class="bs-example" data-example-id="vertical-button-group">
+           <div style="width: 600px;height: 320px;margin-top: 41px;" class="btn-group-vertical" role="group" aria-label="Vertical button group">
+               <button style="padding-right: 470px;" type="button" class="btn btn-default btn-lg">个人信息</button>
+               <button style="padding-right: 470px;" type="button" onclick="tomyintegral('myintegral')" class="btn btn-default btn-lg">我的积分</button>
+               <button style="padding-right: 470px;" type="button" onclick="tomyintegral('mycollect')" class="btn btn-default btn-lg">我的收藏</button>
+               <button style="padding-right: 470px;" type="button" class="btn btn-default btn-lg">我的提问</button>
+               <button style="padding-right: 430px;" type="button" class="btn btn-default btn-lg">我的兑换订单</button>
+           </div>
+       </div>
+</div>
+</body>
+</html>
