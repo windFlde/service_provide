@@ -1,8 +1,6 @@
 package com.jk.service;
 
-import com.jk.bean.DaKa;
-import com.jk.bean.Exprent;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 
 import java.util.List;
 
@@ -26,4 +24,7 @@ public interface HomeService {
     DaKa getdaka(String id);
 
     List<DaKa> getMaster();
+
+    List<Integral> getjifenData(String userId);
+
 }

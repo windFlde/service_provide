@@ -77,13 +77,30 @@
             success: function (result) {
                 $.each(result, function (index, obj) {
                     contt += "<div style='width: 600px;height: 110px'>";
-                    contt += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
+                    contt += "<div style='width: 100px;margin-left: 20px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
                     contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p></div><br>";
                     contt += "</div><br>";
                 })
                 $('#aa').append(contt);
             }
         })
+    }
+
+    function addShouCang() {
+        var wzId = $("#nameVal").val();
+        var tname = "病例荟萃";
+            $.ajax({
+                url: '/bck/addShouCang',
+                data:{wzId:wzId,tname:tname},
+                success: function (result) {
+                    if(result=="0"){
+                        layer.msg('请先登录!!', {time:1000, icon:2});
+                        location.href="/home/ToPage?name=login";
+                    }else {
+                        layer.msg('收藏成功!!', {time:1000, icon:1});
+                    }
+                }
+            })
     }
 
 </script>
@@ -127,17 +144,11 @@
             <div class="collapse navbar-collapse" id="example-navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Java <b class="caret"></b>
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                            更多操作 <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
+                            <li><a href="javascript:void(0)" onclick="addShouCang()">收藏</a></li>
                         </ul>
                     </li>
                 </ul>

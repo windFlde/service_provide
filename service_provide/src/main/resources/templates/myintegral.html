@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>我的积分</title>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+</head>
+<script type="text/javascript">
+    var ii = 0;
+$(function (){
+   getData();
+});
+    function getData() {
+        //用户ID
+        var num = $("#reUrl2").val();
+        if (num != ""){
+            $("#jifen2").html(num);
+        }
+        var userId = $("#reUrl1").val();
+        /*ajax   start*/
+                $.ajax({
+                   url:"/home/getjifenData",
+                    data:{userId:userId},
+                   beforeSend:function(){
+                          ii = layer.msg('加载中', {
+                          icon: 16
+                          ,shade: 0.01
+                          });  },
+                   success:function(a){
+                       var content ="";
+                        $.each(a,function (index ,obj){
+                         content +="<tr><td><font size='4'>&nbsp;&nbsp;&nbsp;"+obj.igName+"</font><div style='margin-left: 535px;margin-top: -25px;'><font size='4'>+"+obj.count+"</font></div></td></tr>";
+                        });
+                        $("#style1").html(content);
+                   },
+                   error:function(){
+                      layer.msg("ajax失败");
+                   },complete:function(){
+                         layer.close(ii);
+                    }
+               });
+             /*ajax   end*/
+    }
+</script>
+<body>
+<input type="hidden" id="reUrl1" th:value="${session.user?.id}">
+<input type="hidden" id="reUrl2" th:value="${session.user?.num}">
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:2001/home/ToPage?name=myprefecture#">返回</a>
+                <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我的积分</font></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航栏-->
+    <div style="background-color: #56eed2;width: 600px;height: 320px;margin-top: -20px;">
+       <div style="margin-left: 235px;padding-top: 50px;"><font size="5">当前总积分</font></div>
+       <div>
+           <center>
+               <font style="font-size: 95px"><span id="jifen2">0000</span></font><fon6t>积分</fon6t>
+           </center>
+       </div>
+        <div><input class="btn btn-primary " style="border-radius: 50px;margin-left: 255px;" type='button' value='  积分兑换  '></div>
+    </div>
+    <div style="width: 600px;margin-top: 25px;">
+        <table class='table' id="style1" >
+
+        </table>
+    </div>
+
+</div>
+</body>
+</html>

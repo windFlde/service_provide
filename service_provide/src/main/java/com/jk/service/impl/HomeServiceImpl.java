@@ -1,8 +1,6 @@
 package com.jk.service.impl;
 
-import com.jk.bean.DaKa;
-import com.jk.bean.Exprent;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 import com.jk.mapper.HomeMapper;
 import com.jk.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,4 +67,11 @@ public class HomeServiceImpl implements HomeService {
     public List<DaKa> getMaster() {
         return homeMapper.getMaster();
     }
+
+    @Override
+    public List<Integral> getjifenData(String userId) {
+        return homeMapper.getjifenData(userId);
+    }
+
+
 }

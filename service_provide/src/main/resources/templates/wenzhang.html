@@ -76,10 +76,28 @@
     function toViewName(indexView) {
         window.location.href = "/wenz/toView?viewName=" + indexView;
     }
+
+    function addShouCang() {
+        var wzId = $("#nameVal").val();
+        var tname = "热点文章";
+        $.ajax({
+            url: '/bck/addShouCang',
+            data:{wzId:wzId,tname:tname},
+            success: function (result) {
+                if(result=="0"){
+                    layer.msg('请先登录!!', {time:1000, icon:2});
+                    location.href="/home/ToPage?name=login";
+                }else {
+                    layer.msg('收藏成功!!', {time:1000, icon:1});
+                }
+            }
+        })
+    }
 </script>
 <body>
 <div style="margin-left: 20px">
     <font size="4px"><a href='javascript:void(0)' onclick=toViewName("index-home")>返回</a></font>
+    <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
 </div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <div class="row" style="width: 450px;height: 800px;">

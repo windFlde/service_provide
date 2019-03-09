@@ -1,8 +1,6 @@
 package com.jk.mapper;
 
-import com.jk.bean.DaKa;
-import com.jk.bean.Exprent;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -29,4 +27,8 @@ public interface HomeMapper {
     DaKa getdaka(@Param("id") String id);
 
     List<DaKa> getMaster();
+
+    List<Integral> getjifenData(@Param("userId") String userId);
+
+
 }
