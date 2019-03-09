@@ -13,4 +13,14 @@
     <update id="updateById">
         update `t_ example` set em_browse = em_browse + 1 where id = #{id}
     </update>
+
+    <insert id="addShouCang">
+        insert into t_shoucang (userId,wzId,tname) values (#{userId},#{wzId},#{tname})
+    </insert>
+
+    <select id="queryShouCang" resultType="ShouCang">
+        SELECT w.id wId,w.title,w.creaTime
+        FROM `t_wenzhang` w,t_shoucang s
+        WHERE w.id = s.wzId AND s.userId =#{id}
+    </select>
 </mapper>

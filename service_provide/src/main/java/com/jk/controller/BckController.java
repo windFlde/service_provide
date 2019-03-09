@@ -1,9 +1,6 @@
 package com.jk.controller;
 
-import com.jk.bean.Example;
-import com.jk.bean.PingLun;
-import com.jk.bean.PingLunTwo;
-import com.jk.bean.User;
+import com.jk.bean.*;
 import com.jk.service.BckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -93,5 +90,29 @@ public class BckController {
         bckService.updateById(id);
     }
 
+    @ResponseBody
+    @RequestMapping("addShouCang")
+    public String addShouCang(ShouCang shouCang,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "0";
+        }else {
+            shouCang.setUserId(user.getId());
+            bckService.addShouCang(shouCang);
+            return "1";
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping("queryShouCang")
+    public List<ShouCang> queryShouCang(HttpSession session){
+
+        User user = (User) session.getAttribute("user");
+
+        Integer id = user.getId();
+
+        return bckService.queryShouCang(id);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.jk.bean.Example;
+import com.jk.bean.ShouCang;
 import com.jk.mapper.BckMapper;
 import com.jk.service.BckService;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,15 @@ public class BckServiceImpl implements BckService {
     @Override
     public void updateById(Integer id) {
          bckMapper.updateById(id);
+    }
+
+    @Override
+    public void addShouCang(ShouCang shouCang) {
+        bckMapper.addShouCang(shouCang);
+    }
+
+    @Override
+    public List<ShouCang> queryShouCang(Integer id) {
+        return bckMapper.queryShouCang(id);
     }
 }
