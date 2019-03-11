@@ -1,9 +1,6 @@
 package com.jk.controller;
 
-import com.jk.bean.Example;
-import com.jk.bean.PingLun;
-import com.jk.bean.PingLunTwo;
-import com.jk.bean.User;
+import com.jk.bean.*;
 import com.jk.service.BckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -32,11 +29,20 @@ public class BckController {
     public void addPingLun(PingLun pingLun, HttpSession session){
 
         User user = (User)session.getAttribute("user");
+        Integral integral = new Integral();
+        Integer id = null;
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
+            id = user.getId();
         }
         mongoTemplate.save(pingLun);
+        if(id != null){
+            bckService.addCount(id);
+            integral.setIgName("留言");
+            integral.setUserId(id);
+            bckService.addIg(integral);
+        }
     }
 
     @ResponseBody
@@ -44,11 +50,20 @@ public class BckController {
     public void addPingLun2(PingLunTwo pingLun, HttpSession session){
 
         User user = (User)session.getAttribute("user");
+        Integral integral = new Integral();
+        Integer id = null;
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
+            id = user.getId();
         }
         mongoTemplate.save(pingLun);
+        if(id == null){
+            bckService.addCount(id);
+            integral.setIgName("留言");
+            integral.setUserId(id);
+            bckService.addIg(integral);
+        }
     }
 
 
@@ -93,5 +108,33 @@ public class BckController {
         bckService.updateById(id);
     }
 
+    @ResponseBody
+    @RequestMapping("addShouCang")
+    public String addShouCang(ShouCang shouCang,HttpSession session){
+        User user = (User) session.getAttribute("user");
+        if(user == null){
+            return "0";
+        }else {
+            shouCang.setUserId(user.getId());
+            bckService.addShouCang(shouCang);
+            return "1";
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping("queryShouCang")
+    public List<ShouCang> queryShouCang(HttpSession session){
+
+        User user = (User) session.getAttribute("user");
+
+        if(user!=null){
+            Integer id = user.getId();
+
+            return bckService.queryShouCang(id);
+        }else {
+            return null;
+        }
+    }
 
 }

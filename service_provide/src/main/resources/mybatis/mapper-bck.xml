@@ -13,4 +13,22 @@
     <update id="updateById">
         update `t_ example` set em_browse = em_browse + 1 where id = #{id}
     </update>
+
+    <insert id="addShouCang">
+        insert into t_shoucang (userId,wzId,tname,ttime,title) values (#{userId},#{wzId},#{tname},NOW(),#{title})
+    </insert>
+
+    <select id="queryShouCang" resultType="ShouCang">
+        SELECT w.id wzId,s.title title,s.ttime,s.tname
+        FROM `t_ example` w,t_shoucang s
+        WHERE w.id = s.wzId AND s.userId =#{id} order by s.ttime desc
+    </select>
+
+    <update id="addCount">
+        update t_user set count = count + 20  where id = #{id}
+    </update>
+
+    <insert id="addIg">
+        insert into t_integral (igName,createtime,count,userId) values (#{igName},now(),20,#{userId});
+    </insert>
 </mapper>
