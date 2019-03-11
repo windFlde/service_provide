@@ -10,7 +10,8 @@
     </select>
     <!--List<Redeem> getIntegral();-->
     <select id="getIntegral" resultType="redeem">
-        select * from t_duihuan
+        select * from t_duihuan where count > 0
+
     </select>
     <!--Redeem exIntegral(Integer id);-->
     <select id="exIntegral" resultType="redeem">
