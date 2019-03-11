@@ -1,6 +1,6 @@
 package com.jk.controller;
 
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 import com.jk.service.WenZHangService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("wenz")
@@ -36,6 +37,60 @@ WenZhangController {
     public String setTitleVal(HttpSession session, WenZhang wenZhang) {
         session.setAttribute("wenZhang", wenZhang);
         return "";
+    }
+    @ResponseBody
+    @RequestMapping("getIntegral")
+    public List<Redeem>getIntegral() {
+        List<Redeem>list=wenZHangService.getIntegral();
+        return list;
+    }
+    @ResponseBody
+    @RequestMapping("exIntegral")
+    public String exIntegral(Redeem redeem,String userId) {
+        Redeem re=wenZHangService.exIntegral(redeem);
+        User user=wenZHangService.getUserMes(userId);
+        if (re.getCount() <= 0) {
+            return "countNo";
+        } else if(re.getFeiyong()>user.getNum()){
+            return "userNo";
+        } else{
+            wenZHangService.updateUserCount(redeem.getFeiyong(),user.getId());
+            wenZHangService.updateDuiHuanCount(redeem.getId(),redeem.getFeiyong());
+            return "countOk";
+        }
+    }
+    //生成订单
+    @ResponseBody
+    @RequestMapping("insertOrder")
+    public String insertOrder(QueryParam queryParam) {
+        if (queryParam.getGoodsId()!=null) {
+            Redeem re=wenZHangService.insertOrder(queryParam.getGoodsId());
+            if (re != null) {
+                wenZHangService.InsertOrderGoods(re,queryParam.getUserId());
+                return "insertOrderOk";
+            }
+        }
+
+        return "1";
+    }
+    @ResponseBody
+    @RequestMapping("toLogin")
+    public String toLogin(HttpSession session,String htmlUrl) {
+        session.setAttribute("reUrl",htmlUrl);
+        return "";
+    }
+    @ResponseBody
+    @RequestMapping("getUserAll")
+    public User getUserAll(User user) {
+        User userf=wenZHangService.getUserAll(user.getId());
+        return userf;
+    }
+
+    @ResponseBody
+    @RequestMapping("getUserOrder")
+    public List<Order>getUserOrder(Order order) {
+        List<Order>or=wenZHangService.getUserOrder(order);
+        return or;
     }
 
 }

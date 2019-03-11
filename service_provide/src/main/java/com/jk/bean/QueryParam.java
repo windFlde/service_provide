@@ -15,4 +15,8 @@ public class QueryParam {
 
     List<CreateLight>cl;
 
+    Integer goodsId;
+
+    Integer userId;
+
 }

@@ -20,8 +20,13 @@ public class LoginController {
     @RequestMapping("toLogin")
     public String toLogin(User users, HttpSession session) {
         User user=loginService.toLogin(users);
-        session.setAttribute("user",user);
-        return "1";
+        if (user!=null) {
+            session.setAttribute("user",user);
+            return "1";
+        }else{
+            return "2";
+        }
+
     }
 
     @ResponseBody

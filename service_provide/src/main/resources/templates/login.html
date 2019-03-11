@@ -18,6 +18,7 @@
 <script type="text/javascript">
     var ii=0;
     function toLogin() {
+        var reUrl=$("#reUrl").val();
             /*ajax   start*/
                     $.ajax({
                        url:"/login/toLogin",
@@ -30,7 +31,30 @@
                               });
                         },
                        success:function(a){
-                            window.location.href="/wenz/toView?viewName=index-home";
+                           if (a ==1) {
+                               if (reUrl != null && reUrl != "") {
+                                   /* 确认框start */
+                                   bootbox.confirm({
+                                       size: "small",
+                                       message: "是否接着刚才的操作?",
+                                       callback: function (result) {
+                                           console.log(result);
+                                           if (result) {
+                                               window.location.href = reUrl;
+                                           } else {
+                                               window.location.href = "/wenz/toView?viewName=index-home";
+                                           }
+                                       }
+                                   });
+                                   /* 确认框end */
+                               } else {
+                                   window.location.href = "/wenz/toView?viewName=index-home";
+                               }
+                           }else if (a==2) {
+                               layer.msg("账号或密码错误");
+                               return ;
+                           }
+                          
                        },
                        error:function(){
                           layer.msg("ajax失败");
@@ -39,6 +63,7 @@
                         }
                    });
                  /*ajax   end*/
+
     }
     function keyLogin(){
         if (event.keyCode==13)  //回车键的键值为13
@@ -46,6 +71,7 @@
     }
 </script>
 <body onkeypress="keyLogin()">
+<input type="hidden" id="reUrl" th:value="${session.reUrl?.requestUrl}">
 <div class="up" >
     <img src="/images/huangkuang.jpg" width="50px" height="60px;" class="hy_img">
     <div class="hy">

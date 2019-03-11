@@ -8,5 +8,62 @@
         select * from t_wenzhang where title=#{title}
 
     </select>
+    <!--List<Redeem> getIntegral();-->
+    <select id="getIntegral" resultType="redeem">
+        select * from t_duihuan
+    </select>
+    <!--Redeem exIntegral(Integer id);-->
+    <select id="exIntegral" resultType="redeem">
+        select *  from t_duihuan where id = #{id}
+    </select>
+
+    <!--User getUserMes(String userId);-->
+    <select id="getUserMes" resultType="user">
+        select * from t_user where id=#{userId}
+    </select>
+
+    <!--void updateUserCount(@Param("feiyong") Integer feiyong, @Param("id") Integer id);;-->
+    <update id="updateUserCount">
+        update t_user set num = num - #{feiyong} where id = #{id}
+    </update>
+
+    <!--void updateDuiHuanCount(@Param("id") Integer id, @Param("feiyong") Integer feiyong);-->
+    <update id="updateDuiHuanCount">
+        update t_duihuan set  count=count-1 where id=#{id}
+    </update>
+
+    <!--Redeem insertOrder(Integer goodsId);-->
+    <select id="insertOrder" resultType="redeem">
+        select  * from t_duihuan where id=#{goodsId}
+
+    </select>
+
+    <!--void InsertOrderGoods(@Param("r") Redeem re, @Param("userId") Integer userId);-->
+    <insert id="InsertOrderGoods">
+        INSERT INTO t_order (
+                `ddName`,
+                `userId`,
+                `createtime`
+            )
+            VALUES
+                (
+                #{r.name},
+                #{userId},
+                SYSDATE()
+                );
+
+    </insert>
+
+    <!--User getUserAll(Integer id);-->
+    <select id="getUserAll" resultType="user">
+        select * from t_user  where id=#{id}
+
+    </select>
+
+    <!--List<Order> getUserOrder(Order order);-->
+    <select id="getUserOrder" resultType="order">
+        select * from t_order where userId=#{id}
+
+    </select>
 
 </mapper>

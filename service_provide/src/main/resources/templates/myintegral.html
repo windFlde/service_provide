@@ -47,6 +47,10 @@ $(function (){
                });
              /*ajax   end*/
     }
+
+    function toView(v) {
+        window.location.href="/wenz/toView?viewName="+v;
+    }
 </script>
 <body>
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
@@ -94,7 +98,7 @@ $(function (){
                <font style="font-size: 95px"><span id="jifen2">0000</span></font><fon6t>积分</fon6t>
            </center>
        </div>
-        <div><input class="btn btn-primary " style="border-radius: 50px;margin-left: 255px;" type='button' value='  积分兑换  '></div>
+        <div><input class="btn btn-primary " onclick="toView('integral')" style="border-radius: 50px;margin-left: 255px;" type='button' value='  积分兑换  '></div>
     </div>
     <div style="width: 600px;margin-top: 25px;">
         <table class='table' id="style1" >

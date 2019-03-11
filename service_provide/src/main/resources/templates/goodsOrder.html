@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <link rel="shortcut icon" type="image/icon" href="/images/jd.ico">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <script src="/js/layui/layui.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        getUserOrder();
+    });
+    function getUserOrder() {
+        var userId=$("#userId").val();
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/getUserOrder",
+                       type:"POST",
+                       data:{id:userId},
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           console.log(a);
+                        var content="";
+                           $.each(a, function (index, obj) {
+                               content+="<tr>";
+                               content+="<td>";
+                               content+="<div style='height:40px;width: 450px;border-radius:10px;background-color:#9acfea;margin-left: 25px;margin-top: 20px'>";
+                               content+="&nbsp;&nbsp;&nbsp;&nbsp;<b>"+obj.ddName+"</b>&nbsp&nbsp&nbsp&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                               content+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+obj.createTime;
+                               content+="</div>";
+                               content+="</td>";
+                               content+="</tr>";
+                           });
+                           $("#content").html(content);
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+    function toView(v) {
+        window.location.href="/wenz/toView?viewName="+v;
+    }
+</script>
+<body>
+<input type="hidden" id="userId" th:value="${session?.user.id}">
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href='javascript:void(0)' onclick=toView("myprefecture")>返回</a>
+                <a class="navbar-brand" href="#"><font size='5'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    我的兑换订单<span id="s1"></span></font>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <font  size="4px"><b>Java</b></font>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>&nbsp;&nbsp;<b><a href="#">Me</a></b></li>
+                            <li>&nbsp;&nbsp;<b><a href="#"><font color="#ccffff">Invincible</font></a></b></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航栏-->
+</div>
+<div style="border-radius:10px;margin-top: -20px;margin-left: 20px;background-color: #9F9F9F;width: 500px;height: 800px">
+    <div style="border-radius:10px;margin-left: 5px;margin-top: 5px">
+     <table id="content"></table>
+    </div>
+</div>
+</body>
+</html>

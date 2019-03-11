@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <link rel="shortcut icon" type="image/icon" href="/images/jd.ico">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <script src="/js/layui/layui.js"></script>
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function () {
+        getIntegral();
+        getUserAll();
+    })
+
+    function getUserAll() {
+        var userId=$("#userId").val();
+        if (userId == null && userId == "") {
+            $("#divUser").html("<font color='red'>请登录</font>");
+            return;
+        } else {
+            /*ajax   start*/
+            $.ajax({
+                url:"/wenz/getUserAll",
+                type:"POST",
+                data:{id:userId},
+                beforeSend:function(){
+                    ii = layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success:function(a){
+                    $("#divUser").html(a.num);
+                },
+                error:function(){
+                    layer.msg("ajax失败");
+                },complete:function(){
+                    layer.close(ii);
+                }
+            });
+            /*ajax   end*/
+        }
+    }
+
+    function insertOrder(goodsId,userId) {
+        var goodsId=goodsId;
+        var userId=userId;
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/insertOrder",
+                       type:"POST",
+                       data:{goodsId:goodsId,userId:userId},
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           if (a=="insertOrderOk") {
+                               layer.msg("已经生成订单");
+                           }else if (a=="1") {
+                               layer.msg("生成订单失败");
+                           }
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+
+    function exIntegral(id) {
+        var feiyong=$("#f"+id).val();
+        var count=$("#c"+id).val();
+        var goodsId=id;
+        var userId=$("#userId").val();
+        if (userId!=null && userId!="") {
+            /*ajax   start*/
+            $.ajax({
+                url:"/wenz/exIntegral",
+                type:"POST",
+                data:{id:goodsId,feiyong:feiyong,count:count,userId:userId},
+                beforeSend:function(){
+                    ii = layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success:function(a){
+                    if (a=="countNo") {
+                        layer.msg("库存不足,兑换失败")
+                    }else if (a=="userNo") {
+                        layer.msg("您的积分不足,兑换失败")
+                    }else if (a=="countOk") {
+                        layer.msg("兑换成功!");
+                        insertOrder(goodsId,userId);
+                        getIntegral();
+                        getUserAll();
+                    }
+                },
+                error:function(){
+                    layer.msg("ajax失败");
+                },complete:function(){
+                    layer.close(ii);
+                }
+            });
+            /*ajax   end*/
+        }else{
+            /* 确认框start */
+            bootbox.confirm({
+                size: "small",
+                message: "您没有登录,是否登录?",
+                callback: function(result){
+                    console.log(result);
+                    if(result){
+                        /*ajax   start*/
+                        $.ajax({
+                            url:"/wenz/toLogin",
+                            type:"POST",
+                            data:{htmlUrl:htmlUrl},
+                            beforeSend:function(){
+                                ii = layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
+                            },
+                            success:function(a){
+                                location.href="/wenz/toView?ViewName=login";
+                            },
+                            error:function(){
+                                layer.msg("ajax失败");
+                            },complete:function(){
+                                layer.close(ii);
+                            }
+                        });
+                        /*ajax   end*/
+                    }
+                }
+            })
+            /* 确认框end */
+        }
+
+    }
+    function getIntegral() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/getIntegral",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           console.log(a);
+                           var content="";
+                           $.each(a, function (index,obj) {
+                               content+="<div  style='border-radius:10px;background-color: #9acfea ;margin-left: 40px;margin-top: 30px;float: left;'>";
+                               content+="<img style='border-radius:10px;' width='200px' height='120px' src='"+obj.img+"'>";
+                               content+="<div  style='margin-top: 4px;margin-left: 10px'>"+obj.name + "</div>";
+                               content+="<div style='margin-top: 2px;margin-left: 10px'><b><font color='red'><span id='f"+obj.id+"'>"+obj.feiyong + "</span></font>&nbsp 积分 </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存:<b><font color='red'><span id='c"+obj.id+"'>"+obj.count+"</span></font></b></div>";
+                               content+="<h3><div style='margin-left: 35px;margin-top: 5px'>"+"<button style='width:120px;height:40px' onclick='exIntegral("+obj.id+")' class='layui-btn layui-btn-normal layui-btn-radius'>点击兑换</button>"+"</div></h3>";
+                               content+="</div>";
+                           });
+                           $("#content").html(content);
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+    function toView(v) {
+        window.location.href="/wenz/toView?viewName="+v;
+    }
+</script>
+<body>
+<input type="hidden" id="userId" th:value="${session?.user.id}">
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href='javascript:void(0)' onclick=toView("myintegral")>返回</a>
+                <a class="navbar-brand" href="#"><font size='5'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    我的积分</font>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <font color="red" size="4px"><b><div id="divUser"></div></b></font>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>&nbsp;&nbsp;<b><a href="#">Me</a></b></li>
+                            <li>&nbsp;&nbsp;<b><a href="#"><font color="#ccffff">Invincible</font></a></b></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航栏-->
+</div>
+<div style="margin-top: -15px;margin-left: 20px;background-color: #737373;width: 500px">
+        <div id="content"></div>
+</div>
+<div style="margin-left: 10px;background-color: #9F9F9F;width:550px;height:1200px"></div>
+
+</body>
+</html>
