@@ -31,4 +31,5 @@ public interface HomeMapper {
     List<Integral> getjifenData(@Param("userId") String userId);
 
 
+    User getNum(@Param("id") String id);
 }

@@ -73,5 +73,11 @@ public class HomeServiceImpl implements HomeService {
         return homeMapper.getjifenData(userId);
     }
 
+    @Override
+    public Integer getNum(String id) {
+        User num = homeMapper.getNum(id);
+        return num.getNum();
+    }
+
 
 }

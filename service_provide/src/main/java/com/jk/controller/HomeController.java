@@ -145,4 +145,10 @@ public class HomeController {
     }
 
 
+    @ResponseBody
+    @RequestMapping("getNum")
+    public Integer getNum(String id){
+        return homeService.getNum(id);
+    }
+
 }
