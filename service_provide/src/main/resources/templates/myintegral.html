@@ -17,13 +17,34 @@ $(function (){
    getData();
 });
     function getData() {
+
         //用户ID
-        var num = $("#reUrl2").val();
-        if (num != ""){
-            $("#jifen2").html(num);
-        }
         var userId = $("#reUrl1").val();
         if (userId != ""){
+            /*ajax   start*/
+            $.ajax({
+                url:"/home/getNum",
+                data:{id:userId},
+                beforeSend:function(){
+                    ii = layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success:function(a){
+                    if (a == null){
+                        $("#jifen2").html("0000");
+                    }else{
+                        $("#jifen2").html(a);
+                    }
+                },
+                error:function(){
+                    layer.msg("ajax失败");
+                },complete:function(){
+                    layer.close(ii);
+                }
+            });
+            /*ajax   end*/
             /*ajax   start*/
             $.ajax({
                 url:"/home/getjifenData",
@@ -97,7 +118,7 @@ $(function (){
        <div style="margin-left: 235px;padding-top: 50px;"><font size="5">当前总积分</font></div>
        <div>
            <center>
-               <font style="font-size: 95px"><span id="jifen2">0000</span></font><fon6t>积分</fon6t>
+               <font style="font-size: 95px"><a href="#"><span id="jifen2">0000</span></a></font><fon6t>积分</fon6t>
            </center>
        </div>
         <div><input class="btn btn-primary " onclick="toView('integral')" style="border-radius: 50px;margin-left: 255px;" type='button' value='  积分兑换  '></div>

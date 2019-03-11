@@ -21,4 +21,6 @@ public interface BckService {
     void addCount(Integer id);
 
     void addIg(Integral integral);
+
+    boolean querySc(String title);
 }

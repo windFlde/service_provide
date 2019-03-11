@@ -98,8 +98,10 @@
                     if(result=="0"){
                         layer.msg('请先登录!!', {time:1000, icon:2});
                         location.href="/home/ToPage?name=login";
-                    }else {
+                    }else if(result == "1"){
                         layer.msg('收藏成功!!', {time:1000, icon:1});
+                    }else {
+                        layer.msg('不能重复收藏!!', {time:1000, icon:2});
                     }
                 }
             })

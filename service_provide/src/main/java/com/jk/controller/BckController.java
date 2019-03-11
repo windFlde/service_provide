@@ -58,7 +58,7 @@ public class BckController {
             id = user.getId();
         }
         mongoTemplate.save(pingLun);
-        if(id == null){
+        if(id != null){
             bckService.addCount(id);
             integral.setIgName("留言");
             integral.setUserId(id);
@@ -115,9 +115,14 @@ public class BckController {
         if(user == null){
             return "0";
         }else {
-            shouCang.setUserId(user.getId());
-            bckService.addShouCang(shouCang);
-            return "1";
+            boolean b = bckService.querySc(shouCang.getTitle());
+            if(b){
+                return "2";
+            }else {
+                shouCang.setUserId(user.getId());
+                bckService.addShouCang(shouCang);
+                return "1";
+            }
         }
 
     }
