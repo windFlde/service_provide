@@ -25,10 +25,14 @@
     </select>
 
     <update id="addCount">
-        update t_user set count = count + 20  where id = #{id}
+        update t_user set num = num + 20  where id = #{id}
     </update>
 
     <insert id="addIg">
         insert into t_integral (igName,createtime,count,userId) values (#{igName},now(),20,#{userId});
     </insert>
+
+    <select id="querySc" resultType="ShouCang">
+        select * from  t_shoucang where title = #{title}
+    </select>
 </mapper>
