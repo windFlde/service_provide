@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+
+    $(function(){
+      var id=$("#id").val();
+        if (id == "") {
+            $("#biaoqian").html("未登录");
+        }
+        var img=$("#img").val();
+        if (img!= "") {
+            $("#tupian").prop("src",img2);
+        }
+        var username=$("username").val();
+        $("#span2").html("0000" + id);
+        $("#span1").html(username);
+
+
+    })
+
+    function back() {
+
+        window.location.href="/home/ToPage?name=index-home";
+
+    }
+</script>
+<style type="text/css">
+    body,div{
+        margin:0;
+        padding:0;
+    }
+    body{
+        width: 600px;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        border: 1px solid #FFFFFF;
+        justify-content: flex-start;
+    }
+    .load_div{
+        width: 600px;
+        height: 230px;
+        border:1px solid #FFFFFF;
+    }
+    .load_div2{
+        width: 600px;
+        height: 100px;
+        border:1px solid #FFFFFF;
+    }
+    .load_div3{
+        width: 600px;
+        height: 300px;
+        border:1px solid #FFFFFF;
+    }
+</style>
+<body>
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)" onclick="back()">返回</a>
+                <a class="navbar-brand" href="#"><font size='5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专属客服</font></a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<input type="hidden" id="id" th:value="${session.user?.id}">
+<input type="hidden" id="username" th:value="${session.user?.username}">
+<input type="hidden" id="img" th:value="${session.user?.img}">
+<div id="conent">
+<div class="load_div" style='background-color:#F3F3F3'>
+
+    <div style="margin-left:520px;margin-top: 15px;"><a id="biaoqian">未登录</a></div>
+    <div style="margin-left:230px;margin-top: 15px;">
+        <img id="tupian" src="/images/20190107164001.jpg" width="100" height="100" class="img-circle">
+    </div>
+    <div style="margin-left:230px;margin-top:15px;">
+        <div><font size="4">昵称:<span id="span1">游客状态</span></font></div>
+        <div><font size="4"> ID:<span id="span2">00000</span></font></div>
+
+    </div>
+
+
+</div>
+<div class="load_div2">
+
+</div>
+<div  class="load_div3">
+
+    <div style="margin-left:200px;margin-top: 15px;">
+        <img src="/img/9ad59c44c3ee16d2.png" width="200px" height="100" class="img-rounded">
+    </div>
+    <div style="margin-left:200px;margin-top: 15px;">
+    188-1212-3214 <button type="button" class="btn btn-primary btn-sm">点击拨打</button>
+    </div>
+    <div style="margin-left:200px;margin-top: 15px;">
+   <button type="button" class="btn btn-primary btn-lg ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线留言&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    </div>
+</div>
+
+</div>
+</body>
+</html>

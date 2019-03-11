@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    function sure(key){
+
+        var bt1 = document.getElementById('bt1');
+        var bt2 = document.getElementById('bt2');
+        bt1.style.backgroundColor="";
+        bt2.style.backgroundColor="";
+        if(key==1){
+            bt1.style.backgroundColor="#00FFFF";
+        }else {
+            bt2.style.backgroundColor="#00FFFF";
+        }
+    }
+
+    function back() {
+
+        location.href="/home/ToPage?name=general"
+    }
+
+</script>
+<style type="text/css">
+    body,div{
+        margin:0;
+        padding:0;
+    }
+    body{
+        width: 600px;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        border: 1px solid #FFFFFF;
+        justify-content: flex-start;
+    }
+    .load_divs{
+        width: 548px;
+        height: 50px;
+    }
+    .load_div{
+        width: 548px;
+        height: 50px;
+        border:1px solid #FFFFFF;
+    }
+
+
+
+</style>
+<body>
+<div style="width:550px;height:80px">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="javascript:back()">返回</a>
+            </div>
+            <div>
+                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">患者教育</font></p>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="load_divs">
+    <center>
+        <button type="button" class="btn btn-default btn-lg " id="bt1" onclick="return sure(1)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;视频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        <button type="button" class="btn btn-default btn-lg " id="bt2" onclick="return sure(2)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    </center>
+</div>
+</body>
+</html>

@@ -4,13 +4,12 @@ import com.jk.bean.Answer;
 import com.jk.bean.User;
 import com.jk.service.ChuangguanService;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -62,21 +61,31 @@ public class ChuangguanController {
 
     @RequestMapping("AddAnswer")
     @ResponseBody
-    public String AddAnswer(Answer answer, Model model, HttpSession session) {
+    public int AddAnswer(Answer answer) {
 
+        ArrayList list = new ArrayList();
+        /*list.add(answer.get);
+        list.add(answer.get);
+        list.add(answer.get);
+        list.add(answer.get);
+        list.add(answer.get);*/
+        int count=0;
         List<Answer> find = mongoTemplate.find(null, Answer.class);
-        if (find == null) {
+        for (int i =1; i <=5 ; i++) {
 
-            model.addAttribute("msg","选项错误");
+            if (find.get(i).getContent().equals(list.get(i))) {
 
+                count++;
+            }else{
 
-        }else{
-
-            model.addAttribute("msg","正确");
+                Integer id = find.get(i).getId();
+            }
 
         }
-        return "";
+        return count;
     }
+
+
 
 
 

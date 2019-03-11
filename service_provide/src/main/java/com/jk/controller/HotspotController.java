@@ -31,6 +31,9 @@ public class HotspotController {
 
     }
 
+
+
+
     @RequestMapping("updateRdzxOne")
     public void updateRdzxOne(Integer id) {
 

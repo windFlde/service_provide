@@ -11,4 +11,6 @@ public interface HotspotMapper {
     Hotspot queryHotspotChildren(Hotspot hotspot);
 
     void updateRdzxOne(Integer id);
+
+
 }

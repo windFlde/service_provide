@@ -12,4 +12,6 @@ public interface HotspotService {
     Hotspot queryHotspotChildren(Hotspot hotspot);
 
     void updateRdzxOne(Integer id);
+
+
 }

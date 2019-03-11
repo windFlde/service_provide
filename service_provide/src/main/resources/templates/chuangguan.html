@@ -44,6 +44,12 @@
 
         })
 
+        function back() {
+
+            window.location.href="/home/ToPage?name=index-home";
+
+        }
+
 
 
 
@@ -64,15 +70,13 @@
             border: 1px solid #FFFFFF;
             justify-content: flex-start;
         }
-        img
-        {
-            opacity:0.4;
-            filter:alpha(opacity=40); /*  IE8 及其更早版本 */
+        .load_divs{
+            height:760px;
         }
-        img:hover
-        {
-            opacity:1.0;
-            filter:alpha(opacity=100); /* IE8 及其更早版本 */
+        .load_div{
+            width: 230px;
+            height: 190px;
+            border:1px solid #FFFFFF;
         }
 
     </style>
@@ -85,7 +89,7 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:history.go(-1)">返回</a>
+                <a class="navbar-brand" href="javascript:back()">返回</a>
             </div>
             <div>
                 <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">冲浪闯关</font></p>
@@ -96,29 +100,37 @@
         </div>
     </nav>
 </div>
-<div id="content">
+<div id="content" class="load_divs">
    <div class='load_div1' style='background-color:#FFFFFF;width:548px;height:150px'>
-       <img src='/images/4.jpg' height='100' width='548'>
+       <img src='/img/U3593P28T3D2475025F346DT20090416003316.jpg' height='100' width='548'>
     </div>
     <div id="chuangguan" class='load_div2' style='background-color:#FFFFFF;width:548px;height:150px'>
 
     </div>
-    <div  style='background-color:#FFFFFF;width:548px;height:600px'>
-        <div style='float:left'>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=createLight'><img src="/images/icon.jpg" height='100' width='200' ></a><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>产品疾病知识</font>
+    <div id="load_div">
+        <div  class="load_div" style='background-color:#F3F3F3;float:left;margin-left:30px; '>
+            <div style="position:relative;margin-top:22px;margin-left:22px;">
+               <a href='/home/ToPage?name=createLight'><img src="/img/8c86eede20cc31a6b62e8f062bdae44c.jpg" height='140' width='180' ></a><br>
+                <div style="position:absolute; z-index:2; left:40px; top:60px"><a href='/home/ToPage?name=createLight'><font size='4' color="#1e90ff">产品疾病知识</font></a></div>
+            </div>
         </div>
-        <div style='float:left'>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/icon_1.jpg" height='100' width='200' ></a><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>问卷调查</font>
+        <div  class="load_div" style='background-color:#F3F3F3;float:left;margin-left:30px; '>
+            <div style="position:relative;margin-top:22px;margin-left:22px;">
+              <a href='/home/ToPage?name=diaocha'><img src="/img/134092401.jpg" height='140' width='180' ></a><br>
+                <div style="position:absolute; z-index:2; left:50px; top:60px"><a href='/home/ToPage?name=diaocha'><font size='4' color="#1e90ff">问卷调查</font></a></div>
+            </div>
         </div>
-        <div style='float:left'>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/icon_3.jpg" height='100' width='200' ></a><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>互动游戏</font>
+        <div  class="load_div" style='background-color:#F3F3F3;float:left;margin-left:30px;margin-top:20px '>
+            <div style="position:relative;margin-top:22px;margin-left:22px;">
+               <a href=''><img src="/img/tim6.jfif" height='140' width='180' ></a><br>
+                <div style="position:absolute; z-index:2; left:50px; top:60px"><a href=''><font size='4' color="#1e90ff">互动游戏</font></a></div>
+            </div>
         </div>
-        <div style='float:left'>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href='/home/ToPage?name=diaocha'><img src="/images/cart_top.png" height='100' width='200' ></a><br>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='2'>暂无</font>
+        <div  class="load_div" style='background-color:#F3F3F3;float:left;margin-left:30px;margin-top:20px '>
+            <div style="position:relative;margin-top:22px;margin-left:22px;">
+                <a href=''><img src="/img/t01fe4cd62538dc8515.jpg" height='140' width='180' ></a><br>
+                <div style="position:absolute; z-index:2; left:70px; top:60px"><a href=''><font size='4' color="#1e90ff">暂无</font></a></div>
+            </div>
         </div>
 
     </div>

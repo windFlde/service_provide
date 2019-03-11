@@ -19,4 +19,6 @@
 
         update t_hottop set rd_browse=rd_browse+1 where id=#{id}
     </update>
+
+
 </mapper>

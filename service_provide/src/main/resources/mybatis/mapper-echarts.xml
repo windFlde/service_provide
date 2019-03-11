@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.EachartsMapper">
+
+    <!--List<Echarts> queryEcharts();-->
+    <select id="queryEcharts" resultType="Echarts">
+
+        select count value, DATE_FORMAT(createtime,"%Y-%m-%d") name from t_integral
+        where createtime between '2019-03-01' and '2019-03-31' group by
+        DATE_FORMAT(createtime,"%Y-%m-%d")
+    </select>
+
+    <!--List<Echarts> queryEchartsTwo();-->
+    <select id="queryEchartsTwo" resultType="Echarts">
+
+        select count value,igName name from t_integral
+    </select>
+
+</mapper>
