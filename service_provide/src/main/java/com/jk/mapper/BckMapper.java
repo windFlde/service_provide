@@ -20,4 +20,6 @@ public interface BckMapper {
     void addCount(Integer id);
 
     void addIg(Integral integral);
+
+    ShouCang querySc(String title);
 }

@@ -55,4 +55,15 @@ public class BckServiceImpl implements BckService {
     public void addIg(Integral integral) {
         bckMapper.addIg(integral);
     }
+
+    @Override
+    public boolean querySc(String title) {
+        ShouCang shouCang = bckMapper.querySc(title);
+        if(shouCang!=null){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
 }
