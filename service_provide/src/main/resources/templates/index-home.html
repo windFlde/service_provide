@@ -78,7 +78,7 @@
                    success:function(a){
                        var content = "<table class='table'>";
                         $.each(a, function (index,obj) {
-                            content += "<tr><td><a href='http://localhost:2001/wenz/toView?viewName=wenzhang&title="+obj.title+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
+                            content += "<tr><td><a href='http://localhost:2001/wenz/toView?viewName=wenzhang&title="+obj.title+"&id="+obj.id+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
                         })
                         content += "</table>";
                         $("#title1").html(content);

@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.bean.Example;
+import com.jk.bean.Integral;
 import com.jk.bean.ShouCang;
 
 import java.util.List;
@@ -16,4 +17,8 @@ public interface BckService {
     void addShouCang(ShouCang shouCang);
 
     List<ShouCang> queryShouCang(Integer id);
+
+    void addCount(Integer id);
+
+    void addIg(Integral integral);
 }

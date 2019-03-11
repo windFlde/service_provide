@@ -10,11 +10,11 @@
 
 </head>
 <script type="text/javascript">
+    var title = "";
     $(function() {
         query();
         getPingLun();
     })
-
     function query() {
         var id = $("#nameVal").val();
         var cont = "";
@@ -22,6 +22,7 @@
             url: '/bck/queryExampleById',
             data:{id:id},
             success: function (result) {
+                title += ""+result.em_title+"";
                 cont += "<div class='load_div'>";
                 cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='6'>"+result.em_title+"</font><br>";
                 cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='4'>"+result.em_createtime+"&nbsp;&nbsp;&nbsp;&nbsp;共浏览:&nbsp;&nbsp;&nbsp;&nbsp;"+result.em_browse+"</font><br><br>";
@@ -89,9 +90,10 @@
     function addShouCang() {
         var wzId = $("#nameVal").val();
         var tname = "病例荟萃";
+
             $.ajax({
                 url: '/bck/addShouCang',
-                data:{wzId:wzId,tname:tname},
+                data:{wzId:wzId,tname:tname,title:title},
                 success: function (result) {
                     if(result=="0"){
                         layer.msg('请先登录!!', {time:1000, icon:2});
