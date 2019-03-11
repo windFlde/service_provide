@@ -23,29 +23,31 @@ $(function (){
             $("#jifen2").html(num);
         }
         var userId = $("#reUrl1").val();
-        /*ajax   start*/
-                $.ajax({
-                   url:"/home/getjifenData",
-                    data:{userId:userId},
-                   beforeSend:function(){
-                          ii = layer.msg('加载中', {
-                          icon: 16
-                          ,shade: 0.01
-                          });  },
-                   success:function(a){
-                       var content ="";
-                        $.each(a,function (index ,obj){
-                         content +="<tr><td><font size='4'>&nbsp;&nbsp;&nbsp;"+obj.igName+"</font><div style='margin-left: 535px;margin-top: -25px;'><font size='4'>+"+obj.count+"</font></div></td></tr>";
-                        });
-                        $("#style1").html(content);
-                   },
-                   error:function(){
-                      layer.msg("ajax失败");
-                   },complete:function(){
-                         layer.close(ii);
-                    }
-               });
-             /*ajax   end*/
+        if (userId != ""){
+            /*ajax   start*/
+            $.ajax({
+                url:"/home/getjifenData",
+                data:{userId:userId},
+                beforeSend:function(){
+                    ii = layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });  },
+                success:function(a){
+                    var content ="";
+                    $.each(a,function (index ,obj){
+                        content +="<tr><td><font size='4'>&nbsp;&nbsp;&nbsp;"+obj.igName+"</font><div style='margin-left: 535px;margin-top: -25px;'><font size='4'>+"+obj.count+"</font></div></td></tr>";
+                    });
+                    $("#style1").html(content);
+                },
+                error:function(){
+                    layer.msg("ajax失败");
+                },complete:function(){
+                    layer.close(ii);
+                }
+            });
+            /*ajax   end*/
+        }
     }
 
     function toView(v) {

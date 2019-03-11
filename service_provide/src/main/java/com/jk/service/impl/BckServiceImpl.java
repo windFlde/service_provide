@@ -2,6 +2,7 @@ package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.jk.bean.Example;
+import com.jk.bean.Integral;
 import com.jk.bean.ShouCang;
 import com.jk.mapper.BckMapper;
 import com.jk.service.BckService;
@@ -43,5 +44,15 @@ public class BckServiceImpl implements BckService {
     @Override
     public List<ShouCang> queryShouCang(Integer id) {
         return bckMapper.queryShouCang(id);
+    }
+
+    @Override
+    public void addCount(Integer id) {
+        bckMapper.addCount(id);
+    }
+
+    @Override
+    public void addIg(Integral integral) {
+        bckMapper.addIg(integral);
     }
 }

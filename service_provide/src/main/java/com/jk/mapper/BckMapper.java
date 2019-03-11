@@ -1,6 +1,7 @@
 package com.jk.mapper;
 
 import com.jk.bean.Example;
+import com.jk.bean.Integral;
 import com.jk.bean.ShouCang;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface BckMapper {
     void addShouCang(ShouCang shouCang);
 
     List<ShouCang> queryShouCang(Integer id);
+
+    void addCount(Integer id);
+
+    void addIg(Integral integral);
 }

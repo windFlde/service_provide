@@ -29,11 +29,20 @@ public class BckController {
     public void addPingLun(PingLun pingLun, HttpSession session){
 
         User user = (User)session.getAttribute("user");
+        Integral integral = new Integral();
+        Integer id = null;
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
+            id = user.getId();
         }
         mongoTemplate.save(pingLun);
+        if(id != null){
+            bckService.addCount(id);
+            integral.setIgName("留言");
+            integral.setUserId(id);
+            bckService.addIg(integral);
+        }
     }
 
     @ResponseBody
@@ -41,11 +50,20 @@ public class BckController {
     public void addPingLun2(PingLunTwo pingLun, HttpSession session){
 
         User user = (User)session.getAttribute("user");
+        Integral integral = new Integral();
+        Integer id = null;
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
+            id = user.getId();
         }
         mongoTemplate.save(pingLun);
+        if(id == null){
+            bckService.addCount(id);
+            integral.setIgName("留言");
+            integral.setUserId(id);
+            bckService.addIg(integral);
+        }
     }
 
 
@@ -110,9 +128,13 @@ public class BckController {
 
         User user = (User) session.getAttribute("user");
 
-        Integer id = user.getId();
+        if(user!=null){
+            Integer id = user.getId();
 
-        return bckService.queryShouCang(id);
+            return bckService.queryShouCang(id);
+        }else {
+            return null;
+        }
     }
 
 }

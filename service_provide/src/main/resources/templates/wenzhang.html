@@ -16,6 +16,7 @@
         queryWen();
         $("#s1").css("background", "#DCDCDC");
     })
+    var title = "";
 
     function queryWen() {
         var titleVal = $("#titleVal").val();
@@ -78,11 +79,12 @@
     }
 
     function addShouCang() {
-        var wzId = $("#nameVal").val();
+        var title = $("#titleVal").val();
         var tname = "热点文章";
+        var wzId = $("#wzId").val();
         $.ajax({
             url: '/bck/addShouCang',
-            data:{wzId:wzId,tname:tname},
+            data:{wzId:wzId,tname:tname,title:title},
             success: function (result) {
                 if(result=="0"){
                     layer.msg('请先登录!!', {time:1000, icon:2});
@@ -100,6 +102,7 @@
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
 </div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
+<input type="hidden" id="wzId" th:value="${param?.id}">
 <div class="row" style="width: 450px;height: 800px;">
     <h3>
         <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
