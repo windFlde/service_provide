@@ -144,11 +144,10 @@ public class HomeController {
         return homeService.getjifenData(userId);
     }
 
-
     @ResponseBody
     @RequestMapping("getNum")
     public Integer getNum(String id){
-        return homeService.getNum(id);
+        Integer num = homeService.getNum(id);
+        return num;
     }
-
 }

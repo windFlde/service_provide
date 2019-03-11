@@ -32,7 +32,11 @@ $(function (){
                     });
                 },
                 success:function(a){
-                    $("#jifen2").html(a);
+                    if (a == null){
+                        $("#jifen2").html("0000");
+                    }else{
+                        $("#jifen2").html(a);
+                    }
                 },
                 error:function(){
                     layer.msg("ajax失败");
