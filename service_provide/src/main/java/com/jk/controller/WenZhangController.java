@@ -54,8 +54,8 @@ WenZhangController {
         } else if(re.getFeiyong()>user.getNum()){
             return "userNo";
         } else{
-            wenZHangService.updateUserCount(redeem.getFeiyong(),user.getId());
-            wenZHangService.updateDuiHuanCount(redeem.getId(),redeem.getFeiyong());
+            wenZHangService.updateUserCount(re.getFeiyong(),user.getId());
+            wenZHangService.updateDuiHuanCount(re.getId(),re.getFeiyong());
             return "countOk";
         }
     }

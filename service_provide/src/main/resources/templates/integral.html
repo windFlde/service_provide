@@ -39,7 +39,11 @@
                     });
                 },
                 success:function(a){
-                    $("#divUser").html(a.num);
+                    if (a.num==null) {
+                        $("#divUser").html("000");
+                    }else{
+                        $("#divUser").html(a.num);
+                    }
                 },
                 error:function(){
                     layer.msg("ajax失败");
