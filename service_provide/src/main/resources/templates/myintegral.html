@@ -57,7 +57,7 @@ $(function (){
                 success:function(a){
                     var content ="";
                     $.each(a,function (index ,obj){
-                        content +="<tr><td><font size='4'>&nbsp;&nbsp;&nbsp;"+obj.igName+"</font><div style='margin-left: 535px;margin-top: -25px;'><font size='4'>+"+obj.count+"</font></div></td></tr>";
+                        content +="<tr><td><font size='4'>&nbsp;&nbsp;&nbsp;"+obj.igName+"</font><div style='margin-left: 535px;margin-top: -25px;'><font size='4'>"+obj.count+"</font></div></td></tr>";
                     });
                     $("#style1").html(content);
                 },
