@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>专家团队</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+</head>
+<script type="text/javascript">
+    var ii = 0;
+    $(function (){
+        getquanweizhuanjia();
+    });
+    function getquanweizhuanjia() {
+        /*ajax   start*/
+        $.ajax({
+            url:"/home/getzhuanjia",
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });
+            },
+            success:function(a){
+                var i = 0;
+                $.each(a,function (index,obj){
+                    i++;
+                    $("#quanwei"+i).prop("src",obj.dt_img);
+                    $("#mingcheng"+i).html(obj.dt_name);
+                    $("#dizhi"+i).html(obj.dt_addr);
+                });
+            },
+            error:function(){
+                layer.msg("ajax失败");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+        /*ajax   start*/
+        $.ajax({
+            url:"/home/getzanmei",
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });
+            },
+            success:function(a){
+                var i = 0;
+                $.each(a,function (index,obj){
+                    i++;
+                    $("#zanmei"+i).prop("src",obj.dt_img);
+                    $("#mingcheng2"+i).html(obj.dt_name);
+                    $("#dizhi2"+i).html(obj.dt_addr);
+                });
+            },
+            error:function(){
+                layer.msg("ajax失败");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+        /*ajax   start*/
+        $.ajax({
+            url:"/home/getTitle",
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });
+            },
+            success:function(a){
+                var content = "<table class='table'>";
+                $.each(a, function (index,obj) {
+                    content += "<tr><td><a href='http://localhost:2001/wenz/toView?viewName=wenzhang&title="+obj.title+"&id="+obj.id+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
+                })
+                content += "</table>";
+                $("#title1").html(content);
+
+            },
+            error:function(){
+                layer.msg("ajax失败");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+    }
+    function getMorezhuanjia(tmp){
+        location.href="/home/to?tmp="+tmp;
+    }
+
+</script>
+<body>
+<div style='height: 80px;width: 600px'>
+    <nav class="navbar navbar-default " role="navigation">
+
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#example-navbar-collapse">
+                    <span class="sr-only">切换导航</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://localhost:2001/home/ToPage?name=index-home">返回</a>
+                <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专家团队</font></a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Java <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav><!--导航栏-->
+    <div style="width: 430px;height: 400px;margin-left:100px;padding-left: 100px;padding-right: 68px;border-radius: 10px;">
+        <div style="margin-left: -100px;width: 500px;">
+            <ul class="breadcrumb">
+                <li><font size="4"><b>权威专家</b></font></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="margin-left: 365px; margin-top: -30px;"><button class="btn btn-default" style="background-color: #1c94c4" onclick="getMorezhuanjia(1)">更多专家</button></div>
+            </ul>
+        </div>
+        <div class="row" style="margin-left: -100px;width: 430px;">   <!--170-->
+            <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;border-radius: 10px;" >
+                <a href="http://localhost:2001/home/to?tmp=1"><img id="quanwei1" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a><br>
+                <a href="http://localhost:2001/home/to?tmp=1"><font id="mingcheng1" ></font></a><br>
+                <font id="dizhi1" size="2"></font>
+            </div>
+            <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-top: -200px;margin-left: 163px;;border-radius: 10px;" >
+                <a href="http://localhost:2001/home/to?tmp=1"><img id="quanwei2" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                <a href="http://localhost:2001/home/to?tmp=1"><font id="mingcheng2" ></font></a><br>
+                <font id="dizhi2" size="2"></font>
+            </div>
+            <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-left: 325px;margin-top: -199px;;border-radius: 10px;" >
+                <a href="http://localhost:2001/home/to?tmp=1"><img id="quanwei3" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                <a href="http://localhost:2001/home/to?tmp=1"><font id="mingcheng3" ></font></a><br>
+                <font id="dizhi3" size="2"></font>
+            </div>
+        </div>
+        <div style="margin-left: -100px;width: 500px;">
+            <ul class="breadcrumb">
+                <li><font size="4"><b>美赞专家</b></font></li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="margin-left: 365px; margin-top: -30px;"><button class="btn btn-default" style="background-color: #1c94c4"  onclick="getMorezhuanjia(0)">更多专家</button></div>
+            </ul>
+        </div>
+        <div class="row" style="margin-left: -100px;width: 430px;">   <!--170-->
+            <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;border-radius: 10px;" >
+                <a href="http://localhost:2001/home/to?tmp=0"><img id="zanmei1"  style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                <a href="http://localhost:2001/home/to?tmp=0"><font id="mingcheng21" ></font></a><br>
+                <font id="dizhi21" size="2"></font>
+            </div>
+            <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-top: -200px;margin-left: 163px;;border-radius: 10px;" >
+                <a href="http://localhost:2001/home/to?tmp=0"><img id="zanmei2"  style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                <a href="http://localhost:2001/home/to?tmp=0"><font id="mingcheng22" ></font></a><br>
+                <font id="dizhi22" size="2"></font>
+            </div>
+            <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-left: 325px;margin-top: -199px;;border-radius: 10px;" >
+                <a href="http://localhost:2001/home/to?tmp=0"><img id="zanmei3" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                <a href="http://localhost:2001/home/to?tmp=0"><font id="mingcheng23" ></font></a><br>
+                <font id="dizhi23" size="2"></font>
+            </div>
+        </div>
+</div>
+</body>
+</html>
