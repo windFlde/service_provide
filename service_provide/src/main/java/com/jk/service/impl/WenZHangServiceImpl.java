@@ -68,5 +68,10 @@ public class WenZHangServiceImpl implements WenZHangService {
         return wenZhangMapper.getUserOrder(order);
     }
 
+    @Override
+    public void insertIntegral(String feiyong, String name, Integer id) {
+        wenZhangMapper.insertIntegral(feiyong,name,id);
+    }
+
 
 }

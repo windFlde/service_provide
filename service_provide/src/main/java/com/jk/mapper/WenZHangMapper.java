@@ -29,4 +29,6 @@ public interface WenZHangMapper {
     User getUserAll(Integer id);
 
     List<Order> getUserOrder(Order order);
+
+    void insertIntegral(@Param("feiyong") String feiyong, @Param("name") String name, @Param("id") Integer id);
 }

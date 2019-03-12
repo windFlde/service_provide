@@ -28,4 +28,6 @@ public interface WenZHangService {
     User getUserAll(Integer id);
 
     List<Order> getUserOrder(Order order);
+
+    void insertIntegral(String feiyong, String name, Integer id);
 }

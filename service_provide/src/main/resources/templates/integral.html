@@ -55,6 +55,33 @@
         }
     }
 
+    function insertIntegral() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/insertIntegral",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           if (a=="insertIntegral") {
+                               layer.msg("可以在我的专区查看消费记录");
+                           }else{
+                               layer.msg("生成消费记录失败");
+                           }
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+
     function insertOrder(goodsId,userId) {
         var goodsId=goodsId;
         var userId=userId;
@@ -72,6 +99,7 @@
                        success:function(a){
                            if (a=="insertOrderOk") {
                                layer.msg("已经生成订单");
+                               insertIntegral();
                            }else if (a=="1") {
                                layer.msg("生成订单失败");
                            }
