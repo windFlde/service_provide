@@ -89,6 +89,16 @@ public class BckController {
     }
 
     @ResponseBody
+    @RequestMapping("queryCommit")
+    public List<PingLun> queryCommit(Integer id){
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(id));
+        List<PingLun> pingLuns = mongoTemplate.find(query, PingLun.class);
+        return pingLuns;
+    }
+
+    @ResponseBody
     @RequestMapping("queryPingLun2")
     public List<PingLunTwo> queryPingLun2(Integer id){
 
