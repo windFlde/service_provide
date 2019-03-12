@@ -53,6 +53,7 @@ public class BckServiceImpl implements BckService {
 
     @Override
     public void addIg(Integral integral) {
+        integral.setCount("+20");
         bckMapper.addIg(integral);
     }
 

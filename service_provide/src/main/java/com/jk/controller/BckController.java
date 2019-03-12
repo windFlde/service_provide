@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -31,9 +34,13 @@ public class BckController {
         User user = (User)session.getAttribute("user");
         Integral integral = new Integral();
         Integer id = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.mm.dd");
+        String format = simpleDateFormat.format(new Date());
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
+            pingLun.setTime(format);
+            pingLun.setUserId(user.getId());
             id = user.getId();
         }
         mongoTemplate.save(pingLun);
@@ -52,9 +59,13 @@ public class BckController {
         User user = (User)session.getAttribute("user");
         Integral integral = new Integral();
         Integer id = null;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.mm.dd");
+        String format = simpleDateFormat.format(new Date());
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
+            pingLun.setTime(format);
+            pingLun.setUserId(user.getId());
             id = user.getId();
         }
         mongoTemplate.save(pingLun);
@@ -78,6 +89,16 @@ public class BckController {
     }
 
     @ResponseBody
+    @RequestMapping("queryCommit")
+    public List<PingLun> queryCommit(Integer id){
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(id));
+        List<PingLun> pingLuns = mongoTemplate.find(query, PingLun.class);
+        return pingLuns;
+    }
+
+    @ResponseBody
     @RequestMapping("queryPingLun2")
     public List<PingLunTwo> queryPingLun2(Integer id){
 
@@ -86,6 +107,23 @@ public class BckController {
         List<PingLunTwo> pingLuns = mongoTemplate.find(query, PingLunTwo.class);
         return pingLuns;
     }
+
+    @ResponseBody
+    @RequestMapping("updateHf")
+    public void updateHf(String huifu,String id,HttpSession session){
+        User user = (User)session.getAttribute("user");
+        if(user!=null){
+            if(user.getId()==6){
+                Query query = new Query();
+                query.addCriteria(Criteria.where("_id").is(id));
+                Update huifu1 = new Update().set("huifu", huifu);
+                Update huifu2 = new Update().set("aa", "丨作者回复");
+                mongoTemplate.updateFirst(query,huifu1,PingLun.class);
+                mongoTemplate.updateFirst(query,huifu2,PingLun.class);
+            }
+        }
+    }
+
 
 
     @ResponseBody

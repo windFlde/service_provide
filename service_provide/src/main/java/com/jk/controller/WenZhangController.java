@@ -44,11 +44,15 @@ WenZhangController {
         List<Redeem>list=wenZHangService.getIntegral();
         return list;
     }
+    Redeem reAll=null;
+    User userAll=null;
     @ResponseBody
     @RequestMapping("exIntegral")
     public String exIntegral(Redeem redeem,String userId) {
         Redeem re=wenZHangService.exIntegral(redeem);
         User user=wenZHangService.getUserMes(userId);
+        reAll=re;
+        userAll=user;
         if (re.getCount() <= 0) {
             return "countNo";
         } else if(re.getFeiyong()>user.getNum()){
@@ -58,6 +62,16 @@ WenZhangController {
             wenZHangService.updateDuiHuanCount(re.getId(),re.getFeiyong());
             return "countOk";
         }
+    }
+    //生成消费记录
+    @ResponseBody
+    @RequestMapping("insertIntegral")
+    public String insertIntegral() {
+        if (reAll!=null) {
+            wenZHangService.insertIntegral("-"+reAll.getFeiyong(),reAll.getName(),userAll.getId());
+            return "insertIntegral";
+        }
+        return "1";
     }
     //生成订单
     @ResponseBody
@@ -92,5 +106,6 @@ WenZhangController {
         List<Order>or=wenZHangService.getUserOrder(order);
         return or;
     }
+
 
 }

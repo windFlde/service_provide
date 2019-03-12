@@ -67,4 +67,21 @@
 
     </select>
 
+    <!--void insertIntegral(@Param("feiyong") Integer feiyong, @Param("name") String name, @Param("id") Integer id);-->
+    <insert id="insertIntegral">
+        INSERT INTO t_integral (
+                `igName`,
+                `createtime`,
+                `count`,
+                `userId`
+            )
+            VALUES
+                (
+                #{name},
+                SYSDATE(),
+                #{feiyong},
+                #{id}
+                );
+    </insert>
+
 </mapper>
