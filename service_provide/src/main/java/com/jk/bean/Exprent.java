@@ -13,4 +13,7 @@ public class Exprent {
     String dt_modle;
     Integer dt_level;
     Integer dt_qw;
+    Integer dt_id;
+
+
 }

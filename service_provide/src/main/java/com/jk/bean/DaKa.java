@@ -10,7 +10,7 @@ public class DaKa {
     Integer browse;
     String content;
     String url;
-
+    String createtime;
     String dt_name;
     String dt_addr;
 }

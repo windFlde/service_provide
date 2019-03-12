@@ -8,28 +8,43 @@
 
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="/rdzx/css/menu.css" media="all">
-    <script type="text/javascript" src="/rdzx/js/jquery-1.9.1.js" ></script>
-    <script type="text/javascript" src="/rdzx/js/jquery.masonry.min.js" ></script>
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
-    <script src="../static/bootstrap-star-rating-master/js/star-rating.js"></script>
-    <link rel="stylesheet" href="../static/bootstrap-star-rating-master/css/star-rating.css">
+
 </head>
 <body>
-<div class="container" style="margin-left: -10px;">
-    <div style="width: 550px;height: 62px;">
+<div style="width:550px;height:80px">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="javascript:fanhui()">返回</a>
+            </div>
+            <div>
+                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">专家灼见</font></p>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+    <div style="width:550px;height:62px;">
         <center>
-            <button type="button" class="btn btn-default btn-lg" onclick="fanhui()">返回</button>
             <button type="button" class="btn btn-default btn-lg" onclick="showDK()">大咖在线</button>
             <button type="button" class="btn btn-default btn-lg" onclick="querySpeciaListToHtml()">大家观点</button>
-            <button type="button" class="btn btn-default btn-lg">大会直播</button>
+            <button type="button" class="btn btn-default btn-lg" onclick="queryLive()">大会直播</button>
         </center>
     </div>
-    <div class="Sbox" id="show1">
+    <div class="load_div" style="background:#F5DEB3;width:548px;height:130px">
+        <div style="position:relative;margin-left:10px">
+            <br>
+        <img src="http://www.cnr.cn/focus/20190312/W020190312346769429630.jpg" width="520px" height="90">
+            <div style='position:absolute; z-index:2; left:200px; top:50px'>
+                <font size='5px' color='black'>预告区</font>
+            </div>
+        </div>
+    </div>
+    <div class="Sbox">
     </div>
 
-</div>
 </body>
 <script>
     $(function () {
@@ -39,7 +54,7 @@
         location.href="http://localhost:2001/home/ToPage?name=index-home#";
     }
     function showDK() {
-        /*ajax   start*/
+        /!*ajax   start*!/
                 $.ajax({
                    url:"/home/getMaster",
                    beforeSend:function(){
@@ -51,9 +66,14 @@
                    success:function(a){
                        var content = "";
                     $.each(a,function (index ,obj){
-                        content +="<div style='margin-top: 15px;border-radius: 10px;width: 500px;height: 240px;background-color: #5bc0de;margin-left: 35px;'>";
-                        content +="<a href='http://localhost:2001/home/todaka?id="+obj.id+"'><img src='"+obj.url+"' width='455px' height='175px' style='margin-left: 22px;    margin-top: 13px;'></a><br>";
-                        content +="<div style='margin-left: 32px; margin-top: 13px;'><a href='http://localhost:2001/home/todaka?id="+obj.id+"'><font size='4'>"+obj.name+"</font></a></div></div>";
+                        console.log(obj.id);
+                        content +="<div style='margin-top:15px;width: 500px;height: 240px;background-color:#FF7F50;margin-left:20px;'><div style='position:relative;'>";
+                        content +="<a href='http://localhost:2001/home/todaka?id="+obj.id+"'>"
+                        content +="<img src='"+obj.url+"' width='450px' height='175px' style='margin-left: 22px; margin-top:20px;'></a>"
+                         content +="<div style='position:absolute; z-index:2;margin-left: 32px; margin-top: 13px;'>";
+                         content +="<a href='http://localhost:2001/home/todaka?id="+obj.id+"'><font size='4'>"+obj.name+"</font></a>";
+                         content +="</div>";
+                        content += "</div></div>";
                     })
                        $(".Sbox").html(content);
                    },
@@ -63,7 +83,7 @@
                          layer.close(ii);
                     }
                });
-             /*ajax   end*/
+             /!*ajax   end*!/
     }
     function querySpeciaListToHtml() {
         $.ajax({
@@ -71,21 +91,54 @@
             success: function (result) {
                 var html = "";
                 for (var i = 0; i < result.length; i++) {
-                    html += "<div class='list' ondblclick='getDetails(" + result[i].id + ")' style='width:550px;height:180px;background: oldlace;margin-left:1px'>"
-                    html += "<div class='img'  style='width:180px;height:180px;float:left'><img width='130' height='150'  src=" + result[i].dt_img + " ></div>"
-                    html += "<div  style='float:left;margin-left: -37px'><h4>" + result[i].gd_title + "</h4></div><br/><br/>"
-                    html += "<div  style='float:left;margin-left: -37px' >" + result[i].dt_name + "&nbsp;-&nbsp;" + result[i].dt_zc + " </div><br/><br/>"
-                    html += "<div  style='float:left;margin-left: -37px'>" + result[i].dt_addr + "</div><br/><br/>"
-                    html += "<div  style='float:left;margin-left: -37px'>" + result[i].gd_browse + "人观看&nbsp;&nbsp;&nbsp;&nbsp;获得" + result[i].gd_zeid + "奖章" + "</div><br/>"
-                    html += "</div><br/>"
+                    html += "<div  ondblclick='getDetails(" + result[i].id + ")' style='width:550px;height:180px;background: oldlace;margin-left:1px;margin-top: 20px'>"
+                    html += "<div   style='width:180px;height:180px;float:left;margin-top: 15px;margin-left: 15px'>" +
+                        "<img width='130' height='150'  src=" + result[i].dt_img + " >" +
+                        "</div>"
+                    html += "<div  style='float:left;margin-left: -37px;margin-top: 15px'><h4>" + result[i].gd_title + "</h4></div><br>"
+                    html += "<div  style='float:left;margin-left: -37px' >" + result[i].dt_name + "&nbsp;-&nbsp;" + result[i].dt_zc + " </div><br><br><br>"
+                    html += "<div  style='float:left;margin-left: -37px'>" + result[i].dt_addr + "</div><br><br>"
+                    html += "<div  style='float:left;margin-left: -37px'>" + result[i].gd_browse + "人观看&nbsp;&nbsp;&nbsp;&nbsp;获得" + result[i].gd_zeid + "奖章" + "</div>"
+                    html += "</div>"
                 }
                 $(".Sbox").html(html)
             }
         })
     }
 
+    function queryLive() {
+
+         $.ajax({
+                 url: '/query/queryLive',
+                 type:'post',
+                 success:function (data) {
+                        var conent="";
+                        $.each(data,function (index,obj) {
+                            console.log(obj.id);
+                            conent +="<div style='margin-top:15px;width: 500px;height: 240px;background-color:#FF7F50;margin-left:20px;'>";
+                            conent +="<div style='position:relative;'>";
+                            conent +="<a href='/home/ToPage?name=zhibo&id="+obj.id+"'>"
+                            conent +="<img src='"+obj.url+"' width='450px' height='175px' style='margin-left: 22px; margin-top:20px;'></a>"
+                            conent +="<div style='position:absolute; z-index:2;margin-left: 32px; margin-top: 13px;'>";
+                            conent +="<a href=''><font size='4'>"+obj.name+"</font></a>";
+                            conent +="</div>";
+                            conent +="</div>";
+                            conent += "</div>";
+                        })
+
+                     $(".Sbox").html(conent);
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+
     function getDetails(id) {
         location.href = "/query/queryDjgd?id=" + id;
     }
 </script>
+
 </html>

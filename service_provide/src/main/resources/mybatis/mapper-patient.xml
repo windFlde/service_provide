@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.mapper.PatientMapper">
+
+    <!--List<General> queryVideo();-->
+    <select id="queryVideo" resultType="General">
+
+        select video_name,video_img from t_patient
+    </select>
+
+    <!--List<General> queryManual();-->
+    <select id="queryManual" resultType="General">
+
+        select manual_name,mannul_img from t_patient
+    </select>
+
+</mapper>

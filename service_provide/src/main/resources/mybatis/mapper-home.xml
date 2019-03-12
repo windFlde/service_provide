@@ -30,6 +30,7 @@
     <!--List<Exprent> getAllzhuanjia1();-->
     <select id="getAllzhuanjia1" resultType="exprent">
         select * from t_docutor_expert where dt_qw = 1
+        order by convert(dt_name USING gbk)   ASC
     </select>
 
     <!--List<Exprent> getAllzhuanjia0();-->
@@ -44,6 +45,7 @@
           t.id = w.zeid
         GROUP BY
           w.browse DESC
+          order by convert(dt_name USING gbk)   ASC
     </select>
 
     <!--Exprent getJJ(String id);-->
