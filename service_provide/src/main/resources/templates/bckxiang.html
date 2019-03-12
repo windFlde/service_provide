@@ -7,6 +7,7 @@
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
 
 </head>
 <script type="text/javascript">
@@ -31,7 +32,7 @@
                     "<div style='margin-left: 10px;float:left;width: 280px'><p><font size='5'>"+result.dt_name+"</font></p><p><font size='4'>"+result.dt_zc+"</font></p><p><font size='4'>"+result.dt_addr+"</font></p><p><span>"+result.dt_jj+"</span></p></div>";
                 cont += "<br><br><center><audio controls='controls' style='width: 550px'  src='"+result.em_mp3+"'></audio></center><br>";
                 cont += "<div style='margin-left: 10px'><font size='5'>"+result.em_content+"</font><div><br><br><br>";
-                cont += "<div style='width: 550px;height: 50px;background-color: #F3F3F3;margin-left: 10px'>*感谢您的阅读，如您有任何问题，点击文末右侧留言提问按钮，留下您的问题，作者奖尽快回复您。</div>"
+                cont += "<div style='width: 550px;height: 50px;background-color: #F3F3F3;margin-left: 10px'><font>*感谢您的阅读，如您有任何问题，点击文末右侧留言提问按钮，留下您的问题，作者奖尽快回复您。</font></div>"
                 cont += "</div><br><br><br>";
                 cont +="<div class='load_div'><div style='width: 550px;height: 150px;margin-left: 10px'><textarea id='name' rows='6' cols='60'></textarea></div>"
                 cont +="<div>" +
@@ -63,6 +64,7 @@
             success: function () {
                 layer.msg('留言成功!!', {time:1000, icon:1});
                 $('#aa').html("");
+                
                 getPingLun();
             }
         })
@@ -72,19 +74,40 @@
     function getPingLun(){
         var id = $("#nameVal").val();
         var contt ="";
+        var userId = $("#userId").val();
         $.ajax({
             url: '/bck/queryPingLun',
             data:{id:id},
             success: function (result) {
                 $.each(result, function (index, obj) {
-                    contt += "<div style='width: 600px;height: 110px'>";
+                    contt += "<div style='width: 600px;height: 110px' id='"+obj._id+"'>";
                     contt += "<div style='width: 100px;margin-left: 20px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
-                    contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p></div><br>";
+                    contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p>"
+                        contt+="<p><font size='4' color='#a9a9a9'>"+obj.aa+"</font></p>"
+                    contt += "<p><font size='4'>"+obj.huifu+"</font></p>"
+                    if(userId==6){
+                        contt += "<p><input size='10' class='layui-input' id='huifu"+index+"'><button class='layui-btn' onclick=backHf('"+obj._id+"',"+index+")>回复</button></p>"
+                    }
+                    contt += "</div><br>";
                     contt += "</div><br>";
                 })
                 $('#aa').append(contt);
             }
         })
+    }
+
+
+    function backHf(id,index){
+        var huifu= $("#huifu"+index+"").val();
+        $.ajax({
+            url: '/bck/updateHf',
+            data:{id:id,huifu:huifu},
+            success: function () {
+                $('#aa').html("");
+                getPingLun();
+            }
+        })
+
     }
 
     function addShouCang() {
@@ -161,6 +184,7 @@
     </nav>
 </div>
 <input type="hidden"  id="nameVal"  th:value="${param?.id}">
+<input type="hidden"  id="userId"  th:value="${session.user?.id}">
 <div id="content">
 
 </div>
