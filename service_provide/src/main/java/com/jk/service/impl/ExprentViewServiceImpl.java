@@ -1,9 +1,6 @@
 package com.jk.service.impl;
 
-import com.jk.bean.Baoming;
-import com.jk.bean.DaKa;
-import com.jk.bean.Exprent;
-import com.jk.bean.Guandian;
+import com.jk.bean.*;
 import com.jk.mapper.ExprentViewMapper;
 import com.jk.service.ExprentViewService;
 import org.springframework.stereotype.Service;
@@ -40,6 +37,16 @@ public class ExprentViewServiceImpl implements ExprentViewService {
     @Override
     public void addBaoming(Baoming baoming) {
         exprentViewMapper.addBaoming();
+    }
+
+    @Override
+    public DaKa queryZhiboTwo(Integer id) {
+        return exprentViewMapper.queryZhiboTwo(id);
+    }
+
+    @Override
+    public Guandian queryGunadian(Integer id) {
+        return exprentViewMapper.queryGunadian(id);
     }
 
 }

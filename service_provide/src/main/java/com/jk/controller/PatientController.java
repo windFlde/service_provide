@@ -28,5 +28,19 @@ public class PatientController {
         return list;
     }
 
+    @RequestMapping("queryHuanzejiaoyu")
+    public General queryHuanzejiaoyu(Integer id) {
+
+        General general = patientService.queryHuanzejiaoyu(id);
+        return general;
+    }
+
+    @RequestMapping("queryHuanzheTree")
+    public General queryHuanzheTree(Integer id) {
+
+        General general = patientService.queryHuanzheTree(id);
+        return general;
+    }
+
 
 }

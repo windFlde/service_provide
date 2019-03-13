@@ -16,9 +16,12 @@ public class Guandian {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date gd_createtime;
     String gd_mp3;
+    /*详情*/
     String gd_content;
     String gd_detailed;
     Integer gd_zeid;
+    /*观点*/
+    String gd_gd;
 
 
     String dt_name;

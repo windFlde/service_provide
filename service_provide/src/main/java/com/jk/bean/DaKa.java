@@ -11,6 +11,11 @@ public class DaKa {
     String content;
     String url;
     String createtime;
+    String kenr;
+
     String dt_name;
     String dt_addr;
+    String dt_zc;
+    String dt_img;
+    String dt_jj;
 }

@@ -13,6 +13,13 @@
         SELECT t.id,t.gd_title,t.gd_createtime,t.gd_browse,t.gd_content,t.gd_img,t.gd_detailed from  t_guandian t WHERE t.id = #{id}
     </select>
 
+    <!--Guandian queryGunadian(Integer id);-->
+    <!--查询大家观点-->
+    <select id="queryGunadian" resultType="Guandian">
+
+        select * from t_guandian where id=#{id}
+    </select>
+
     <!--List<DaKa> queryLive();-->
     <select id="queryLive" resultType="DaKa">
 
@@ -23,7 +30,18 @@
     <!--根据ID查询会议信息-->
     <select id="queryZhibo" resultType="DaKa">
 
-        select t.name,te.dt_name,te.dt_zc,te.dt_addr,te.dt_img,t.createtime,te.dt_jj from t_master t,t_docutor_expert te where t.zjid=te.id and  t.id=#{id}
+        select t.id,t.name,te.dt_name ,te.dt_zc ,te.dt_addr ,
+        te.dt_img ,t.createtime,te.dt_jj
+         from t_master t,t_docutor_expert te where t.zjid=te.id and  t.id=#{id}
+    </select>
+
+    <!-- DaKa queryZhiboTwo(Integer id);-->
+    <select id="queryZhiboTwo" resultType="DaKa">
+
+        select t.id,t.name,te.dt_name ,te.dt_zc ,te.dt_addr ,
+        te.dt_img ,t.createtime,t.kenr
+         from t_master t,t_docutor_expert te where t.zjid=te.id and  t.id=#{id}
+
     </select>
 
     <!--新增报名-->

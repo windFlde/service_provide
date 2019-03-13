@@ -12,9 +12,10 @@
     $(function(){
 
         queryZhibo()
+        queryLiuyan()
     })
 
-
+    /*讲着介绍查询开始*/
     function queryZhibo() {
         var id=$("#id").val();
          $.ajax({
@@ -23,15 +24,24 @@
                  data:{id:id},
                  success:function (data) {
                      console.log(data);
-                     $("#name").html(data.name);
-                     $("#dt_name").html(data.dt_name);
-                     $("#dt_zc").html(data.dt_zc);
+                     /*$("#name").html(data.name);    $("#dt_addr").html(data.dt_addr);
+                     $("#dt_name").html(data.dt_name);  $("#dt_img").html("src",data.dt_img);
+                     $("#dt_zc").html(data.dt_zc);      $("#createtime").html('直播时间：'+data.);
+                        $("#dt_jj").html(data.dt_jj);*/
 
-                     $("#dt_addr").html(data.dt_addr);
-                     $("#dt_img").html("src",data.dt_img);
-                     $("#createtime").html('直播时间：'+data.createtime);
-                     $("#dt_jj").html(data.dt_jj);
+                    var conent="";
+                 conent+="<div style='margin-left:30px' > <font size=5px >"+data.name+"</font> </div>"
+                 conent+="<div style='margin-top:10px;margin-left:40px' > <font size='3px'>"+data.dt_name+"</font>."
+                 conent+="<font size='3px' >"+data.dt_zc+"</font>&nbsp;&nbsp;&nbsp;&nbsp;<font size='3px'>"+data.dt_addr+"</font></div>"
+                 conent+="<div  style='width:548px;height:260px;background-color:#F3F3F3;margin-top: 10px;'><br>"
+                 conent+=" <div style='margin-left: 30px'><img src='"+data.dt_img+"'  width='480px' height='220px'> </div> </div>"
+                 conent+=" <div style='margin-top:15px;margin-left: 30px'><font >直播时间:"+data.createtime+"</font></div>"
+                 conent+=" <div style='margin-top:15px;margin-left:100px'>"
+                 conent+=" <button type='button' class='btn btn-default btn-lg' onclick='queryZhibo()'>&nbsp;&nbsp;&nbsp;&nbsp;讲着介绍&nbsp;&nbsp;&nbsp;</button>"
+                 conent+="<button type='button' class='btn btn-default btn-lg' onclick='queryZhiboTwo()'>&nbsp;&nbsp;&nbsp;直播简介&nbsp;&nbsp;&nbsp;</button></div>"
+                 conent+="<div style='width:548px;height:150px;background-color:#F3F3F3;margin-top: 10px;' >"+data.dt_jj+"</div>"
 
+                     $("#divconent").html(conent);
 
 
                  },error:function () {
@@ -41,32 +51,8 @@
                  })
     }
     
-    function queryZhiboTwo() {
 
-        var id=$("#id").val();
-        $.ajax({
-            url:'/query/queryZhibo',
-            type:'post',
-            data:{id:id},
-            success:function (data) {
-
-                $("#name").html(data.name);
-                $("#dt_name").html(data.dt_name);
-                $("#dt_zc").html(data.dt_zc);
-                $("#dt_addr").html(data.dt_addr);
-                $("#dt_img").html("src",data.dt_img);
-                $("#createtime").html('直播时间：'+data.createtime);
-                $("#dt_jj").html(data.dt_jj);
-
-
-            },error:function () {
-                alert("ajax访问失败,请查看控制台");
-            }
-
-        })
-        
-    }
-
+    /*新增报名开始*/
     function addBaoming() {
         var formDate =new FormData($("#form")[0])
          $.ajax({
@@ -88,8 +74,119 @@
                  })
 
     }
+    /*新增报名结束*/
+
+    /*新增留言开始*/
+    function addLiu() {
+
+        var content=$("#content").val();
+        var id=$("#id").val();
+        if (content == null || content == "") {
+
+            layer.msg("请输入留言内容");
+            return;
+        }
+         $.ajax({
+                 url:'/addLiu',
+                 type:'post',
+                 data:{content:content,em_id:id},
+                 success:function () {
+
+                     layer.msg("留言成功");
+                     $("#content").val("");
+                     queryLiuyan();
 
 
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 });
+    }
+    /*新增留言结束*/
+
+    /*查询留言开始*/
+    function queryLiuyan() {
+        var id=$("#id").val();
+        /*var userId=$("#userId").val();*/
+         $.ajax({
+                 url:'/queryLiuyan',
+                 type:'post',
+                 data:{id:id},
+                 success:function (data) {
+                     var conent = "";
+                     $.each(data,function (index,obj) {
+                         conent+="<div style='width: 450px;background-color:#F3F3F3;height: 180px;margin-left:40px'>"
+                         conent+="<div style='margin-left: 30px;float:left;'><br>"
+                         conent+="<img src="+obj.img+" width='100px' height='100px'class='img-circle'>"
+                         conent+="</div><br>"
+                         conent+="<div style='margin-left:150px;margin-top:5px'><font size='4px'>"+obj.name+"</font><br><br>"
+                         conent+="<font size='3px'>"+obj.content+"</font>"
+                         conent+="</div>"
+                         conent+="</div>"
+                     })
+
+                     $("#divtwo").html(conent);
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+    /*查询留言结束*/
+    /*讲着介绍查询结束*/
+
+    /*直播简介开始*/
+    var number=1;
+   function queryZhiboTwo() {
+
+        var id=$("#id").val();
+        $.ajax({
+            url:'/query/queryZhiboTwo',
+            type:'post',
+            data:{id:id},
+            success:function (data) {
+
+
+                var conent="";
+                var kcnr=data.kenr;
+                var ke=kcnr.split(",");
+                console.log(ke);
+                conent+="<div style='margin-left:30px' > <font size=5px >"+data.name+"</font> </div>"
+                conent+="<div style='margin-top:10px;margin-left:40px' > <font size='3px'>"+data.dt_name+"</font>."
+                conent+="<font size='3px' >"+data.dt_zc+"</font>&nbsp;&nbsp;&nbsp;&nbsp;<font size='3px'>"+data.dt_addr+"</font></div>"
+                conent+="<div  style='width:548px;height:260px;background-color:#F3F3F3;margin-top: 10px;'><br>"
+                conent+=" <div style='margin-left: 30px'><img src='"+data.dt_img+"'  width='480px' height='220px'> </div> </div>"
+                conent+=" <div style='margin-top:15px;margin-left: 30px'><font >直播时间:"+data.createtime+"</font></div>"
+                conent+=" <div style='margin-top:15px;margin-left:100px'>"
+                conent+=" <button type='button' class='btn btn-default btn-lg' onclick='queryZhibo()'>&nbsp;&nbsp;&nbsp;&nbsp;讲着介绍&nbsp;&nbsp;&nbsp;</button>"
+                conent+="<button type='button' class='btn btn-default btn-lg' onclick='queryZhiboTwo()'>&nbsp;&nbsp;&nbsp;直播简介&nbsp;&nbsp;&nbsp;</button></div>"
+                conent+="<div style='width:548px;height:250px;background-color:#F3F3F3;margin-top: 10px;' >"
+
+                for (var i = 0; i <ke.length; i++) {
+
+                    conent+="<br>&nbsp;&nbsp;&nbsp;&nbsp;"+number+"、<font>"+ke[i]+"</font><br>"
+                    number++;
+
+                }
+                conent+="</div>"
+
+
+
+                $("#divconent").html(conent);
+
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+
+        })
+
+    }
+    /*直播简介结束*/
 
     function fanhui() {
         location.href="/home/ToPage?name=zjzja";
@@ -113,25 +210,11 @@
     </nav>
 </div>
 <input type="hidden" id="id" th:value="${param?.id}">
+<!--<input type="hidden" id="userId" th:value="${session.user?.id}">-->
 <div id="conent">
-    <div style="margin-left:30px" ><font size="5px" id="name"></font></div>
-    <div style="margin-top:10px;margin-left:40px" >
-        <font size="3px" id="dt_name"></font>.
-        <font size="3px" id="dt_zc"></font>
-        <font size="3px" id="dt_addr"></font>
+    <div id="divconent">
+
     </div>
-    <div  style="width:548px;height:260px;background-color:#F3F3F3;margin-top: 10px;">
-        <br>
-        <div style="margin-left: 30px">
-            <img src="" id="dt_img" width="480px" height="220px">
-        </div>
-    </div>
-    <div style="margin-top:15px;margin-left: 30px"><font id="createtime"></font></div>
-    <div style="margin-top:15px;margin-left:100px">
-        <button type='button' class='btn btn-default btn-lg' onclick='queryZhibo()'>&nbsp;&nbsp;&nbsp;&nbsp;讲着介绍&nbsp;&nbsp;&nbsp;</button>
-        <button type='button' class='btn btn-default btn-lg' onclick='queryZhiboTwo()'>&nbsp;&nbsp;&nbsp;直播简介&nbsp;&nbsp;&nbsp;</button>
-    </div>
-    <div style="width:548px;height:150px;background-color:#F3F3F3;margin-top: 10px;" id="dt_jj"></div>
     <div style="margin-left:30px;margin-top: 10px;" >我要报名</div>
     <div style="margin-left:50px;margin-top: 10px;" >
 
@@ -140,19 +223,25 @@
             医院 <input type="text" style="width: 250px" name="hospital" placeholder="请输入医院"><br><br>
             科室 <input type="text"  style="width: 250px"  name="desk" placeholder="请输入科室"><br><br>
             电话<input type="text"  style="width: 250px"  name="work" placeholder="请输入电话"><br><br>
-            <div style="width: 548px;margin-left: 100px"> <button type="button" onclick="addBaoming()" class="btn btn-default">&nbsp;&nbsp;&nbsp;提交信息&nbsp;&nbsp;&nbsp;</button></div>
+            <div style="width: 548px;margin-left: 100px">
+                <button type="button" onclick="addBaoming()" class="btn btn-default">&nbsp;&nbsp;&nbsp;提交信息&nbsp;&nbsp;&nbsp;</button>
+            </div>
         </form>
 
     </div>
     <div style="margin-left:30px;margin-top: 10px;" > 留言</div>
-    <div style="width:500px;margin-left:30px;margin-top: 10px;" >
-        <form>
-            <textarea class="form-control"  ></textarea>
+    <div  style="width:500px;margin-left:30px;margin-top: 10px;" >
+        <form id="add_form" >
+            <textarea class="form-control"  name="content" id="content"></textarea>
             <div style="margin-top:10px;float: right" >
-            <button type="button" class="btn btn-primary btn-sm">提交留言</button>
+            <button type="button" onclick="addLiu()" class="btn btn-primary btn-sm">提交留言</button>
             </div>
         </form>
     </div>
+    <div id="divtwo" style="margin-top: 50px">
+
+    </div>
+
 </div>
 
 </body>

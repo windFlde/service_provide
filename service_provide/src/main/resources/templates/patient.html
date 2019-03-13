@@ -23,12 +23,13 @@
 
                      var conent="";
                      $.each(data,function (index,obj) {
+                         console.log(obj.id);
 
                          conent+="<div class='load_div' style='background-color:#F5DEB3;margin-left:20px;margin-top:20px'>";
                          conent +="<div style='position:relative;margin-left:20px;margin-top:20px'>";
-                         conent+="<a href='/home/ToPage?name='><img src="+obj.video_img+" height='180' width='450' ></a>";
+                         conent+="<a href='/home/ToPage?name=patientTwo&id="+obj.id+"'><img src="+obj.video_img+" height='180' width='450' >";
                          conent+="<div style='position:absolute; z-index:2; left:40px; top:70px'>";
-                         conent+="<font size='5px' color='black'>"+obj.video_name+"</font>";
+                         conent+="<font size='5px' color='black'>"+obj.video_name+"</font></a>";
                          conent+="</div>";
                          conent+="</div>";
                          conent+="</div>";
@@ -56,9 +57,9 @@
 
                     conent+="<div class='load_div' style='background-color:#F5DEB3;margin-left:20px;margin-top:20px'>";
                     conent +="<div style='position:relative;margin-left:20px;margin-top:20px'>";
-                    conent+="<a href='/home/ToPage?name='><img src="+obj.mannul_img+" height='180' width='450' ></a>";
+                    conent+="<a href='/home/ToPage?name=patientTree&id="+obj.id+"'><img src="+obj.mannul_img+" height='180' width='450' >";
                     conent+="<div style='position:absolute; z-index:2; left:40px; top:70px'>";
-                    conent+="<font size='5px' color='black'>"+obj.manual_name+"</font>";
+                    conent+="<font size='5px' color='black'>"+obj.manual_name+"</font></a>";
                     conent+="</div>";
                     conent+="</div>";
                     conent+="</div>";
@@ -121,6 +122,9 @@
         width: 500px;
         height: 230px;
         border:1px solid #FFFFFF;
+    }
+    a:link,a:visited{
+        text-decoration:none;  /*超链接无下划线*/
     }
 
 

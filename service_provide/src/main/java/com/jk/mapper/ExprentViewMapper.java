@@ -1,7 +1,6 @@
 package com.jk.mapper;
 
 import com.jk.bean.DaKa;
-import com.jk.bean.Exprent;
 import com.jk.bean.Guandian;
 
 import java.util.List;
@@ -17,4 +16,8 @@ public interface ExprentViewMapper {
     DaKa queryZhibo(Integer id);
 
     void addBaoming();
+
+    DaKa queryZhiboTwo(Integer id);
+
+    Guandian queryGunadian(Integer id);
 }

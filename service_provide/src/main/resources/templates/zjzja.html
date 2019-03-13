@@ -92,14 +92,14 @@
                 var html = "";
                 for (var i = 0; i < result.length; i++) {
                     html += "<div  ondblclick='getDetails(" + result[i].id + ")' style='width:550px;height:180px;background: oldlace;margin-left:1px;margin-top: 20px'>"
-                    html += "<div   style='width:180px;height:180px;float:left;margin-top: 15px;margin-left: 15px'>" +
+                    html += "<a href='/home/ToPage?name=dajiaguandian&id="+result[i].id+"'><div   style='width:180px;height:180px;float:left;margin-top: 15px;margin-left: 15px'>" +
                         "<img width='130' height='150'  src=" + result[i].dt_img + " >" +
                         "</div>"
                     html += "<div  style='float:left;margin-left: -37px;margin-top: 15px'><h4>" + result[i].gd_title + "</h4></div><br>"
                     html += "<div  style='float:left;margin-left: -37px' >" + result[i].dt_name + "&nbsp;-&nbsp;" + result[i].dt_zc + " </div><br><br><br>"
                     html += "<div  style='float:left;margin-left: -37px'>" + result[i].dt_addr + "</div><br><br>"
                     html += "<div  style='float:left;margin-left: -37px'>" + result[i].gd_browse + "人观看&nbsp;&nbsp;&nbsp;&nbsp;获得" + result[i].gd_zeid + "奖章" + "</div>"
-                    html += "</div>"
+                    html += "</a></div>"
                 }
                 $(".Sbox").html(html)
             }

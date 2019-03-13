@@ -24,4 +24,14 @@ public class PatientServiceImpl implements PatientService {
     public List<General> queryManual() {
         return patientMapper.queryManual();
     }
+
+    @Override
+    public General queryHuanzejiaoyu(Integer id) {
+        return patientMapper.queryHuanzejiaoyu(id);
+    }
+
+    @Override
+    public General queryHuanzheTree(Integer id) {
+        return patientMapper.queryHuanzheTree(id);
+    }
 }
