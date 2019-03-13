@@ -42,7 +42,8 @@ public class HomeController {
     @ResponseBody
     @RequestMapping("getTitle")
     public List<WenZhang> getTitle() {
-        return homeService.getTitle();
+        List<WenZhang> asd =  homeService.getTitle();
+        return asd;
     }
 
     @RequestMapping("to")
