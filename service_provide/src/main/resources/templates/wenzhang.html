@@ -97,11 +97,44 @@
             }
         })
     }
+    function sendEmail(){
+        var username = $("#reUrl2").val();
+        var email = $("#email").val();
+        var wzid = $("#wzId").val();
+        if (username != ""){
+            /*ajax   start*/
+            $.ajax({
+                url:"/order/saveOrder",
+                data:{username:username,email:email,wzid:wzid},
+                beforeSend:function(){
+                    ii = layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success:function(a){
+                },
+                error:function(){
+                    layer.msg("ajax失败");
+                },complete:function(){
+                    layer.close(ii);
+                }
+            });
+            /*ajax   end*/
+        }else{
+            layer.msg('请先登录！！！');
+        }
+    }
 </script>
 <body>
+<input type="hidden" id="reUrl1" th:value="${session.user?.id}">
+<input type="hidden" id="reUrl2" th:value="${session.user?.username}">
 <div style="margin-left: 20px">
     <font size="4px"><a href='javascript:void(0)' onclick=toViewName("index-home")>返回</a></font>
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
+    <font size="4px">
+        <!-- 按钮触发模态框 -->
+        <a href='javascript:void(0)' class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
 </div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <input type="hidden" id="wzId" th:value="${param?.id}">
@@ -164,7 +197,30 @@
             </a>
         </div>
     </div>
-
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        请输入您的邮箱
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input id="email" type="text" >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" onclick="sendEmail()" class="btn btn-primary">
+                        保存
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
 </div>
 </body>
 </html>
