@@ -9,12 +9,12 @@ import java.util.Date;
 @Document(collection = "t_loginLog")
 public class LoginLog {
     private String id;
-    private String phone;
+    private String userName;
     private String logName;
     private Date createTime;
 
-    public LoginLog(String phone, String logName, Date createTime) {
-        this.phone = phone;
+    public LoginLog(String userName, String logName, Date createTime) {
+        this.userName = userName;
         this.logName = logName;
         this.createTime = createTime;
     }
