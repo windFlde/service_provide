@@ -2,14 +2,79 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>患者教育视频</title>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
 <script type="text/javascript">
-    function sure(key){
+    
+    $(function(){
+        queryVideo();
+    })
+    
+    function queryVideo() {
+
+         $.ajax({
+                 url:'/queryVideo',
+                 type:'post',
+                 success:function (data) {
+
+                     var conent="";
+                     $.each(data,function (index,obj) {
+
+                         conent+="<div class='load_div' style='background-color:#F5DEB3;margin-left:20px;margin-top:20px'>";
+                         conent +="<div style='position:relative;margin-left:20px;margin-top:20px'>";
+                         conent+="<a href='/home/ToPage?name='><img src="+obj.video_img+" height='180' width='450' ></a>";
+                         conent+="<div style='position:absolute; z-index:2; left:40px; top:70px'>";
+                         conent+="<font size='5px' color='black'>"+obj.video_name+"</font>";
+                         conent+="</div>";
+                         conent+="</div>";
+                         conent+="</div>";
+                     })
+
+                     $("#content").html(conent);
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+
+    function queryManual() {
+
+        $.ajax({
+            url:'/queryManual',
+            type:'post',
+            success:function (data) {
+
+                var conent="";
+                $.each(data,function (index,obj) {
+
+                    conent+="<div class='load_div' style='background-color:#F5DEB3;margin-left:20px;margin-top:20px'>";
+                    conent +="<div style='position:relative;margin-left:20px;margin-top:20px'>";
+                    conent+="<a href='/home/ToPage?name='><img src="+obj.mannul_img+" height='180' width='450' ></a>";
+                    conent+="<div style='position:absolute; z-index:2; left:40px; top:70px'>";
+                    conent+="<font size='5px' color='black'>"+obj.manual_name+"</font>";
+                    conent+="</div>";
+                    conent+="</div>";
+                    conent+="</div>";
+                })
+
+                $("#content").html(conent);
+
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+
+        })
+    }
+    
+   /* function sure(key){
 
         var bt1 = document.getElementById('bt1');
         var bt2 = document.getElementById('bt2');
@@ -17,15 +82,21 @@
         bt2.style.backgroundColor="";
         if(key==1){
             bt1.style.backgroundColor="#00FFFF";
+
+
         }else {
             bt2.style.backgroundColor="#00FFFF";
+            location.href="/home/ToPage?name=manual"
         }
-    }
+    }*/
 
     function back() {
 
         location.href="/home/ToPage?name=general"
     }
+
+
+
 
 </script>
 <style type="text/css">
@@ -47,10 +118,11 @@
         height: 50px;
     }
     .load_div{
-        width: 548px;
-        height: 50px;
+        width: 500px;
+        height: 230px;
         border:1px solid #FFFFFF;
     }
+
 
 
 
@@ -73,9 +145,13 @@
 </div>
 <div class="load_divs">
     <center>
-        <button type="button" class="btn btn-default btn-lg " id="bt1" onclick="return sure(1)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;视频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-        <button type="button" class="btn btn-default btn-lg " id="bt2" onclick="return sure(2)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        <button type="button" class="btn btn-default btn-lg " id="bt1" onclick="queryVideo()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;视频&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        <button type="button" class="btn btn-default btn-lg " id="bt2" onclick="queryManual()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;手册&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
     </center>
+</div>
+<div id="content">
+
+
 </div>
 </body>
 </html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>会议直播</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    $(function(){
+
+        queryZhibo()
+    })
+
+
+    function queryZhibo() {
+        var id=$("#id").val();
+         $.ajax({
+                 url:'/query/queryZhibo',
+                 type:'post',
+                 data:{id:id},
+                 success:function (data) {
+                     console.log(data);
+                     $("#name").html(data.name);
+                     $("#dt_name").html(data.dt_name);
+                     $("#dt_zc").html(data.dt_zc);
+
+                     $("#dt_addr").html(data.dt_addr);
+                     $("#dt_img").html("src",data.dt_img);
+                     $("#createtime").html('直播时间：'+data.createtime);
+                     $("#dt_jj").html(data.dt_jj);
+
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+    
+    function queryZhiboTwo() {
+
+        var id=$("#id").val();
+        $.ajax({
+            url:'/query/queryZhibo',
+            type:'post',
+            data:{id:id},
+            success:function (data) {
+
+                $("#name").html(data.name);
+                $("#dt_name").html(data.dt_name);
+                $("#dt_zc").html(data.dt_zc);
+                $("#dt_addr").html(data.dt_addr);
+                $("#dt_img").html("src",data.dt_img);
+                $("#createtime").html('直播时间：'+data.createtime);
+                $("#dt_jj").html(data.dt_jj);
+
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+
+        })
+        
+    }
+
+    function addBaoming() {
+        var formDate =new FormData($("#form")[0])
+         $.ajax({
+                 url:'/query/addBaoming',
+                 type:'post',
+                 data:formDate,
+                 processData:false,
+                 contentType:false,
+                 success:function () {
+
+                     layer.msg("报名成功");
+                     location.reload();
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+
+
+
+    function fanhui() {
+        location.href="/home/ToPage?name=zjzja";
+    }
+
+</script>
+<body>
+<div style="width:550px;height:80px">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="javascript:fanhui()">返回</a>
+            </div>
+            <div>
+                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">会议直播</font></p>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<input type="hidden" id="id" th:value="${param?.id}">
+<div id="conent">
+    <div style="margin-left:30px" ><font size="5px" id="name"></font></div>
+    <div style="margin-top:10px;margin-left:40px" >
+        <font size="3px" id="dt_name"></font>.
+        <font size="3px" id="dt_zc"></font>
+        <font size="3px" id="dt_addr"></font>
+    </div>
+    <div  style="width:548px;height:260px;background-color:#F3F3F3;margin-top: 10px;">
+        <br>
+        <div style="margin-left: 30px">
+            <img src="" id="dt_img" width="480px" height="220px">
+        </div>
+    </div>
+    <div style="margin-top:15px;margin-left: 30px"><font id="createtime"></font></div>
+    <div style="margin-top:15px;margin-left:100px">
+        <button type='button' class='btn btn-default btn-lg' onclick='queryZhibo()'>&nbsp;&nbsp;&nbsp;&nbsp;讲着介绍&nbsp;&nbsp;&nbsp;</button>
+        <button type='button' class='btn btn-default btn-lg' onclick='queryZhiboTwo()'>&nbsp;&nbsp;&nbsp;直播简介&nbsp;&nbsp;&nbsp;</button>
+    </div>
+    <div style="width:548px;height:150px;background-color:#F3F3F3;margin-top: 10px;" id="dt_jj"></div>
+    <div style="margin-left:30px;margin-top: 10px;" >我要报名</div>
+    <div style="margin-left:50px;margin-top: 10px;" >
+
+        <form  id="form">
+            名称 <input type="text" style="width: 250px"  name="name" placeholder="请输入姓名"><br><br>
+            医院 <input type="text" style="width: 250px" name="hospital" placeholder="请输入医院"><br><br>
+            科室 <input type="text"  style="width: 250px"  name="desk" placeholder="请输入科室"><br><br>
+            电话<input type="text"  style="width: 250px"  name="work" placeholder="请输入电话"><br><br>
+            <div style="width: 548px;margin-left: 100px"> <button type="button" onclick="addBaoming()" class="btn btn-default">&nbsp;&nbsp;&nbsp;提交信息&nbsp;&nbsp;&nbsp;</button></div>
+        </form>
+
+    </div>
+    <div style="margin-left:30px;margin-top: 10px;" > 留言</div>
+    <div style="width:500px;margin-left:30px;margin-top: 10px;" >
+        <form>
+            <textarea class="form-control"  ></textarea>
+            <div style="margin-top:10px;float: right" >
+            <button type="button" class="btn btn-primary btn-sm">提交留言</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,5 +1,7 @@
 package com.jk.controller;
 
+import com.jk.bean.Baoming;
+import com.jk.bean.DaKa;
 import com.jk.bean.Guandian;
 import com.jk.service.ExprentViewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +58,35 @@ public class ExprentViewController {
     public String ToPage( ){
         return "djgd";
     }
+
+    @RequestMapping("queryLive")
+    @ResponseBody
+    public List<DaKa> queryLive() {
+
+        List<DaKa> list=exprentViewService.queryLive();
+        return list;
+    }
+
+    /**
+     * 根据ID查询会议直播
+     */
+    @RequestMapping("queryZhibo")
+    @ResponseBody
+    public DaKa queryZhibo(Integer id) {
+
+        DaKa DaKa = exprentViewService.queryZhibo(id);
+        return DaKa;
+    }
+
+    @RequestMapping("addBaoming")
+    @ResponseBody
+    public String addBaoming(Baoming baoming) {
+
+        exprentViewService.addBaoming(baoming);
+        System.out.println(baoming);
+        return "success";
+    }
+
+
 
 }
