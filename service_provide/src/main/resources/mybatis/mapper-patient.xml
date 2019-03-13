@@ -5,13 +5,27 @@
     <!--List<General> queryVideo();-->
     <select id="queryVideo" resultType="General">
 
-        select video_name,video_img from t_patient
+        select * from t_patient
     </select>
 
     <!--List<General> queryManual();-->
     <select id="queryManual" resultType="General">
 
-        select manual_name,mannul_img from t_patient
+        select * from t_patient
+    </select>
+
+    <!--General queryHuanzejiaoyu(Integer id);-->
+    <select id="queryHuanzejiaoyu" resultType="General">
+
+        select t.*,te.*,tm.* from t_patient t,t_docutor_expert te,t_master tm where t.video_docutoId=te.id and tm.zjid=te.id and t.id=#{id}
+
+    </select>
+
+    <!--General queryHuanzheTree(Integer id);-->
+    <select id="queryHuanzheTree" resultType="General">
+
+        select t.*,te.* from t_patient t,t_docutor_expert te  where t.video_docutoId=te.id  and t.id=#{id}
+
     </select>
 
 </mapper>

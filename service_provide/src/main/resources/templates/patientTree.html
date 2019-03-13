@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+</head>
+<script type="text/javascript">
+    function back() {
+        location.href="/home/ToPage?name=patient"
+    }
+
+    $(function(){
+        queryHuanzheTree()
+    })
+    function queryHuanzheTree() {
+
+        var id=$("#id").val();
+         $.ajax({
+                 url:'/queryHuanzheTree',
+                 type:'post',
+                 data:{id:id},
+                 success:function (data) {
+
+                     $("#video_name").html(data.video_name);
+                     $("#dt_name").html(data.dt_name);
+                     $("#dt_addr").html("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data.dt_addr);
+                     $("#dt_zc").html("."+data.dt_zc);
+                     $("#dt_img").prop("src",data.dt_img);
+                     $("#numbers").html(data.numbers+"人观看");
+                     $("#dt_jj").html("专家介绍<br><br>"+data.dt_jj);
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+
+</script>
+<body>
+<div style="width:550px;height:80px">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="javascript:back()">返回</a>
+            </div>
+            <div>
+                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">患者视频</font></p>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">...</a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<input type="hidden" id="id" th:value="${param?.id}">
+<div>
+    <div style="margin-left: 20px;margin-top: 10px"><font size="5px" id="video_name"></font></div>
+    <div style="margin-left: 20px;margin-top: 10px">
+        <font size="3px" id="dt_name"></font>
+        <font size="3px" id="dt_zc"></font>
+        <font size="3px" id="dt_addr"></font>
+    </div>
+    <div style="margin-left: 70px;margin-top: 10px"><img src="" id="dt_img" width="400px" height="200px"></div>
+    <div style="margin-left: 30px;margin-top: 20px"><font id="numbers" size="4px"></font></div>
+    <div style="margin-left: 200px;margin-top: 10px">
+        <button type="button" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;查看患者教育手册&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    </div>
+    <div style="margin-top:20px;width:500px;margin-left:20px" id="dt_jj"></div>
+</div>
+<div style="background-color:#faebcc;width:548px;height:200px">
+    <div style="margin-left: 20px"><br><font size="4px">获取手册(该服务仅提供给会员)</font></div>
+    <div style="margin-top: 20px;margin-left:20px "><textarea style="width:480px;height: 50px" class="form-control" placeholder="|填写邮箱地址"></textarea></div>
+    <div style="margin-left: 20px"><br><font size="3px">*提交邮箱地址，文字将在3个工作日内发送到您的邮箱。</font></div>
+    <div style="margin-left: 440px;margin-top: 10px">
+        <button type="button" class="btn btn-primary">提交邮箱</button>
+    </div>
+</div>
+</body>
+</html>

@@ -59,6 +59,16 @@ public class ExprentViewController {
         return "djgd";
     }
 
+    /*查询大家观点*/
+    @RequestMapping("queryGunadian")
+    @ResponseBody
+    public Guandian queryGunadian(Integer id) {
+
+        Guandian guandian = exprentViewService.queryGunadian(id);
+        return guandian;
+
+    }
+
     @RequestMapping("queryLive")
     @ResponseBody
     public List<DaKa> queryLive() {
@@ -85,6 +95,14 @@ public class ExprentViewController {
         exprentViewService.addBaoming(baoming);
         System.out.println(baoming);
         return "success";
+    }
+
+    @RequestMapping("queryZhiboTwo")
+    @ResponseBody
+    public DaKa queryZhiboTwo(Integer id) {
+
+        DaKa daKa = exprentViewService.queryZhiboTwo(id);
+        return daKa;
     }
 
 

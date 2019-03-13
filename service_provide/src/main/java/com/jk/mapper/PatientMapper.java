@@ -9,4 +9,8 @@ public interface PatientMapper {
     List<General> queryVideo();
 
     List<General> queryManual();
+
+    General queryHuanzejiaoyu(Integer id);
+
+    General queryHuanzheTree(Integer id);
 }
