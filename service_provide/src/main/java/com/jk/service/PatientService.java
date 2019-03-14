@@ -1,6 +1,7 @@
 package com.jk.service;
 
 import com.jk.bean.General;
+import com.jk.bean.Oder;
 
 import java.util.List;
 
@@ -12,4 +13,10 @@ public interface PatientService {
     General queryHuanzejiaoyu(Integer id);
 
     General queryHuanzheTree(Integer id);
+
+    void addShoucang(General general);
+
+    Oder fsYouxiang(String id);
+
+    void updatePeople(General general);
 }

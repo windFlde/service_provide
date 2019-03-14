@@ -28,4 +28,22 @@
 
     </select>
 
+    <!--&lt;!&ndash;void addShoucang(General general);&ndash;&gt;
+    <insert id="addShoucang">
+        insert into t_patient(manual_name,)
+    </insert>-->
+
+    <!-- Oder fsYouxiang(String id);-->
+   <select id="fsYouxiang" resultType="Oder">
+
+       select t.manual_name title,te.dt_jj info from t_patient t,t_docutor_expert te where t.video_docutoId=te.id and t.id=#{id}
+   </select>
+
+    <!--void updatePeople(General general);-->
+    <!--修改教育视频观看人数-->
+    <update id="updatePeople">
+
+        update t_patient set numbers=numbers+1 where id=#{id}
+    </update>
+
 </mapper>

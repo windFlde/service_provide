@@ -52,5 +52,19 @@
         values(#{name},#{hospital},#{desk},#{work})
     </insert>
 
+    <!-- void updatePeople(Integer id);-->
+    <!--修改大咖在线观看人数-->
+    <update id="updatePeople">
+
+        update t_master set browse=browse+1 where id=#{id}
+    </update>
+
+    <!--void updatePeopleTwo(String id);-->
+    <!--修改大家观点人数-->
+    <update id="updatePeopleTwo">
+
+        update t_guandian set gd_browse=gd_browse+1 where id=#{id}
+    </update>
+
 
 </mapper>
