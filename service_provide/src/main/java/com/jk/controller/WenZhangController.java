@@ -93,6 +93,13 @@ public class WenZhangController {
         return "";
     }
     @ResponseBody
+    @RequestMapping("removeReUrl")
+    public String removeReUrl(HttpSession session) {
+        session.removeAttribute("reUrl");
+        return "";
+    }
+
+    @ResponseBody
     @RequestMapping("getUserAll")
     public User getUserAll(User user) {
         User userf=wenZHangService.getUserAll(user.getId());
