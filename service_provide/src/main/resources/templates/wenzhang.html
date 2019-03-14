@@ -113,6 +113,7 @@
                     });
                 },
                 success:function(a){
+                    layer.msg('邮箱已发送，注意查收。请不要重复发送！！！');
                 },
                 error:function(){
                     layer.msg("ajax失败");
@@ -134,7 +135,7 @@
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
     <font size="4px">
         <!-- 按钮触发模态框 -->
-        <a href='javascript:void(0)' class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
+        <a href='javascript:void(0)' onclicl="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
 </div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <input type="hidden" id="wzId" th:value="${param?.id}">
