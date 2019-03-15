@@ -106,5 +106,31 @@ public class ExprentViewController {
     }
 
 
+    /**
+     * 修改大咖在线观看人数
+     * @param id
+     * @return
+     */
+    @RequestMapping("updatePeople")
+    @ResponseBody
+    public String updatePeople(String id) {
+
+        exprentViewService.updatePeople(id);
+        return "success";
+    }
+
+    /**
+     * 修改大家观点人数
+     */
+    @RequestMapping("updatePeopleTwo")
+    @ResponseBody
+    public String updatePeopleTwo(String id) {
+
+        exprentViewService.updatePeopleTwo(id);
+        return "success";
+    }
+
+
+
 
 }

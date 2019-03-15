@@ -24,7 +24,8 @@
 
     <!--List<WenZhang> getTitle();-->
     <select id="getTitle" resultType="wenzhang">
-        select  *  from   t_wenzhang w where strat = 1 order by  w.creaTime desc LIMIT 5
+        select  *  from   t_wenzhang w where strat = 1 order by  w.sites
+        LIMIT 5
     </select>
 
     <!--List<Exprent> getAllzhuanjia1();-->
@@ -76,7 +77,7 @@
             t_master m
         LEFT JOIN t_docutor_expert d ON m.zjid = d.id
         WHERE
-            m.id = ${id}
+            m.id = #{id}
     </select>
 
     <!--List<DaKa> getMaster();-->

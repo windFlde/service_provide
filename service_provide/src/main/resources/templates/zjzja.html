@@ -68,10 +68,10 @@
                     $.each(a,function (index ,obj){
                         console.log(obj.id);
                         content +="<div style='margin-top:15px;width: 500px;height: 240px;background-color:#FF7F50;margin-left:20px;'><div style='position:relative;'>";
-                        content +="<a href='http://localhost:2001/home/todaka?id="+obj.id+"'>"
-                        content +="<img src='"+obj.url+"' width='450px' height='175px' style='margin-left: 22px; margin-top:20px;'></a>"
+                        content +="<a href='javascript:updatePeople("+obj.id+")'>"
+                        content +="<img src='"+obj.url+"' width='450px' height='175px' style='margin-left: 22px; margin-top:20px;'>"
                          content +="<div style='position:absolute; z-index:2;margin-left: 32px; margin-top: 13px;'>";
-                         content +="<a href='http://localhost:2001/home/todaka?id="+obj.id+"'><font size='4'>"+obj.name+"</font></a>";
+                         content +="<font size='4'>"+obj.name+"</font></a>";
                          content +="</div>";
                         content += "</div></div>";
                     })
@@ -92,7 +92,7 @@
                 var html = "";
                 for (var i = 0; i < result.length; i++) {
                     html += "<div  ondblclick='getDetails(" + result[i].id + ")' style='width:550px;height:180px;background: oldlace;margin-left:1px;margin-top: 20px'>"
-                    html += "<a href='/home/ToPage?name=dajiaguandian&id="+result[i].id+"'><div   style='width:180px;height:180px;float:left;margin-top: 15px;margin-left: 15px'>" +
+                    html += "<a href='javascript:updatePeopleTwo("+result[i].id+")'><div   style='width:180px;height:180px;float:left;margin-top: 15px;margin-left: 15px'>" +
                         "<img width='130' height='150'  src=" + result[i].dt_img + " >" +
                         "</div>"
                     html += "<div  style='float:left;margin-left: -37px;margin-top: 15px'><h4>" + result[i].gd_title + "</h4></div><br>"
@@ -135,6 +135,45 @@
 
                  })
     }
+
+    /*修改大咖在线噶观看人数*/
+    function updatePeople(id) {
+
+         $.ajax({
+                 url:'/query/updatePeople',
+                 type:'post',
+                 data:{id:id},
+                 success:function (data) {
+
+                     location.href=" /home/ToPage?name=dakaOnline&id="+id;
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+    /*修改大家观点观看人数*/
+    function updatePeopleTwo(id) {
+
+        $.ajax({
+            url:'/query/updatePeopleTwo',
+            type:'post',
+            data:{id:id},
+            success:function (data) {
+
+                location.href=" /home/ToPage?name=dajiaguandian&id="+id;
+
+            },error:function () {
+                alert("ajax访问失败,请查看控制台");
+            }
+
+        })
+
+    }
+
+
 
     function getDetails(id) {
         location.href = "/query/queryDjgd?id=" + id;

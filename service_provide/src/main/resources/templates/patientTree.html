@@ -41,6 +41,70 @@
 
     }
 
+    function addShoucang() {
+        var id=$("#id").val();
+        var username=$("#username").val();
+        if (username != null) {
+
+             $.ajax({
+                     url:'/addShoucang',
+                     type:'post',
+                     data:{id:id,username:username},
+                     success:function (data) {
+
+
+
+                     },error:function () {
+                         alert("ajax访问失败,请查看控制台");
+                     }
+
+                     })
+
+        }else{
+
+            layer.msg("亲请先登录,再进行收藏");
+        }
+
+    }
+
+    function fsYouxiang() {
+
+
+        var id=$("#id").val();
+        var email=$("#email").val();
+        var username=$("#username").val();
+        if (email == null || email == "") {
+            layer.msg("请输入内容");
+            return ;
+        }
+        if (username !="") {
+
+             $.ajax({
+                     url:'/fsYouxiang',
+                     type:'post',
+                     data:{id:id,username:username,email:email},
+                     success:function (data) {
+
+                         layer.msg("邮件已发送,请勿重复发送");
+
+                     },error:function () {
+                         alert("ajax访问失败,请查看控制台");
+                     }
+
+                     })
+
+        }else{
+
+            layer.msg("请先登录");
+            location.href="/home/ToPage?name=login"
+        }
+
+
+
+    }
+
+
+
 </script>
 <body>
 <div style="width:550px;height:80px">
@@ -50,7 +114,10 @@
                 <a class="navbar-brand" href="javascript:back()">返回</a>
             </div>
             <div>
-                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">患者视频</font></p>
+                <div style="margin-left:170px">
+                    <p class="navbar-text"><font size="5px">患者视频</font></p>
+                    <p class="navbar-text"><font size="5px"><a href="javacript:addShoucang()">收藏</a></font></p>
+                </div>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">...</a></li>
@@ -59,6 +126,7 @@
     </nav>
 </div>
 <input type="hidden" id="id" th:value="${param?.id}">
+<input type="hidden" id="username" th:value="${session.user?.username}">
 <div>
     <div style="margin-left: 20px;margin-top: 10px"><font size="5px" id="video_name"></font></div>
     <div style="margin-left: 20px;margin-top: 10px">
@@ -74,12 +142,14 @@
     <div style="margin-top:20px;width:500px;margin-left:20px" id="dt_jj"></div>
 </div>
 <div style="background-color:#faebcc;width:548px;height:200px">
+
     <div style="margin-left: 20px"><br><font size="4px">获取手册(该服务仅提供给会员)</font></div>
-    <div style="margin-top: 20px;margin-left:20px "><textarea style="width:480px;height: 50px" class="form-control" placeholder="|填写邮箱地址"></textarea></div>
+    <div style="margin-top: 20px;margin-left:20px "><textarea style="width:480px;height: 50px" class="form-control" placeholder="|填写邮箱地址" id="email"></textarea></div>
     <div style="margin-left: 20px"><br><font size="3px">*提交邮箱地址，文字将在3个工作日内发送到您的邮箱。</font></div>
     <div style="margin-left: 440px;margin-top: 10px">
-        <button type="button" class="btn btn-primary">提交邮箱</button>
+        <button type="button" class="btn btn-primary" onclick="fsYouxiang()">提交邮箱</button>
     </div>
+
 </div>
 </body>
 </html>

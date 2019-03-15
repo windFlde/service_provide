@@ -19,4 +19,5 @@ public class QueryParam {
 
     Integer userId;
 
+    String htmlUrl;
 }

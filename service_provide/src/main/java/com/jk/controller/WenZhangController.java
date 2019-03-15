@@ -12,8 +12,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("wenz")
-public class
-WenZhangController {
+public class WenZhangController {
 
     @Resource
     private WenZHangService wenZHangService;
@@ -89,10 +88,17 @@ WenZhangController {
     }
     @ResponseBody
     @RequestMapping("toLogin")
-    public String toLogin(HttpSession session,String htmlUrl) {
-        session.setAttribute("reUrl",htmlUrl);
+    public String toLogin(HttpSession session,QueryParam queryParam) {
+        session.setAttribute("reUrl",queryParam);
         return "";
     }
+    @ResponseBody
+    @RequestMapping("removeReUrl")
+    public String removeReUrl(HttpSession session) {
+        session.removeAttribute("reUrl");
+        return "";
+    }
+
     @ResponseBody
     @RequestMapping("getUserAll")
     public User getUserAll(User user) {

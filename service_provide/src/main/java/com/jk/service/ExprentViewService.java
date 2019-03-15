@@ -21,4 +21,8 @@ public interface ExprentViewService {
     DaKa queryZhiboTwo(Integer id);
 
     Guandian queryGunadian(Integer id);
+
+    void updatePeople(String id);
+
+    void updatePeopleTwo(String id);
 }

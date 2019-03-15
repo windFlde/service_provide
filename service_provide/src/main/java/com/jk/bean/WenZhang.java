@@ -20,5 +20,6 @@ public class WenZhang {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     Date creaTime;
     Integer zeid;
+    Integer sites;
 
 }

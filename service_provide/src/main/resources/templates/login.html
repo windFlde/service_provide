@@ -41,6 +41,7 @@
                                            console.log(result);
                                            if (result) {
                                                window.location.href = reUrl;
+                                               removeReUrl();
                                            } else {
                                                window.location.href = "/wenz/toView?viewName=index-home";
                                            }
@@ -65,13 +66,36 @@
                  /*ajax   end*/
 
     }
+
+    function removeReUrl() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/removeReUrl",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
     function keyLogin(){
         if (event.keyCode==13)  //回车键的键值为13
             toLogin();//调用登录按钮的登录事件
     }
 </script>
 <body onkeypress="keyLogin()">
-<input type="hidden" id="reUrl" th:value="${session.reUrl?.requestUrl}">
+<input type="hidden" id="reUrl" th:value="${session.reUrl?.htmlUrl}">
 <div class="up" >
     <img src="/images/huangkuang.jpg" width="50px" height="60px;" class="hy_img">
     <div class="hy">

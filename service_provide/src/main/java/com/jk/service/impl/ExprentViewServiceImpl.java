@@ -49,4 +49,14 @@ public class ExprentViewServiceImpl implements ExprentViewService {
         return exprentViewMapper.queryGunadian(id);
     }
 
+    @Override
+    public void updatePeople(String id) {
+        exprentViewMapper.updatePeople(id);
+    }
+
+    @Override
+    public void updatePeopleTwo(String id) {
+        exprentViewMapper.updatePeopleTwo(id);
+    }
+
 }
