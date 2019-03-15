@@ -36,19 +36,6 @@ public class EachartsController {
     @RequestMapping("queryEchartsTwo")
     public ArrayList<Echarts> queryEchartsTwo() {
 
-       /* HashMap<String, Object> param = new HashMap<>();
-        ArrayList<Object> name = new ArrayList<>();
-        ArrayList<Object> value = new ArrayList<>();
-        List<Echarts> list=eachartsService.queryEchartsTwo();
-        for (Echarts echarts : list) {
-            name.add(echarts.getName());
-            value.add(echarts.getValue());
-        }
-
-        param.put("ename",name);
-        param.put("evalue",value);
-        return param;*/
-
        ArrayList<Echarts> user=eachartsService.queryEchartsTwo();
        return user;
     }

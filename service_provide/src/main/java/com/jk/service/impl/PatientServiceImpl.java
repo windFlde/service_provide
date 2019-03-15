@@ -36,10 +36,6 @@ public class PatientServiceImpl implements PatientService {
         return patientMapper.queryHuanzheTree(id);
     }
 
-    @Override
-    public void addShoucang(General general) {
-        patientMapper.addShoucang(general);
-    }
 
     @Override
     public Oder fsYouxiang(String id) {

@@ -50,29 +50,9 @@ public class PatientController {
         return general;
     }
 
-   /* @RequestMapping("addShoucang")
-    public String addShoucang(General general,HttpSession session) {
-
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-
-            patientService.addShoucang(general);
-            return "1";
-
-
-        }else{
-
-            return "0";
-        }
-
-
-
-
-
-    }*/
-
     @RequestMapping("fsYouxiang")
     public void fsYouxiang(String id,String username,String email) {
+
         if (username != null) {
             Oder oder = patientService.fsYouxiang(id);
             oder.setUsername(username);

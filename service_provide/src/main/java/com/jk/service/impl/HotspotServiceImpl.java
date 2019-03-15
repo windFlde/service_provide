@@ -2,6 +2,7 @@ package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.jk.bean.Hotspot;
+import com.jk.bean.ShouCang;
 import com.jk.mapper.HotspotMapper;
 import com.jk.service.HotspotService;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,20 @@ public class HotspotServiceImpl implements HotspotService {
          hotspotMapper.updateRdzxOne(id);
     }
 
+    @Override
+    public boolean querysc(String title) {
+        ShouCang shouCang=hotspotMapper.querysc(title);
+        if (shouCang != null) {
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public void addShoucang(ShouCang shouCang) {
+
+        hotspotMapper.addShoucang(shouCang);
+    }
 
 
 }

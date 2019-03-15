@@ -28,11 +28,6 @@
 
     </select>
 
-    <!--&lt;!&ndash;void addShoucang(General general);&ndash;&gt;
-    <insert id="addShoucang">
-        insert into t_patient(manual_name,)
-    </insert>-->
-
     <!-- Oder fsYouxiang(String id);-->
    <select id="fsYouxiang" resultType="Oder">
 

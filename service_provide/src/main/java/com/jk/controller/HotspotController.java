@@ -1,11 +1,14 @@
 package com.jk.controller;
 
 import com.jk.bean.Hotspot;
+import com.jk.bean.ShouCang;
+import com.jk.bean.User;
 import com.jk.service.HotspotService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -38,6 +41,35 @@ public class HotspotController {
     public void updateRdzxOne(Integer id) {
 
         hotspotService.updateRdzxOne(id);
+
+    }
+
+    /**
+     * 收藏
+     */
+    @RequestMapping("addShoucang")
+    public String addShoucang(ShouCang shouCang,HttpSession session) {
+
+        User user= (User) session.getAttribute("user");
+        if (user == null) {
+
+            return "0";
+        }else{
+
+            boolean b=hotspotService.querysc(shouCang.getTitle());
+            System.out.println(b);
+            if (b) {
+                return "2";
+
+            }else{
+
+                shouCang.setUserId(user.getId());
+
+                hotspotService.addShoucang(shouCang);
+                return "1";
+            }
+
+        }
 
     }
 }

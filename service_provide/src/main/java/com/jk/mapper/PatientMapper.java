@@ -15,8 +15,6 @@ public interface PatientMapper {
 
     General queryHuanzheTree(Integer id);
 
-    void addShoucang(General general);
-
     Oder fsYouxiang(String id);
 
     void updatePeople(General general);

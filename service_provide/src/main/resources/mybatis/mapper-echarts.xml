@@ -5,15 +5,16 @@
     <!--List<Echarts> queryEcharts();-->
     <select id="queryEcharts" resultType="Echarts">
 
-        select count value, DATE_FORMAT(createtime,"%Y-%m-%d") name from t_integral
-        where createtime between '2019-03-01' and '2019-03-31' group by
-        DATE_FORMAT(createtime,"%Y-%m-%d")
+        select num value,username name from t_user  group by username
+
+        /*DATE_FORMAT(createtime,"%Y-%m-%d");*/
+
     </select>
 
     <!--List<Echarts> queryEchartsTwo();-->
     <select id="queryEchartsTwo" resultType="Echarts">
 
-        select count value,igName name from t_integral
+        select num value,username name  from t_user group by username
     </select>
 
 </mapper>

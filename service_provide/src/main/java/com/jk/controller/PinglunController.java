@@ -1,5 +1,7 @@
 package com.jk.controller;
 
+import com.jk.bean.PinglunFive;
+import com.jk.bean.PinglunFour;
 import com.jk.bean.PinglunTree;
 import com.jk.bean.User;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -58,5 +60,53 @@ public class PinglunController {
 
         return "success";
 
+    }
+
+    /**
+     * 患者视频留言
+     */
+    @RequestMapping("addLiuyanTwo")
+    public String addLiuyanTwo(PinglunFour pinglunFour) {
+
+        mongoTemplate.save(pinglunFour);
+        System.out.println(pinglunFour);
+
+        return "success";
+    }
+
+    @RequestMapping("queryLiuyanTwo")
+    public List<PinglunFour> queryLiuyanTwo(Integer id) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("em_id").is(id));
+        List<PinglunFour> list = mongoTemplate.find(query, PinglunFour.class);
+        return  list;
+    }
+
+    @RequestMapping("deleteLiuyan2")
+    public String deleteLiuyan2(String id) {
+
+        PinglunFour pinglunFour = new PinglunFour();
+        pinglunFour.set_id(id);
+        mongoTemplate.remove(pinglunFour);
+
+        return "success";
+
+    }
+
+    @RequestMapping("addLiuyanFive")
+    public String addLiuyanFive(PinglunFive pinglunFive) {
+
+        mongoTemplate.save(pinglunFive);
+        return "success";
+    }
+
+    @RequestMapping("queryLiuyanFive")
+    public List<PinglunFive> queryLiuyanFive(Integer id) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("em_id").is(id));
+        List<PinglunFive> list = mongoTemplate.find(query, PinglunFive.class);
+        return list;
     }
 }

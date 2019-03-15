@@ -9,10 +9,13 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
 <script type="text/javascript">
-    
+
+
     $(function(){
 
         queryHuanzejiaoyu();
+        queryLiuyan();
+        huifu();
     })
 
     var number=1;
@@ -53,6 +56,78 @@
                  })
     }
 
+    function addPinglun() {
+
+        var id = $("#id").val();
+        var text = $("#text").val();
+        if (text == null || text == "") {
+
+            layer.msg("请输入内容");
+            return;
+        }
+         $.ajax({
+                 url:'/addLiuyanTwo',
+                 type:'post',
+                 data:{em_id:id,content:text},
+                 success:function (data) {
+
+                     layer.msg("留言成功");
+                     $("#text").val("");
+                     queryLiuyan()
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 });
+    }
+
+
+   function queryLiuyan() {
+
+        var id=$("#id").val();
+         $.ajax({
+                 url:'/queryLiuyanTwo',
+                 type:'post',
+                 data:{id:id},
+                 success:function (data) {
+
+                     console.log(data);
+
+                     var cotor = "";
+                     for (var i = 0; i <data.length ; i++) {
+                         cotor += "<div  class='article' style='width: 600px;height: 110px'>";
+                         cotor += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+data[i].img+"'></div>";
+                         cotor += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font>&nbsp;&nbsp;<a href='javascript:huifu("+obj._id+","+i+")'>回复</a></p>" +
+                             "<p><font size='4'>"+data[i].content+"</font></p><input type='text' id='conent' placeholder='请输入内容'></div><br>";
+                         cotor += "</div><br>";
+                     }
+
+                     $("#aa").html(cotor);
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+   }
+
+   function huifu(_id,i) {
+       console.log(_id,i);
+
+        var conent=$("#conent").val();
+       if (conent == null || conent == "") {
+
+           layer.msg("回复内容不能为空");
+           return;
+       }
+
+
+   }
+
 
     
     function back() {
@@ -60,6 +135,26 @@
     }
 
 </script>
+<style type="text/css">
+    body,div{
+        margin:0;
+        padding:0;
+    }
+    body{
+        width: 600px;
+        background-color: #FFFFFF;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        border: 1px solid #FFFFFF;
+        justify-content: flex-start;
+    }
+    .load_div{
+        width: 400px;
+        height: 200px;
+        border:1px solid #FFFFFF;
+    }
+</style>
 <body>
 <div style="width:550px;height:80px">
     <nav class="navbar navbar-default" role="navigation">
@@ -91,18 +186,21 @@
         <button type="button" class="btn btn-primary">专家在线答疑</button>
     </div>
     <div style="background-color:#00ee00;margin-top:10px;width:548px;height: 250px" id="kenr">
-
     </div>
     <div style="margin-top: 20px">
         <div style="margin-left: 30px">心得分享</div>
     </div>
     <div style="margin-top: 10px;margin-left: 60px">
-        <form>
-            <textarea style="width:460px;height: 150px" class="form-control" placeholder="|我要分享"></textarea>
-            <div style="margin-left:400px;margin-top: 10px"><button type="button" class="btn btn-primary">提交分享</button></div>
-        </form>
+            <textarea style="width:460px;height: 150px" class="form-control" id="text" placeholder="|我要分享"></textarea>
+            <div style="margin-left:400px;margin-top: 10px"><button type="button" onclick="addPinglun()" class="btn btn-primary">提交分享</button></div>
+    </div>
+    <div id="aa" class="load_div" >
+
+
     </div>
 
 </div>
+
+
 </body>
 </html>

@@ -74,10 +74,29 @@ $(function (){
     function toView(v) {
         window.location.href="/wenz/toView?viewName="+v;
     }
+    function asd(){
+        var loginacct=$("#reUrl3").val();
+        console.log(loginacct);
+        if (loginacct == null||loginacct=="") {
+
+            layer.msg('亲您还未登录,请登录', {
+                time: 0 //不自动关闭
+                ,btn: ['登录', '关闭']
+                ,yes: function(){
+                    location.href="/home/ToPage?name=login";
+                }
+            });
+        }else{
+
+            location.href="/home/ToPage?name=eacharts";
+        }
+
+    }
 </script>
 <body>
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <input type="hidden" id="reUrl2" th:value="${session.user?.num}">
+<input type="hidden" id="reUrl3" th:value="${session.user?.loginacct}">
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">
 
@@ -118,7 +137,7 @@ $(function (){
        <div style="margin-left: 235px;padding-top: 50px;"><font size="5">当前总积分</font></div>
        <div>
            <center>
-               <font style="font-size: 95px"><a herf='/home/ToPage?name=eacharts'><span id="jifen2">0000</span></a></font><fon6t>积分</fon6t>
+               <font style="font-size: 95px"><a onclick="asd()"><span id="jifen2">0000</span></a></font><fon6t>积分</fon6t>
            </center>
        </div>
         <div><input class="btn btn-primary " onclick="toView('integral')" style="border-radius: 50px;margin-left: 255px;" type='button' value='  积分兑换  '></div>

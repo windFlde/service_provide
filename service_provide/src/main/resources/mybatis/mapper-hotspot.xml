@@ -20,5 +20,17 @@
         update t_hottop set rd_browse=rd_browse+1 where id=#{id}
     </update>
 
+    <!--  ShouCang querysc(String title);
+
+    void addShoucang(ShouCang shouCang);-->
+    <select id="querysc" resultType="ShouCang">
+
+        select * from t_shoucang where title=#{title}
+    </select>
+
+    <insert id="addShoucang">
+         insert into t_shoucang (userId,wzId,tname,ttime,title) values (#{userId},#{wzId},#{tname},NOW(),#{title})
+    </insert>
+
 
 </mapper>

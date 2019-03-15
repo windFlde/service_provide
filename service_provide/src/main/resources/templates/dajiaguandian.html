@@ -12,6 +12,7 @@
     
     $(function(){
         queryGunadian();
+        queryLiuyanFive()
     })
     
     function queryGunadian() {
@@ -36,6 +37,63 @@
 
                  })
     }
+
+    function addLiuyan() {
+
+        var id=$("#id").val();
+        var text=$("#text").val();
+        if (text==null||text=="") {
+
+            layer.msg("内容不能为空");
+            return ;
+        }
+
+         $.ajax({
+                 url:'/addLiuyanFive',
+                 type:'post',
+                 data:{em_id:id,content:text},
+                 success:function (data) {
+
+                     layer.msg("留言成功");
+                     $("#text").val("");
+                     queryLiuyanFive();
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+
+    }
+
+
+    function queryLiuyanFive() {
+        var id = $("#id").val();
+         $.ajax({
+                 url:'/queryLiuyanFive',
+                 type:'post',
+                 data:{id:id},
+                 success:function (data) {
+
+                     var conent = "";
+                     for (var i = 0; i <data.length; i++) {
+                         conent += "<div  class='article' style='width: 600px;height: 110px'>";
+                         conent += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+data[i].img+"'></div>";
+                         conent += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font></p><p><font size='4'>"+data[i].content+"</font></p></div><br>";
+                         conent += "</div><br>";
+                     }
+                     $("#abc").html(conent);
+
+
+                 },error:function () {
+                     alert("ajax访问失败,请查看控制台");
+                 }
+
+                 })
+    }
+
+
     
     function fanhui() {
         location.href = "/home/ToPage?name=zjzja"
@@ -68,12 +126,14 @@
     <div style='margin-top: 10px;margin-left:20px;width:440px'><font id="gd_content"></font></div>
     <div>
         <div style="margin-top: 30px;margin-left: 20px"><font>写留言</font></div>
-        <form>
-            <div style="margin-left: 45px;margin-top: 10px"><textarea style="width:350px;height: 100px" class="form-control" placeholder="|我要留言"></textarea></div>
+            <div style="margin-left: 45px;margin-top: 10px"><textarea style="width:350px;height: 100px" id="text" class="form-control" placeholder="|我要留言"></textarea></div>
             <div style="margin-left: 45px;margin-top: 10px">送勋章⭐⭐⭐⭐⭐</div>
-            <div style="width:548px;margin-left:450px;margin-top: 10px"><button type="button" class="btn btn-primary btn-sm">提交留言</button></div>
-        </form>
+            <div style="width:548px;margin-left:450px;margin-top: 10px"><button type="button" onclick="addLiuyan()" class="btn btn-primary btn-sm">提交留言</button></div>
     </div>
+</div>
+<div id="abc">
+
+
 </div>
 </body>
 </html>
