@@ -24,6 +24,8 @@ public class User implements Serializable {
     String img;
     Integer count;
     Integer num;
+    Integer balance;
+    Integer vip;
 
 }
 
