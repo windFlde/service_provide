@@ -26,9 +26,14 @@ $(function (){
     $("#span2").html("0000"+id);
     $("#span1").html(name);
 });
-function tomyintegral(name) {
+
+    function togerenInfo(name) {
+        window.location.href="/wenz/toView?viewName="+name;
+    }
+
+    function tomyintegral(name) {
     location.href="http://localhost:2001/home/ToPage?name="+name;
-}
+    }
 
     function toViewHtml(v) {
         window.location.href="/wenz/toView?viewName="+v;
@@ -87,7 +92,7 @@ function tomyintegral(name) {
    </div>
        <div class="bs-example" data-example-id="vertical-button-group">
            <div style="width: 600px;height: 320px;margin-top: 41px;" class="btn-group-vertical" role="group" aria-label="Vertical button group">
-               <button style="padding-right: 470px;" type="button" class="btn btn-default btn-lg">个人信息</button>
+               <button style="padding-right: 470px;" type="button" onclick="togerenInfo('gerenInfo')" class="btn btn-default btn-lg">个人信息</button>
                <button style="padding-right: 470px;" type="button" onclick="tomyintegral('myintegral')" class="btn btn-default btn-lg">我的积分</button>
                <button style="padding-right: 470px;" type="button" onclick="tomyintegral('mycollect')" class="btn btn-default btn-lg">我的收藏</button>
                <button style="padding-right: 470px;" type="button" class="btn btn-default btn-lg" onclick="toMyCommit()">我的提问</button>
