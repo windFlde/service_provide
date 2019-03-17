@@ -5,4 +5,5 @@ import com.jk.bean.User;
 public interface LoginMapper {
 
     User toLogin(User users);
+
 }

@@ -13,10 +13,41 @@
     <script src="/js/bootstrap-bootbox/bootbox.js"></script>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
     <script src="/js/layui/layui.js"></script>
+    <script src="/js/easyui1.5/jquery.easyui.min.js"></script>
 
 </head>
 <script type="text/javascript">
     var ii=0;
+    $(function () {
+        cookieHui();
+        getAllLoginAccount();
+    })
+    function cookieHui() {
+        if(document.cookie!=null & document.cookie!=""){
+            //decodeURIComponent  解码
+            var cookie=document.cookie;
+            console.log("-=====>"+cookie)
+            var sp=cookie.split("=");
+            var sp1=sp[1];
+            var sp2=sp1.split(";");
+            var sp3=sp2[0];
+            var x=decodeURIComponent(sp3);
+            var b=JSON.parse(x);
+            var loginaccount=b.loginacct;
+            var userpswd=b.userpswd;
+            var remempwd=b.remempwd;
+            $("#name1").val(loginaccount);
+            $("#password1").val(userpswd);
+            /*if start*/
+            if(remempwd==1){
+                $("#checkbox1").attr("checked",true);
+            }
+            /*if end*/
+        }else{
+            return ;
+        }
+
+    }
     function toLogin() {
         var reUrl=$("#reUrl").val();
             /*ajax   start*/
@@ -31,7 +62,7 @@
                               });
                         },
                        success:function(a){
-                           if (a ==1) {
+                           if (a ==2) {
                                if (reUrl != null && reUrl != "") {
                                    /* 确认框start */
                                    bootbox.confirm({
@@ -51,7 +82,7 @@
                                } else {
                                    window.location.href = "/wenz/toView?viewName=index-home";
                                }
-                           }else if (a==2) {
+                           }else if (a==1) {
                                layer.msg("账号或密码错误");
                                return ;
                            }
@@ -67,6 +98,48 @@
 
     }
 
+    function registerForm() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/user/registerForm",
+                       type:"POST",
+                       data:$("#registerForm").serialize(),
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           if (a=="") {
+                            layer.msg("注册成功");
+                               var today=new Date();
+                               var year=today.getFullYear();
+                               var month=today.getMonth();
+                               var day=today.getDate();
+                               qingchu();
+                               $('#myModal').modal('hide')
+                               layer.msg('注册成功,  '+"您的注册时间为<font color='red'>"+year+"年"+month+"月"+day+"日</font>", {time: 3000, icon:6});
+
+                           }else if (a=="2") {
+                               layer.msg("用户已经存在");
+                           }
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+    function qingchu() {
+        $("#registerLoginacct").val("");
+        $("#userpswd11").val("");
+        $("#userNameCon").val("");
+        $("#emailCon").val("");
+        $("#phoneCon").val("");
+    }
     function removeReUrl() {
             /*ajax   start*/
                     $.ajax({
@@ -89,13 +162,220 @@
                    });
                  /*ajax   end*/
     }
+
+    function getAllLoginAccount() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/phoneLogin/registerUserAccount",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+    /*验证码 strat*/
+    var temp=null;
+    var time=60;
+    function timeDown(){
+        /*ajax start*/
+        $.ajax({
+            url:"/phoneLogin/sendCode",
+            type:"POST",
+            data:$("#form").serialize(),
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });
+            },
+            success:function(result){
+                if(result.code==1){ //验证码发送成功  开始倒计时
+                    layer.msg('验证码发送成功', {time:2500, icon:1});
+                    $("#sendCode").prop("disabled",true)
+                    temp = setInterval("changeBtnText()",1000);
+                }else if(result.code==2){
+                    $("#sendCode").prop("disabled",true)
+                    layer.msg("已经发送验证码,请勿重复发送!");
+                }else if(result.code==3){
+                    layer.msg("您的手机号已经在黑名单中");
+                }
+            },
+            error:function(){
+                layer.msg("ajax访问失,请看控制台");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax end*/
+    }
+    function changeBtnText(){
+        time--;
+        $("#sendCode").html("还剩"+time+"秒");
+        if(time<=0){
+            time=60;
+            $("#sendCode").prop("disabled",false);
+            $("#sendCode").html("重新发送");
+            clearInterval(temp);
+        }
+    }
+    function checkPhone(){
+        var phone=$("[name='phone_no']").val();
+        if(phone.length!=11){
+            if(phone.length==0){
+                layer.msg('请输入手机号', {time:2500, icon:2});
+                return ;
+            }else{
+                layer.msg('手机号必须为11位', {time:2500, icon:0});
+                return ;
+            }
+        }else if(phone.length==11){
+            timeDown();
+        }
+    }
+    function checkCode(){
+        $.ajax({
+            url:"/phoneLogin/checkCode",
+            type:"POST",
+            data:$("#form").serialize(),
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });
+            },
+            success:function(result){
+                if(result==2){
+                    layer.msg('您的手机号已经在黑名单中',  {time: 3000, icon:5});
+                }else if(result==1){
+                    qingchuPhone();
+                    window.location.href="/toView?viewName=mall-home";
+                }else if(result==3){
+                    layer.msg("没有检测到您的手机号");
+                }
+            },
+            error:function(){
+                layer.msg("ajax访问失败,请看控制台");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+    }
+
+    function qingchuPhone() {
+        $("#inputPassword").val("");
+        $("#yzm").val("");
+    }
+    /*验证码 end*/
     function keyLogin(){
         if (event.keyCode==13)  //回车键的键值为13
             toLogin();//调用登录按钮的登录事件
     }
+
+    function queryLoginAccount() {
+        var registerLoginacct=$("#registerLoginacct").val();
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/phoneLogin/queryLoginAccount",
+                       type:"POST",
+                       data:{loginacct:registerLoginacct},
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           if (a==1) {
+                               $("#s1").html("<font color='red'>&nbsp &nbsp 用户名已经存在</font>");
+                               $("#zhuce").attr("disabled",true);
+                           }else{
+                               $("#s1").html("");
+                               $("#zhuce").attr("disabled",false);
+                           }
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
 </script>
 <body onkeypress="keyLogin()">
 <input type="hidden" id="reUrl" th:value="${session.reUrl?.htmlUrl}">
+<!--模态框start-->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">您好,欢迎您注册!</h4>
+            </div>
+            <div class="modal-body">
+                <!--内容start-->
+                <form id="registerForm">
+                    <div style="width: 60%">
+                        <div>
+                            <input id="registerLoginacct" name="loginacct" type="text" class="form-control"
+                                   placeholder="账号" onblur="queryLoginAccount()">
+                            <span id="s1"></span>
+                        </div>
+                    </div>
+                    <div style="width: 60%">
+                        <div>
+                            <input id="userpswd11" name="userpswd" type="password" class="form-control"
+                                   placeholder="密码">
+                        </div>
+                    </div>
+                    <div style="width: 60%">
+                        <div>
+                            <input id="userNameCon" name="username" type="text" class="form-control"
+                                   placeholder="用户名">
+                        </div>
+                    </div>
+                    <div style="width: 70%">
+                        <div>
+                            <input id="emailCon" name="email" type="text" class="form-control"
+                                   placeholder="邮箱">
+                        </div>
+                    </div>
+                    <div style="width: 70%">
+                        <div>
+                            <input id="phoneCon" name="phone" type="text" class="form-control"
+                                   placeholder="电话">
+                        </div>
+                    </div>
+                    <div class="">
+                        <span class="help-block u-errormessage" id="js-server-helpinfo">&nbsp;</span>			</div>
+                    <div>
+                        <!-- Button trigger modal -->
+                        <a href="#" onclick="">忘记密码?</a>
+                    </div>
+                </form><!-- form -->
+                <!--内容end-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="zhuce" onclick="registerForm()" class="btn btn-primary">注册</button>
+                <button type="button" onclick="qingchu()" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!--模态框end-->
 <div class="up" >
     <img src="/images/huangkuang.jpg" width="50px" height="60px;" class="hy_img">
     <div class="hy">
@@ -119,11 +399,11 @@
                     账号密码登录
                 </a>
             </li>
-            <!--<li>-->
-                <!--<a href="#ios" data-toggle="tab">-->
-                    <!--手机登录-->
-                <!--</a>-->
-            <!--</li>-->
+            <li>
+                <a href="#ios" data-toggle="tab">
+                    手机登录
+                </a>
+            </li>
 
         </ul>
         <!--ul end-->
@@ -133,6 +413,7 @@
                 <div class="l1 ">
                     <div class="l1_font_01 ">您好,欢迎登录!</div>
                     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <button  class="btn btn-success" data-toggle="modal" data-target="#myModal">用户注册</button>
                 </div>
                 <div class="blank_01"></div>
                 <div class="ts">
@@ -140,25 +421,34 @@
                 </div>
                 <div class="blank_01"></div>
                 <form  id="login_form" method="post">
-                    <div class="row">
-                        <div class="col-lg-6" style="margin-left: 10px">
-                            <input type="text" name="loginacct" lay-verify="title"
-                                   autocomplete="off" placeholder="账号" class="layui-input">
-                        </div><!-- /.col-lg-6 -->
+                    <div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button">
+							账号
+						</button>
+					</span>
+                        <input type="text" id="name1"  name="loginacct"  class="form-control">
+                    </div>
                     <div class="blank_01"></div>
                     <div class="blank_01"></div>
-                        <div class="col-lg-6"  style="margin-left: 10px">
-                            <input type="password" name="userpswd" lay-verify="title"
-                                   autocomplete="off" placeholder="密码" class="layui-input">
-                        </div><!-- /.col-lg-6 -->
+                    <div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" >
+							密码
+						</button>
+					</span>
+                        <input type="password" id="password1" name="userpswd"  class="form-control">
+                    </div>
                     <div class="blank_01"></div>
                     <div class="blank_01"></div>
-                </form>
-                <div class="box_01">
+                    <div class="box_01">
+                        <input id="checkbox1" type="checkbox" value="1" name="remempwd"  class="box_01_box">
                         <div class="box_01_both">
+                            <div class="box_01_both_1">记住密码</div>
                             <div class="box_01_both_2">忘记密码？</div>
                         </div>
                     </div>
+                </form>
                 <div class="blank_01"></div>
                 <a href="#" class="aline">
                     <div style="background: #FF8C69;" class="red_button" onclick="toLogin()">
@@ -179,12 +469,32 @@
                 <div class="l1 ">
                     <div class="l1_font_01 ">您好,欢迎登录!</div>
                     &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <button  class="btn btn-info" data-toggle="modal" data-target="#myModal">用户注册</button>
                 </div>
                 <div class="blank_01"></div>
                 <div class="ts">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
                 <div class="blank_01"></div>
+                <form id="form">
+                    <div style="width: 70%">
+                        <div>
+                            <input name="phone_no" type="text" class="form-control" id="inputPassword"
+                                   placeholder="手机号">
+                        </div>
+                    </div>
+                    &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+                    <button style="width: 100px;height: 30px" type="button" onclick="checkPhone()" id="sendCode" class="btn btn-default">
+                        发送验证码
+                    </button>
+                    <div style="width: 70%">
+                        <div>
+                            <input  id="yzm" name="verify_code" type="text" class="form-control"  placeholder="验证码">
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </form>
                 <div class="blank_01"></div>
                 <a href="#" class="aline">
                     <div style="background: #FF8C69;" class="red_button" onclick="checkCode()">
@@ -211,7 +521,6 @@
     <br>
     <font size="5px">最终解释权归第一组所有!!!!!</font>
 </div>
-
 </body>
 </html>
 
