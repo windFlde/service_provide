@@ -32,11 +32,13 @@
                 });
             },
             success: function (a) {
+                var site=a.site;
                 $("#title").html(a.title);
                 $("#name").html(a.name);
                 $("#img1").prop("src", a.img);
-                // $("#music").attr("href", a.music);
+                $("#music").attr("href", a.music);
                 $("#content").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + a.content);
+                $("#getSite").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp--------文章发布于 "+site);
                 console.log(a);
             },
             error: function () {
@@ -135,7 +137,7 @@
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
     <font size="4px">
         <!-- 按钮触发模态框 -->
-        <a href='javascript:void(0)' onclicl="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
+        <a href='javascript:void(0)' onclick="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
 </div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <input type="hidden" id="wzId" th:value="${param?.id}">
@@ -155,9 +157,10 @@
     <div id="img" style="margin-top: 10px;margin-left: 90px">
         <img width="300px" src="" id="img1">
     </div>
-    <!--<div style="margin-top: 5px;margin-left: 60px">-->
-        <!--<audio controls="controls" id="music" src=""></audio>-->
-    <!--</div>-->
+    <!--收音机-->
+    <div style="margin-top: 5px;margin-left: 60px">
+        <audio controls="controls" id="music" src=""></audio>
+    </div>
     <div class="panel panel-default" style="margin-left:50px;margin-top: 20px">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -165,6 +168,7 @@
             </h3>
         </div>
         <div id="content" style="margin-top: 5px;margin-left: 15px;margin-right: 10px"></div>
+        <div id="getSite"></div>
     </div>
     <div style="background-color: #D3D3D3;width: 450px;height: 100px;margin-left: 50px">
         <div style="float: left;margin-left: 15px ;margin-top: 15px">
@@ -223,5 +227,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
 </div>
+
 </body>
 </html>
