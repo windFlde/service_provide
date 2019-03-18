@@ -24,7 +24,7 @@
                         $.each(result,function (index,obj) {
                             cont += "<br>";
                             cont += "<div class='load_div' style='background-color:#F3F3F3'>";
-                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>"+obj.em_title+"</a></font><br><br>";
+                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>"+obj.em_title+"</a></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
                             cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>"+obj.dt_name+"&nbsp;·&nbsp;"+obj.dt_addr+"</font><br><br>";
                             cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>"+obj.em_createtime+"&nbsp;&nbsp;&nbsp;          "+obj.em_browse+"人观看&nbsp;&nbsp;&nbsp;          获得"+obj.em_medal+"枚奖章</font><br><br>";
                             cont += "<center><img src='"+obj.em_img+"'width='500px' height='300px'></center>"

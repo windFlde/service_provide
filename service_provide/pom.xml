@@ -37,16 +37,6 @@
 
         </dependency>
 
-        <!--redis依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.8.6</version>
-        </dependency>
         <!--aop-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -63,12 +53,6 @@
             <artifactId>httpclient</artifactId>
             <version>4.5</version>
         </dependency>
-        <!--redis依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
         <!--httpclient依赖包 -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -110,13 +94,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <!-- 移除嵌入式tomcat插件 -->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!--//end-->
 
@@ -200,6 +177,16 @@
             <version>3.4.27.ALL</version>
         </dependency>
 
+        <!--redis依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

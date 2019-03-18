@@ -16,7 +16,7 @@ public interface WenZHangMapper {
 
     Redeem exIntegral(Redeem redeem);
 
-    User getUserMes(String userId);
+    User getUserMes(Integer userId);
 
     void updateUserCount(@Param("feiyong") Integer feiyong, @Param("id") Integer id);
 

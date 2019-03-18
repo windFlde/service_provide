@@ -35,4 +35,8 @@
     <select id="querySc" resultType="ShouCang">
         select * from  t_shoucang where title = #{title}
     </select>
+
+    <select id="querySs" resultType="Sensitivity">
+        select content from t_sensitivity
+    </select>
 </mapper>
