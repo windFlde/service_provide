@@ -23,4 +23,9 @@ public class PlayServiceImpl implements PlayService {
     public void addVIP(User user) {
         playMapper.addVIP(user);
     }
+
+    @Override
+    public User selectUserBalance(Integer id) {
+        return playMapper.selectUserBalance(id);
+    }
 }

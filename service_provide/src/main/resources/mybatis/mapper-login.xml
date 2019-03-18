@@ -8,4 +8,7 @@
         select  * from t_user where loginacct=#{loginacct} and userpswd=#{userpswd}
     </select>
 
+    <select id="toLoginByQQ" resultType="user">
+        select * from t_user where openId = #{opens}
+    </select>
 </mapper>

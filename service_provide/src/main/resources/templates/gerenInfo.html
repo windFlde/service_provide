@@ -25,14 +25,20 @@
         $("#span2").html("0000"+id);
         $("#span1").html(name);
 
-        /*var jf = $("reUr15").val()
-        var balance = $("reUr17").val()
-        var phone = $("reUr16").val()
-        var vip = $("reUr14").val();
-        /*$("#span3").html(jf);
+        var jf = $("#reUr15").val()
+        var balance = $("#reUr17").val()
+        var phone = $("#reUr16").val()
+        var vip = $("#reUr14").val();
+        if (vip == "1") {
+            vip="VIP"
+        }else {
+            vip="普通"
+        }
+
+        $("#span3").html(jf);
         $("#span4").html(balance);
         $("#span5").html(phone);
-        $("#span6").html(vip);*/
+        $("#span6").html(vip);
 
 
     });
