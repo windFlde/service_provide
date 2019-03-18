@@ -13,35 +13,9 @@
 <script type="text/javascript">
     var title = "";
     $(function() {
-        vip();
+        query();
+        getPingLun();
     })
-    function vip() {
-        var vip = $("#vip").val();
-        var id = $("#id").val();
-        var id2 = $("#nameVal").val()
-        if(id==""){
-            location.href="/home/ToPage?name=login"
-        }else {
-            if(vip==0){
-                $.ajax({
-                    url: '/bck/paySuccess',
-                    data: {emId:id2},
-                    success: function (a) {
-                        if(a=="1"){
-                            query();
-                            getPingLun();
-                        }else {
-                            location.href="/home/ToPage?name=pay"
-                        }
-                    }
-                })
-
-            }else {
-                query();
-                getPingLun();
-            }
-        }
-    }
 
     function query() {
         var id = $("#nameVal").val();
@@ -185,8 +159,7 @@
         border:1px solid #FFFFFF;
     }
 </style>
-<input type="hidden" id="id" th:value="${session.user?.id}">
-<input type="hidden" id="vip" th:value="${session.user?.vip}">
+
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">
 
