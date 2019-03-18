@@ -11,6 +11,8 @@
         var i = 1;
         var a = 3;
         cont = "";
+        var mony = 0;
+        var num = 0;
         var seeHeight = null;
         var scrollTop = null
         var totalHeight = null;
@@ -41,17 +43,12 @@
                         var totalBodyWidth = $(document.body).outerWidth(true);//浏览器当前窗口文档body的总宽度 包括border padding margin*/
                         scrollTop= $(window).scrollTop();//浏览器可视窗口顶端距离网页顶端的高度（垂直偏移）
                         totalHeight = $(document).height();//整个文档高度
-
                     },
                     error:function(){
                         alert("失败");
                     }
-
             })
         })
-
-
-
         // console.log(totalHeight,seeHeight,thisBodyHeight,totalBodyHeight,thisWidth,thisDocumentWidth,thisBodyWidth,totalBodyWidth,scrollTop);
         //添加滚动事件
         $(window).scroll(function(){
@@ -96,6 +93,15 @@
         function back(){
                 window.location.href="/home/ToPage?name=index-home";
         }
+        function kaitongVIP() {
+            location.href="/home/ToPage?name=kaitongVIP";
+        }
+        function goumai() {
+            location.href="/zhifu/zhifu?jg="+mony;
+        }
+        function duihuan(){
+
+        }
         function xiangqing(id){
                 var vip = $("#vip").val();
                 var id2 = $("#id").val();
@@ -119,7 +125,25 @@
                                         }
                                     })
                                 }else {
-                                    location.href="/home/ToPage?name=pay"
+                                    /* payMony*/
+                                    $.ajax({
+                                        url: '/bck/payMony',
+                                        data: {emId:id},
+                                        success: function (ruslt) {
+                                            mony = ruslt.mony;
+                                            num = ruslt.num
+                                            layer.tab({
+                                                area: ['600px', '300px'],
+                                                tab: [{
+                                                    title: '查看文章',
+                                                    content: "<br><br><div><font color='#6495ed'>购买文章"+ruslt.mony+"元</font>  <input onclick='goumai()' class='btn btn-primary ' value='点击购买' style='margin-left: 105px;'></div><br>" +
+                                                        "<div><font color='#6495ed'>开通会员</font><input onclick='kaitongVIP()' class='btn btn-success'  value='点击开通'style='margin-left: 150px;' ></div><br>" +
+                                                        "<div><font color='#6495ed'>消费"+ruslt.num+"积分兑换（<font color='red'>时效30分钟</font>）<input onclick='duihuan("+id+")' class='btn btn-default'  value='点击兑换' ></font></div>"
+                                                }]
+                                            });
+
+                                        }
+                                    })
                                 }
                             }
                         })
@@ -138,7 +162,21 @@
                     }
                 }
         }
-
+        
+        
+        function duihuan(id) {
+            $.ajax({
+                url:'/bck/payEx',
+                data:{emId:id,mony:mony},
+                success:function() {
+                    window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                },
+                error: function () {
+                    alert("失败");
+                }
+            })
+        }
+        
     </script>
 
 </head>

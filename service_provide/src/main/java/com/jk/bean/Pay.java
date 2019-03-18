@@ -6,7 +6,7 @@ import lombok.Data;
 public class Pay {
 
     Integer id;
-    Integer userId;
+    Integer num;
     Integer emId;
-
+    Integer mony;
 }
