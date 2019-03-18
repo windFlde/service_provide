@@ -190,12 +190,12 @@ public class BckController {
     /*使用积分购买收费文章*/
     @ResponseBody
     @RequestMapping("payEx")
-    public String payEx(Integer emId,HttpSession session) {
+    public String payEx(Integer emId,Integer mony,HttpSession session) {
         User user = (User)session.getAttribute("user");
-        if(user.getNum()>100){
+        if(user.getNum()>mony){
            /* bckService.addPay(id,emId);*/
-            wenZHangService.updateUserCount(100,user.getId());
-            wenZHangService.insertIntegral("-100","购买文章",user.getId());
+            wenZHangService.updateUserCount(mony,user.getId());
+            wenZHangService.insertIntegral("-"+mony,"购买文章",user.getId());
             redisTemplate.opsForList().leftPush(Content.pay+user.getId()+emId,"aa");
             redisTemplate.expire(Content.pay+user.getId()+emId,30, TimeUnit.MINUTES);
             return "1";
@@ -204,6 +204,12 @@ public class BckController {
         }
     }
 
+    /*查看每篇收费文章的价格*/
+    @ResponseBody
+    @RequestMapping("payMony")
+    public Pay payMony(Integer emId) {
+        return bckService.payMony(emId);
+    }
     /*判断是否购买*/
     @ResponseBody
     @RequestMapping("paySuccess")

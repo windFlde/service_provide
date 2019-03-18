@@ -1,10 +1,7 @@
 package com.jk.service.impl;
 
 import com.github.pagehelper.PageHelper;
-import com.jk.bean.Example;
-import com.jk.bean.Integral;
-import com.jk.bean.Sensitivity;
-import com.jk.bean.ShouCang;
+import com.jk.bean.*;
 import com.jk.mapper.BckMapper;
 import com.jk.service.BckService;
 import org.springframework.stereotype.Service;
@@ -72,6 +69,11 @@ public class BckServiceImpl implements BckService {
     @Override
     public List<Sensitivity> querySs() {
         return bckMapper.querySs();
+    }
+
+    @Override
+    public Pay payMony(Integer emId) {
+        return bckMapper.payMony(emId);
     }
 
 }
