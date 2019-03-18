@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <title>首页</title>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/layer/layer.js"></script>
 
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
-
 </head>
 <script type="text/javascript">
     var ii = 0;
@@ -78,7 +78,7 @@
                    success:function(a){
                        var content = "<table class='table'>";
                         $.each(a, function (index,obj) {
-                            content += "<tr><td><a href='http://192.168.1.166:2001/wenz/toView?viewName=wenzhang&title="+obj.title+"&id="+obj.id+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
+                            content += "<tr><td><a href='/wenz/toView?viewName=wenzhang&title="+obj.title+"&id="+obj.id+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
                         })
                         content += "</table>";
                         $("#title1").html(content);
