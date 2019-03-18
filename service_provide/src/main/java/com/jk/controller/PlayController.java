@@ -29,13 +29,14 @@ public class PlayController {
      */
     @ResponseBody
     @RequestMapping("kaitongVIP")
-    public Integer kaitongVIP(KTVip ktVip) throws Exception {
+    public Integer kaitongVIP(KTVip ktVip, HttpSession session) throws Exception {
         User user = new User();
         String[] split = ktVip.getMoney().split("//@//%//&//");
         if(split.length > 2){
             user.setXufei(1);
         }
-        user.setUserid(ktVip.getUserid());
+        Integer userid = ktVip.getUserid();
+        user.setUserid(userid);
         Date date = new Date();
         user.setStarttime(date);
 
@@ -54,6 +55,11 @@ public class PlayController {
         user.setEndtime(d);
         //添加vip表
         playService.addVIP(user);
+        //修改user  vip字段
+        playService.updateVIP(userid);
+
+        User userFormDB = playService.selectUserBalance(userid);
+        session.setAttribute("user",userFormDB);
         return money;
     }
 

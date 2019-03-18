@@ -28,4 +28,6 @@ public interface HomeService {
     List<Integral> getjifenData(String userId);
 
     Integer getNum(String id);
+
+    List<Title> getTitleAll();
 }

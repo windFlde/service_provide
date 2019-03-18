@@ -10,4 +10,6 @@ public interface PlayMapper {
     User selectUserBalance(Integer id);
 
     void addVIP(User user);
+
+    void updateVIP(@Param("userid") Integer userid);
 }
