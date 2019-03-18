@@ -6,4 +6,5 @@ public interface LoginService {
 
     User toLogin(User users);
 
+    User toLoginByQQ(String opens);
 }

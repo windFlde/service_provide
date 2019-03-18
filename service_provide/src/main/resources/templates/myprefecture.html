@@ -26,14 +26,9 @@ $(function (){
     $("#span2").html("0000"+id);
     $("#span1").html(name);
 });
-
-    function togerenInfo(name) {
-        window.location.href="/wenz/toView?viewName="+name;
-    }
-
-    function tomyintegral(name) {
-    location.href="http://localhost:2001/home/ToPage?name="+name;
-    }
+function tomyintegral(name) {
+    location.href="/home/ToPage?name="+name;
+}
 
     function toViewHtml(v) {
         window.location.href="/wenz/toView?viewName="+v;

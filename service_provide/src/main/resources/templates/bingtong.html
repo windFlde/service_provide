@@ -24,7 +24,7 @@
                         $.each(result,function (index,obj) {
                             cont += "<br>";
                             cont += "<div class='load_div' style='background-color:#F3F3F3'>";
-                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>"+obj.em_title+"</a></font><br><br>";
+                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>"+obj.em_title+"</a></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
                             cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>"+obj.dt_name+"&nbsp;·&nbsp;"+obj.dt_addr+"</font><br><br>";
                             cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>"+obj.em_createtime+"&nbsp;&nbsp;&nbsp;          "+obj.em_browse+"人观看&nbsp;&nbsp;&nbsp;          获得"+obj.em_medal+"枚奖章</font><br><br>";
                             cont += "<center><img src='"+obj.em_img+"'width='500px' height='300px'></center>"
@@ -97,16 +97,46 @@
                 window.location.href="/home/ToPage?name=index-home";
         }
         function xiangqing(id){
-            $.ajax({
-                url:'/bck/updateById',
-                data:{id:id},
-                success:function() {
-                    window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
-                },
-                error: function () {
-                    alert("失败");
+                var vip = $("#vip").val();
+                var id2 = $("#id").val();
+                if(id2==""){
+                    location.href="/home/ToPage?name=login"
+                }else {
+                    if(vip==0){
+                        $.ajax({
+                            url: '/bck/paySuccess',
+                            data: {emId:id},
+                            success: function (a) {
+                                if(a=="1"){
+                                    $.ajax({
+                                        url:'/bck/updateById',
+                                        data:{id:id},
+                                        success:function() {
+                                            window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                                        },
+                                        error: function () {
+                                            alert("失败");
+                                        }
+                                    })
+                                }else {
+                                    location.href="/home/ToPage?name=pay"
+                                }
+                            }
+                        })
+
+                    }else {
+                        $.ajax({
+                            url:'/bck/updateById',
+                            data:{id:id},
+                            success:function() {
+                                window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                            },
+                            error: function () {
+                                alert("失败");
+                            }
+                        })
+                    }
                 }
-            })
         }
 
     </script>
@@ -140,6 +170,8 @@
         </style>
  </head>
  <body>
+ <input type="hidden" id="id" th:value="${session.user?.id}">
+ <input type="hidden" id="vip" th:value="${session.user?.vip}">
  <div style='height: 80px;width: 600px'>
  <nav class="navbar navbar-default " role="navigation">
 

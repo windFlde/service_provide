@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>首页</title>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/layer/layer.js"></script>
 
@@ -78,7 +79,7 @@
                    success:function(a){
                        var content = "<table class='table'>";
                         $.each(a, function (index,obj) {
-                            content += "<tr><td><a href='http://localhost:2001/wenz/toView?viewName=wenzhang&title="+obj.title+"&id="+obj.id+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
+                            content += "<tr><td><a href='http://192.168.1.166:2001/wenz/toView?viewName=wenzhang&title="+obj.title+"&id="+obj.id+"'><font size='4' style='color: #1c94c4'>"+obj.title+"</font></a></td></tr>";
                         })
                         content += "</table>";
                         $("#title1").html(content);
@@ -116,7 +117,7 @@
             </div>
         </nav><!--导航条-->
         <div style="padding-left:142px">
-            <font size="6">美赞臣婴幼儿营养研究院</font><br/><br/>
+            <font size="6">美赞臣婴幼儿营养研究院</font><a href="javascript:QC.Login.signOut();" style="margin-left:6px;">退出</a><br/><br/>
         </div>
         <div style="padding-left: 100px;padding-right: 68px;">
             <font size="4" >欢迎您来到美赞臣婴幼儿营养研究院，这里有最权威的专家团队、最前沿的热点资讯、最精彩的专家课程，别忘记注册成为我们的会员哦！</font>
@@ -130,18 +131,18 @@
             </div>
             <div class="row" style="margin-left: -100px;width: 430px;">   <!--170-->
                     <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;border-radius: 10px;" >
-                        <a href="http://localhost:2001/home/to?tmp=1"><img id="quanwei1" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a><br>
-                            <a href="http://localhost:2001/home/to?tmp=1"><font id="mingcheng1" ></font></a><br>
+                        <a href="http://192.168.1.166:2001/home/to?tmp=1"><img id="quanwei1" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a><br>
+                            <a href="http://192.168.1.166:2001/home/to?tmp=1"><font id="mingcheng1" ></font></a><br>
                         <font id="dizhi1" size="2"></font>
                     </div>
                     <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-top: -200px;margin-left: 163px;;border-radius: 10px;" >
-                        <a href="http://localhost:2001/home/to?tmp=1"><img id="quanwei2" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
-                        <a href="http://localhost:2001/home/to?tmp=1"><font id="mingcheng2" ></font></a><br>
+                        <a href="http://192.168.1.166:2001/home/to?tmp=1"><img id="quanwei2" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                        <a href="http://192.168.1.166:2001/home/to?tmp=1"><font id="mingcheng2" ></font></a><br>
                         <font id="dizhi2" size="2"></font>
                     </div>
                     <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-left: 325px;margin-top: -199px;;border-radius: 10px;" >
-                        <a href="http://localhost:2001/home/to?tmp=1"><img id="quanwei3" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
-                        <a href="http://localhost:2001/home/to?tmp=1"><font id="mingcheng3" ></font></a><br>
+                        <a href="http://192.168.1.166:2001/home/to?tmp=1"><img id="quanwei3" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                        <a href="http://192.168.1.166:2001/home/to?tmp=1"><font id="mingcheng3" ></font></a><br>
                         <font id="dizhi3" size="2"></font>
                     </div>
             </div>
@@ -153,8 +154,8 @@
             </div>
             <div class="row" style="margin-left: -100px;width: 430px;">   <!--170-->
                 <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;border-radius: 10px;" >
-                    <a href="http://localhost:2001/home/to?tmp=0"><img id="zanmei1"  style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
-                    <a href="http://localhost:2001/home/to?tmp=0"><font id="mingcheng21" ></font></a><br>
+                    <a href="http://192.168.1.166:2001/home/to?tmp=0"><img id="zanmei1"  style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                    <a href="http://192.168.1.166:2001/home/to?tmp=0"><font id="mingcheng21" ></font></a><br>
                     <font id="dizhi21" size="2"></font>
                 </div>
                 <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-top: -200px;margin-left: 163px;;border-radius: 10px;" >
@@ -163,8 +164,8 @@
                     <font id="dizhi22" size="2"></font>
                 </div>
                 <div class="col-md-4" style="width: 160px;height: 200px;background-color: #9acfea;margin-left: 325px;margin-top: -199px;;border-radius: 10px;" >
-                    <a href="http://localhost:2001/home/to?tmp=0"><img id="zanmei3" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
-                    <a href="http://localhost:2001/home/to?tmp=0"><font id="mingcheng23" ></font></a><br>
+                    <a href="http://192.168.1.166:2001/home/to?tmp=0"><img id="zanmei3" style="border-radius: 10px;margin-top: 11px;" src="http://doctorimg.oss-cn-beijing.aliyuncs.com/photo.png?Expires=1551787221&OSSAccessKeyId=TMP.AQGl93kkMkzf8leUlaw7PkxbfH_j9MBWmHJG8OnbvmYfx6j4qIsI0PxmAJjAMC4CFQCDNn8F_SoOXKaprvpGF15cz__l9AIVAMaR55OZapSRMhzc9pbpa9WejAj9&Signature=IOAQo0jqIiqrN7sNVDKhf47JAZc%3D" height="130px" width=130px/></a>
+                    <a href="http://192.168.1.166:2001/home/to?tmp=0"><font id="mingcheng23" ></font></a><br>
                     <font id="dizhi23" size="2"></font>
                 </div>
             </div>

@@ -20,4 +20,5 @@ public class PingLun {
     String time;
     String huifu="";
     String aa = "";
+    Integer black;
 }

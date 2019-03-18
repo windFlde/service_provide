@@ -91,12 +91,12 @@ $(function (){
             location.href="/home/ToPage?name=eacharts";
         }
 
+        location.href="/wenz/toView?viewName="+v;
     }
 </script>
 <body>
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <input type="hidden" id="reUrl2" th:value="${session.user?.num}">
-<input type="hidden" id="reUrl3" th:value="${session.user?.loginacct}">
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">
 

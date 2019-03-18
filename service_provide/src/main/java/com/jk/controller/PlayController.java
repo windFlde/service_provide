@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.jk.bean.User;
 import com.jk.service.PlayService;
 import com.jk.util.AlipayConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @Controller
@@ -59,7 +61,9 @@ public class PlayController {
 
     @ResponseBody
     @RequestMapping("updateBlance")
-    public void updateBlance(Integer jg,Integer id) {
+    public void updateBlance(Integer jg, Integer id, HttpSession session) {
         playService.updateBlance(jg,id);
+        User userFormDB = playService.selectUserBalance(id);
+        session.setAttribute("user",userFormDB);
     }
 }

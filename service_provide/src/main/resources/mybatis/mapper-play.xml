@@ -6,4 +6,23 @@
         update t_user set balance = balance + #{jg} where id = #{id}
     </update>
 
+    <!--void addVIP(User user);-->
+    <insert id="addVIP">
+      INSERT INTO t_vip (
+            userid,
+            starttime,
+            endtime,
+            xufei,
+            fasong
+        )
+        VALUES
+          ( #{userid},
+            #{starttime},
+            #{endtime},
+            #{xufei},
+            #{fasong} )
+    </insert>
+    <select id="selectUserBalance" resultType="user">
+        select * from t_user where id = #{id}
+    </select>
 </mapper>
