@@ -48,6 +48,11 @@
         }
 
     }
+
+    function qingchuAccountAndPwd() {
+        $("#password1").val("");
+        $("#name1").val("");
+    }
     function toLogin() {
         var reUrl=$("#reUrl").val();
             /*ajax   start*/
@@ -73,13 +78,16 @@
                                            if (result) {
                                                window.location.href = reUrl;
                                                removeReUrl();
+                                               qingchuAccountAndPwd();
                                            } else {
+                                               qingchuAccountAndPwd();
                                                window.location.href = "/wenz/toView?viewName=index-home";
                                            }
                                        }
                                    });
                                    /* 确认框end */
                                } else {
+                                   qingchuAccountAndPwd();
                                    window.location.href = "/wenz/toView?viewName=index-home";
                                }
                            }else if (a==1) {

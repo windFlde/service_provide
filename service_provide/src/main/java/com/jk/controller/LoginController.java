@@ -3,7 +3,6 @@ package com.jk.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.User;
 import com.jk.service.LoginService;
-import com.jk.util.Constant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,30 +32,32 @@ public class LoginController {
         }
         session.setAttribute("user",userFromDB);
 
+
         //正确
         //判断有没有记住密码
         if (user.getRemempwd()!=null) {
             String jsonString = JSONObject.toJSONString(user);
             String encode = null;
             //捕捉异常
-            try {
-                encode = URLEncoder.encode(jsonString, "utf-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+                try {
+                    encode = URLEncoder.encode(jsonString, "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
             Cookie pwd = new Cookie("pwd",encode);
+
             pwd.setMaxAge(410381);
             pwd.setPath("/");
             response.addCookie(pwd);
 
             /* 将用户的用户名称存放到cookie中 - start*/
-            Cookie userName=new Cookie(Constant.userName,userFromDB.getUsername());
-            userName.setMaxAge(410381);
-            userName.setPath("/");
-            response.addCookie(userName);
+//            Cookie userName=new Cookie(Constant.userName,userFromDB.getUsername());
+//            userName.setMaxAge(410381);
+//            userName.setPath("/");
+//            response.addCookie(userName);
             /*将用户的用户名称存放到cookie中 end*/
-        }else{
-            Cookie cc=new Cookie(Constant.remPwd,"");
+        }else {
+            Cookie cc = new Cookie("pwd", "");
             cc.setMaxAge(0);
             cc.setPath("/");
             response.addCookie(cc);
