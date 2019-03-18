@@ -159,7 +159,8 @@
         border:1px solid #FFFFFF;
     }
 </style>
-
+<input type="hidden" id="id" th:value="${session.user?.id}">
+<input type="hidden" id="vip" th:value="${session.user?.vip}">
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">
 

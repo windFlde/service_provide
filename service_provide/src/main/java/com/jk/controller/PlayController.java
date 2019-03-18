@@ -3,23 +3,60 @@ package com.jk.controller;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.jk.bean.KTVip;
 import com.jk.bean.User;
 import com.jk.service.PlayService;
 import com.jk.util.AlipayConfig;
+import groovy.util.logging.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.UUID;
 
 @Controller
+@Log4j
 @RequestMapping("zhifu")
 public class PlayController {
-
     @Autowired
     PlayService playService;
+
+    /**
+     *修改字段
+     */
+    @ResponseBody
+    @RequestMapping("kaitongVIP")
+    public Integer kaitongVIP(KTVip ktVip) throws Exception {
+        User user = new User();
+        String[] split = ktVip.getMoney().split("//@//%//&//");
+        if(split.length > 2){
+            user.setXufei(1);
+        }
+        user.setUserid(ktVip.getUserid());
+        Date date = new Date();
+        user.setStarttime(date);
+
+        //开通时间
+        String s1 = split[1];
+        Integer day = Integer.valueOf(s1);
+
+        //开通费用
+        String s = split[0];
+        Integer money = Integer.valueOf(s);
+
+        long time = date.getTime();
+        long daytime = day * 86400000L;
+        long endtime = time + daytime;
+        Date d = new Date(endtime);
+        user.setEndtime(d);
+        //添加vip表
+        playService.addVIP(user);
+        return money;
+    }
+
     /*
     支付
      */
