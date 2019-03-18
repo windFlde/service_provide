@@ -39,4 +39,8 @@
     <select id="querySs" resultType="Sensitivity">
         select content from t_sensitivity
     </select>
+
+    <select id="payMony" resultType="Pay">
+        select * from  t_pay where emId = #{emId}
+    </select>
 </mapper>

@@ -32,11 +32,13 @@
                 });
             },
             success: function (a) {
+                var site=a.site;
                 $("#title").html(a.title);
                 $("#name").html(a.name);
                 $("#img1").prop("src", a.img);
-                // $("#music").attr("href", a.music);
+                $("#music").attr("href", a.music);
                 $("#content").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" + a.content);
+                $("#getSite").html("&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp--------文章发布于 "+site);
                 console.log(a);
             },
             error: function () {
@@ -128,7 +130,6 @@
     }
 </script>
 <body>
-<div style="margin-left: 475px;">
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <input type="hidden" id="reUrl2" th:value="${session.user?.username}">
 <div style="margin-left: 20px">
@@ -156,9 +157,10 @@
     <div id="img" style="margin-top: 10px;margin-left: 90px">
         <img width="300px" src="" id="img1">
     </div>
-    <!--<div style="margin-top: 5px;margin-left: 60px">-->
-        <!--<audio controls="controls" id="music" src=""></audio>-->
-    <!--</div>-->
+    <!--收音机-->
+    <div style="margin-top: 5px;margin-left: 60px">
+        <audio controls="controls" id="music" src=""></audio>
+    </div>
     <div class="panel panel-default" style="margin-left:50px;margin-top: 20px">
         <div class="panel-heading">
             <h3 class="panel-title">
@@ -195,7 +197,7 @@
         <div style="float: left;margin-left:15px ;margin-top: 15px">
             <a href='javascript:void(0)' onclick=toView()>
                 <div><img width="70px" height="60px" src="/js/img/20190107163940.png"></div>
-                <div>常见Q&A</div>
+                <div><font size="4" style="color: #1c94c4">常见Q&A</font></div>
             </a>
         </div>
     </div>
@@ -224,6 +226,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
 </div>
-</div>
+
 </body>
 </html>
