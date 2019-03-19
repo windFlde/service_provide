@@ -145,9 +145,9 @@ public class WenZhangController {
     }
     @ResponseBody
     @RequestMapping("insertTitleName")
-    public String insertTitleName(HttpServletResponse response) {
+    public String insertTitleName(HttpServletResponse response,String ziduan) {
         Cookie cc=new Cookie(Constant.titleName,"1");
-        cc.setMaxAge(0);
+        cc.setMaxAge(410381);
         cc.setPath("/");
         response.addCookie(cc);
         return "1";
@@ -159,6 +159,34 @@ public class WenZhangController {
         List<MainContent>list=wenZHangService.getMoadlContent();
         return list;
     }
+    @ResponseBody
+    @RequestMapping("mainModal")
+    public String mainModal(HttpServletResponse response,String ziduan) {
+        Cookie cc=new Cookie(Constant.mainModal,"1");
+        cc.setMaxAge(410381);
+        cc.setPath("/");
+        response.addCookie(cc);
+        return "1";
+    }
+    @ResponseBody
+    @RequestMapping("getMainModalCookie")
+    public String getMainModalCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(Constant.mainModal)) {
+                    String val = cookie.getValue();
+                    if (val.equals("0")) {
+                        return "0";
+                    }else{
+                        return "1";
+                    }
+                }
+            }
+        }
+        return "0";
+    }
+
 
 
 }

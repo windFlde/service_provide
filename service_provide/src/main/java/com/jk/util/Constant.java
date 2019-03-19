@@ -26,4 +26,6 @@ public class Constant {
 
     public static final String titleName="title_name";
 
+    public static final String mainModal="main_modal";
+
 }
