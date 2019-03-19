@@ -16,6 +16,7 @@
         query();
         getPingLun();
     })
+
     function query() {
         var id = $("#nameVal").val();
         var cont = "";
@@ -61,8 +62,14 @@
         $.ajax({
             url: '/bck/addPingLun',
             data: {content: name,em_id:id},
-            success: function () {
-                layer.msg('留言成功!!', {time:1000, icon:1});
+            success: function (a) {
+                if(a=="1"){
+                    layer.msg('等待审核!!', {time:1000, icon:1});
+                }else if(a=="0"){
+                    layer.msg('留言成功!!', {time:1000, icon:1});
+                }else {
+                    layer.msg('最多留言5条!!', {time:1000, icon:2});
+                }
                 $('#aa').html("");
                 
                 getPingLun();
@@ -152,6 +159,8 @@
         border:1px solid #FFFFFF;
     }
 </style>
+<input type="hidden" id="id" th:value="${session.user?.id}">
+<input type="hidden" id="vip" th:value="${session.user?.vip}">
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">
 

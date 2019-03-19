@@ -25,7 +25,4 @@ public interface ExprentViewService {
     void updatePeople(String id);
 
     void updatePeopleTwo(String id);
-
-
-    Img queryImg(Integer id);
 }

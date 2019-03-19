@@ -30,7 +30,7 @@ function getneirong() {
                success:function(a){
                    var tmp = $("#tmp").val();
                    var id = $("#id1").val();
-                   $("#href1").prop("href","http://localhost:2001/home/towenzhang?id="+a.zeid+"&tmp="+tmp);
+                   $("#href1").prop("href","http://192.168.1.166:2001/home/towenzhang?id="+a.zeid+"&tmp="+tmp);
 
                  $("#title1").html(a.title);
                  $("#shijian").html(a.creaTime +"&nbsp;&nbsp;&nbsp;共浏览:"+a.browse+"次");

@@ -17,7 +17,7 @@ $(function (){
 function getjingxuanwenzhang(){
     var tmp = $("#tmp").val();
     var id = $("#id1").val();
-    $("#href1").prop("href","http://localhost:2001/home/to?tmp="+tmp);
+    $("#href1").prop("href","http://192.168.1.166:2001/home/to?tmp="+tmp);
     /*ajax   start*/
             $.ajax({
                url:"/home/getGoodsWord",
@@ -35,7 +35,7 @@ function getjingxuanwenzhang(){
                            ,closeBtn: 0
                            ,anim: 4 //动画类型
                        },function () {
-                           location.href="http://localhost:2001/home/to?tmp="+tmp;
+                           location.href="http://192.168.1.166:2001/home/to?tmp="+tmp;
                        });
                    }
                    var content = "";

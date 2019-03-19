@@ -6,7 +6,7 @@
         <!-- List<User> queryChuangguan();-->
     <select id="queryChuangguan" resultType="User">
 
-        select username,count  from t_user order by count desc;
+        select username ,count as count from t_user order by count desc;
 
     </select>
 

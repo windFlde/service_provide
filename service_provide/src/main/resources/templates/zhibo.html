@@ -108,19 +108,19 @@
     /*查询留言开始*/
     function queryLiuyan() {
         var id=$("#id").val();
+        /*var userId=$("#userId").val();*/
          $.ajax({
                  url:'/queryLiuyan',
                  type:'post',
                  data:{id:id},
                  success:function (data) {
-                     console.log(data);
                      var conent = "";
                      $.each(data,function (index,obj) {
                          conent+="<div style='width: 450px;background-color:#F3F3F3;height: 180px;margin-left:40px'>"
                          conent+="<div style='margin-left: 30px;float:left;'><br>"
                          conent+="<img src="+obj.img+" width='100px' height='100px'class='img-circle'>"
                          conent+="</div><br>"
-                         conent+="<div style='margin-left:150px;margin-top:5px'><font size='4px'>"+obj.name+"</font>&nbsp;&nbsp;&nbsp;&nbsp;"+obj.time+"<br><br>"
+                         conent+="<div style='margin-left:150px;margin-top:5px'><font size='4px'>"+obj.name+"</font><br><br>"
                          conent+="<font size='3px'>"+obj.content+"</font>"
                          conent+="</div>"
                          conent+="</div>"

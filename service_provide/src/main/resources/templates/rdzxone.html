@@ -92,7 +92,6 @@
                 url: '/bck/queryPingLun2',
                 data:{id:id},
                 success: function (result) {
-                    console.log(result);
                     $.each(result, function (index, obj) {
                         contt += "<div  class='article' style='width: 600px;height: 110px'>";
                        contt += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
@@ -169,7 +168,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                <div style="margin-left: 50px"></div>
-                <a class="navbar-brand" href="javascript:void(0)" onclick="back()">返回</a>
+
                 <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;热点资讯</font></a>
                 <a class="navbar-brand" href="javascript:void(0)" onclick="addShoucang()">收藏</a>
             </div>

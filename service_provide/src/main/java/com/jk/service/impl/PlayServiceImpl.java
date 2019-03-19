@@ -1,8 +1,8 @@
 package com.jk.service.impl;
 
+import com.jk.bean.User;
 import com.jk.mapper.PlayMapper;
 import com.jk.service.PlayService;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,5 +17,20 @@ public class PlayServiceImpl implements PlayService {
     @Override
     public void updateBlance(Integer jg,Integer id) {
         playMapper.updateBlance(jg,id);
+    }
+
+    @Override
+    public void addVIP(User user) {
+        playMapper.addVIP(user);
+    }
+
+    @Override
+    public void updateVIP(Integer userid) {
+        playMapper.updateVIP(userid);
+    }
+
+    @Override
+    public User selectUserBalance(Integer id) {
+        return playMapper.selectUserBalance(id);
     }
 }

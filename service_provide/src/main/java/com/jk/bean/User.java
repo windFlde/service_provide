@@ -24,9 +24,19 @@ public class User implements Serializable {
     String img;
     Integer count;
     Integer num;
-    Integer balance;
     Integer vip;
+    Integer balance;
 
+    Integer userid;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    Date starttime;  //开通时间
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+
+    Date endtime;    //到期时间
+    Integer fasong = 0;
+    Integer xufei ;
 }
 
 

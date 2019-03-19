@@ -26,14 +26,9 @@ $(function (){
     $("#span2").html("0000"+id);
     $("#span1").html(name);
 });
-
-    function togerenInfo(name) {
-        window.location.href="/wenz/toView?viewName="+name;
-    }
-
-    function tomyintegral(name) {
-    location.href="http://localhost:2001/home/ToPage?name="+name;
-    }
+function tomyintegral(name) {
+    location.href="/home/ToPage?name="+name;
+}
 
     function toViewHtml(v) {
         window.location.href="/wenz/toView?viewName="+v;
@@ -43,6 +38,7 @@ $(function (){
     }
 </script>
 <body>
+<div style="margin-left: 475px;">
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <input type="hidden" id="reUrl2" th:value="${session.user?.username}">
 <input type="hidden" id="reUrl3" th:value="${session.user?.img}">
@@ -100,5 +96,6 @@ $(function (){
            </div>
        </div>
 </div>
+    </div>
 </body>
 </html>

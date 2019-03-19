@@ -1,8 +1,6 @@
 package com.jk.service;
 
-import com.jk.bean.Example;
-import com.jk.bean.Integral;
-import com.jk.bean.ShouCang;
+import com.jk.bean.*;
 
 import java.util.List;
 
@@ -23,4 +21,8 @@ public interface BckService {
     void addIg(Integral integral);
 
     boolean querySc(String title);
+
+    List<Sensitivity> querySs();
+
+    Pay payMony(Integer emId);
 }

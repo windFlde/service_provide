@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jk.mapper.BckMapper">
-    <select id="queryExample" resultType="Example">
+    <select id="queryExample" resultType="com.jk.bean.Example">
          SELECT e.*,d.* FROM `t_ example` e,t_docutor_expert d where e.em_zeid = d.id ORDER BY e.em_createtime DESC
 
     </select>
 
-    <select id="queryExampleById" resultType="Example">
+    <select id="queryExampleById" resultType="com.jk.bean.Example">
          SELECT e.*,d.* FROM `t_ example` e,t_docutor_expert d where e.em_zeid = d.id and e.id = #{id}
     </select>
 
@@ -18,7 +18,7 @@
         insert into t_shoucang (userId,wzId,tname,ttime,title) values (#{userId},#{wzId},#{tname},NOW(),#{title})
     </insert>
 
-    <select id="queryShouCang" resultType="ShouCang">
+    <select id="queryShouCang" resultType="com.jk.bean.ShouCang">
         SELECT w.id wzId,s.title title,s.ttime,s.tname
         FROM `t_ example` w,t_shoucang s
         WHERE w.id = s.wzId AND s.userId =#{id} order by s.ttime desc
@@ -32,7 +32,15 @@
         insert into t_integral (igName,createtime,count,userId) values (#{igName},now(),#{count},#{userId});
     </insert>
 
-    <select id="querySc" resultType="ShouCang">
+    <select id="querySc" resultType="com.jk.bean.ShouCang">
         select * from  t_shoucang where title = #{title}
+    </select>
+
+    <select id="querySs" resultType="Sensitivity">
+        select content from t_sensitivity
+    </select>
+
+    <select id="payMony" resultType="Pay">
+        select * from  t_pay where emId = #{emId}
     </select>
 </mapper>
