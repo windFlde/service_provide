@@ -66,5 +66,12 @@
         update t_guandian set gd_browse=gd_browse+1 where id=#{id}
     </update>
 
+    <!--Img queryImg(Integer id);-->
+    <!--查询广告-->
+    <select id="queryImg" resultType="Img">
+
+        select * from t_img where id=#{id}
+    </select>
+
 
 </mapper>

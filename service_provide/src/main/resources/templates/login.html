@@ -27,16 +27,15 @@
             //decodeURIComponent  解码
             var cookie=document.cookie;
             console.log("-=====>"+cookie)
-            var cookieList=cookie.split(";");
-            var sp=cookieList[0];
-            var sp1=sp.split("=");
-            var sp2=sp1[1];
-            var x=decodeURIComponent(sp2);
+            var sp=cookie.split("=");
+            var sp1=sp[1];
+            var sp2=sp1.split(";");
+            var sp3=sp2[0];
+            var x=decodeURIComponent(sp3);
             var b=JSON.parse(x);
             var loginaccount=b.loginacct;
             var userpswd=b.userpswd;
             var remempwd=b.remempwd;
-            console.log("loginaccount="+loginaccount+" ,userpswd="+userpswd+",remempwd="+remempwd);
             $("#name1").val(loginaccount);
             $("#password1").val(userpswd);
             /*if start*/
@@ -48,6 +47,11 @@
             return ;
         }
 
+    }
+
+    function qingchuAccountAndPwd() {
+        $("#password1").val("");
+        $("#name1").val("");
     }
     function toLogin() {
         var reUrl=$("#reUrl").val();
@@ -74,14 +78,16 @@
                                            if (result) {
                                                window.location.href = reUrl;
                                                removeReUrl();
+                                               qingchuAccountAndPwd();
                                            } else {
+                                               qingchuAccountAndPwd();
                                                window.location.href = "/wenz/toView?viewName=index-home";
                                            }
                                        }
                                    });
                                    /* 确认框end */
                                } else {
-                                   console.log($("#checkbox1").val())
+                                   qingchuAccountAndPwd();
                                    window.location.href = "/wenz/toView?viewName=index-home";
                                }
                            }else if (a==1) {

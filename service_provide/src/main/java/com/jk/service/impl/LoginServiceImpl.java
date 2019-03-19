@@ -18,9 +18,4 @@ public class LoginServiceImpl implements LoginService {
         return loginMapper.toLogin(users);
     }
 
-    @Override
-    public User toLoginByQQ(String opens) {
-        return loginMapper.toLoginByQQ(opens);
-    }
-
 }

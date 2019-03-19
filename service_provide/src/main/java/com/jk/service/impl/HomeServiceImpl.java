@@ -79,10 +79,5 @@ public class HomeServiceImpl implements HomeService {
         return num.getNum();
     }
 
-    @Override
-    public List<Title> getTitleAll() {
-        return homeMapper.getTitleAll();
-    }
-
 
 }

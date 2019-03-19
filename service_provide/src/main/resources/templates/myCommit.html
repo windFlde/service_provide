@@ -20,7 +20,6 @@
     function getCollectData() {
         /*ajax   start*/
         var id = $("#reUrl1").val();
-        var black = 1;
         if(id==""){
             layer.msg('请先登录!!', {time:1000, icon:2});
             location.href="/home/ToPage?name=login";
@@ -28,7 +27,7 @@
         $.ajax({
             url:"/bck/queryCommit",
             async:false,
-            data:{id:id,black:black},
+            data:{id:id},
             beforeSend:function(){
                 ii = layer.msg('加载中', {
                     icon: 16
@@ -73,10 +72,16 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            更多操作 <b class="caret"></b>
+                            Java <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/home/ToPage?name=myCommitcc">查看待审核的提问</a></li>
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
                         </ul>
                     </li>
                 </ul>

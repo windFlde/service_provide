@@ -59,4 +59,9 @@ public class ExprentViewServiceImpl implements ExprentViewService {
         exprentViewMapper.updatePeopleTwo(id);
     }
 
+    @Override
+    public Img queryImg(Integer id) {
+        return exprentViewMapper.queryImg(id);
+    }
+
 }

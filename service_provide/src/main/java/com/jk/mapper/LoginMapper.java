@@ -6,5 +6,4 @@ public interface LoginMapper {
 
     User toLogin(User users);
 
-    User toLoginByQQ(String opens);
 }

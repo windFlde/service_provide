@@ -34,7 +34,7 @@ public class WenZHangServiceImpl implements WenZHangService {
     }
 
     @Override
-    public User getUserMes(Integer userId) {
+    public User getUserMes(String userId) {
         return wenZhangMapper.getUserMes(userId);
     }
 

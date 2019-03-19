@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,38 +59,6 @@ public class ChuangguanController {
         mongoTemplate.remove(id);
         return "success";
     }
-
-    @RequestMapping("AddAnswer")
-    @ResponseBody
-    public int AddAnswer(Answer answer) {
-
-        ArrayList list = new ArrayList();
-        /*list.add(answer.get);
-        list.add(answer.get);
-        list.add(answer.get);
-        list.add(answer.get);
-        list.add(answer.get);*/
-        int count=0;
-        List<Answer> find = mongoTemplate.find(null, Answer.class);
-        for (int i =1; i <=5 ; i++) {
-
-            if (find.get(i).getContent().equals(list.get(i))) {
-
-                count++;
-            }else{
-
-                Integer id = find.get(i).getId();
-            }
-
-        }
-        return count;
-    }
-
-
-
-
-
-
 
 
 

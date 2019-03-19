@@ -19,7 +19,7 @@
         var tmp = $("#tmp").val();
         var der = tmp == 0 ? "赞美专家" : "权威专家";
         $("#font1").html(der);
-        $("#href1").prop("href", "http://192.168.1.166:2001/home/to?tmp=" + tmp);
+        $("#href1").prop("href", "http://localhost:2001/home/to?tmp=" + tmp);
         /*ajax   start*/
         var id = $("#id1").val();
         $.ajax({

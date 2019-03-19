@@ -58,7 +58,6 @@
                      $("#text").val("");
                      queryLiuyanFive();
 
-
                  },error:function () {
                      alert("ajax访问失败,请查看控制台");
                  }
@@ -75,15 +74,15 @@
                  type:'post',
                  data:{id:id},
                  success:function (data) {
-
+                     console.log(data);
                      var conent = "";
                      for (var i = 0; i <data.length; i++) {
                          conent += "<div  class='article' style='width: 600px;height: 110px'>";
                          conent += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+data[i].img+"'></div>";
-                         conent += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font></p><p><font size='4'>"+data[i].content+"</font></p></div><br>";
+                         conent += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data[i].time+"</p><p><font size='4'>"+data[i].content+"</font></p></div><br>";
                          conent += "</div><br>";
                      }
-                     $("#abc").html(conent);
+                     $("#abc").append(conent);
 
 
                  },error:function () {
@@ -117,6 +116,7 @@
     </nav>
 </div>
 <input type="hidden" id="id" th:value="${param?.id}">
+<input type="hidden" id="userid" th:value="${session.user?.id}">
 <div id="conent">
     <div style='margin-top: 10px;margin-left:40px'><font size='5px' id='gd_title'></font></div>
     <div style='margin-top: 10px;margin-left:20px;float:left'><font size='3px' id='gd_createtime'></font></div>

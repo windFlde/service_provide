@@ -151,11 +151,4 @@ public class HomeController {
         Integer num = homeService.getNum(id);
         return num;
     }
-
-    @ResponseBody
-    @RequestMapping("getTitleAll")
-    public List<Title> getTitleAll(){
-        List<Title> titles = homeService.getTitleAll();
-        return titles;
-    }
 }

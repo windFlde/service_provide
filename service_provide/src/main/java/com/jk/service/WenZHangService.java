@@ -15,7 +15,7 @@ public interface WenZHangService {
 
     Redeem exIntegral(Redeem redeem);
 
-    User getUserMes(Integer userId);
+    User getUserMes(String userId);
 
     void updateUserCount(Integer feiyong, Integer id);
 
