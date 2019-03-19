@@ -147,7 +147,7 @@ public class WenZhangController {
     @RequestMapping("insertTitleName")
     public String insertTitleName(HttpServletResponse response,String ziduan) {
         Cookie cc=new Cookie(Constant.titleName,"1");
-        cc.setMaxAge(410381);
+        cc.setMaxAge(60);
         cc.setPath("/");
         response.addCookie(cc);
         return "1";
@@ -163,7 +163,7 @@ public class WenZhangController {
     @RequestMapping("mainModal")
     public String mainModal(HttpServletResponse response,String ziduan) {
         Cookie cc=new Cookie(Constant.mainModal,"1");
-        cc.setMaxAge(410381);
+        cc.setMaxAge(60);
         cc.setPath("/");
         response.addCookie(cc);
         return "1";

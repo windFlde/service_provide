@@ -19,24 +19,30 @@
 <script type="text/javascript">
     var ii=0;
     $(function () {
-        cookieHui();
         getAllLoginAccount();
+        cookieHui();
     })
+
     function cookieHui() {
         if(document.cookie!=null & document.cookie!=""){
             //decodeURIComponent  解码
             var cookie=document.cookie;
             console.log("-=====>"+cookie)
             var cookieList=cookie.split(";");
-            var sp=cookieList[0];
-            var sp1=sp.split("=");
-            var sp2=sp1[1];
-            var x=decodeURIComponent(sp2);
+            var content="";
+            $.each(cookieList, function (index,obj) {
+                if (obj.substr(0,3)=="pwd") {
+                    content=obj;
+                }
+            });
+            var sp=content.split("=");
+            var sp1=sp[1];
+            var x=decodeURIComponent(sp1);
             var b=JSON.parse(x);
             var loginaccount=b.loginacct;
             var userpswd=b.userpswd;
             var remempwd=b.remempwd;
-            console.log("loginaccount="+loginaccount+" ,userpswd="+userpswd+",remempwd="+remempwd);
+            console.log(loginaccount+"   ======"+userpswd);
             $("#name1").val(loginaccount);
             $("#password1").val(userpswd);
             /*if start*/
@@ -47,7 +53,6 @@
         }else{
             return ;
         }
-
     }
     function toLogin() {
         var reUrl=$("#reUrl").val();
