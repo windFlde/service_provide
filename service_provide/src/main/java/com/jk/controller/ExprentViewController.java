@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.jk.bean.Baoming;
 import com.jk.bean.DaKa;
 import com.jk.bean.Guandian;
+import com.jk.bean.Img;
 import com.jk.service.ExprentViewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -128,6 +129,18 @@ public class ExprentViewController {
 
         exprentViewService.updatePeopleTwo(id);
         return "success";
+    }
+
+    /**
+     * 广告图片
+     */
+    @RequestMapping("queryImg")
+    @ResponseBody
+    public Img queryImg(Integer id) {
+
+
+        Img img = exprentViewService.queryImg(id);
+        return img;
     }
 
 

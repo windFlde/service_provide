@@ -47,7 +47,7 @@ public class WenZhangController {
     User userAll=null;
     @ResponseBody
     @RequestMapping("exIntegral")
-    public String exIntegral(Redeem redeem,Integer userId) {
+    public String exIntegral(Redeem redeem,String userId) {
         Redeem re=wenZHangService.exIntegral(redeem);
         User user=wenZHangService.getUserMes(userId);
         reAll=re;

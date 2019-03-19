@@ -26,7 +26,7 @@
 
                              conent+="<li style='width:50%;float:left'>NO"+(number+1)+".我是"+obj.username+"&nbsp;&nbsp;&nbsp;&nbsp;共闯关"+obj.count+"次</li>  ";
                              number++;
-                             /*console.log(number);*/
+
 
                          })
 
@@ -40,14 +40,55 @@
 
                      })
 
+            queryImg()
+
 
 
         })
+
+        function wenJuan() {
+
+            var userid=$("#userid").val()
+            if (userid == null || userid == "") {
+
+                layer.msg('亲您还未登录,请登录', {
+                    time: 0 //不自动关闭
+                    ,btn: ['登录', '关闭']
+                    ,yes: function(){
+                        location.href="/home/ToPage?name=login";
+                    }
+                });
+            }else{
+
+                location.href="/home/ToPage?name=diaocha";
+            }
+
+        }
 
         function back() {
 
             window.location.href="/home/ToPage?name=index-home";
 
+        }
+
+        function queryImg() {
+
+             $.ajax({
+                     url:'/query/queryImg',
+                     type:'post',
+                     data:{id:2},
+                     success:function (data) {
+
+                         var conent="";
+                         conent+=" <img src="+data.img+" height='160' width='548'>";
+                         $(".load_div1").html(conent);
+
+
+                     },error:function () {
+                         alert("ajax访问失败,请查看控制台");
+                     }
+
+                     })
         }
 
 
@@ -100,9 +141,10 @@
         </div>
     </nav>
 </div>
+<input type="hidden" id="userid" th:value="${session.user?.id}">
 <div id="content" class="load_divs">
    <div class='load_div1' style='background-color:#FFFFFF;width:548px;height:150px'>
-       <img src='/img/U3593P28T3D2475025F346DT20090416003316.jpg' height='160' width='548'>
+
     </div>
     <div id="chuangguan" class='load_div2' style='background-color:#F5DEB3;width:548px;height:150px;margin-top:20px'>
 
@@ -117,7 +159,7 @@
         <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px; '>
             <div style="position:relative;margin-top:22px;margin-left:22px;">
               <a href='/home/ToPage?name=diaocha'><img src="/img/134092401.jpg" height='140' width='180' ></a><br>
-                <div style="position:absolute; z-index:2; left:50px; top:60px"><a href='/home/ToPage?name=diaocha'><font size='4' color="#1e90ff">问卷调查</font></a></div>
+                <div style="position:absolute; z-index:2; left:50px; top:60px"><a href='javascript:wenJuan()'><font size='4' color="#1e90ff">问卷调查</font></a></div>
             </div>
         </div>
         <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px;margin-top:20px '>

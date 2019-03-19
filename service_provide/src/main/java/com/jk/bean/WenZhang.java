@@ -21,6 +21,5 @@ public class WenZhang {
     Date creaTime;
     Integer zeid;
     Integer sites;
-    String site;
 
 }

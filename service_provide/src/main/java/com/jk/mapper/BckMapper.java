@@ -1,6 +1,8 @@
 package com.jk.mapper;
 
-import com.jk.bean.*;
+import com.jk.bean.Example;
+import com.jk.bean.Integral;
+import com.jk.bean.ShouCang;
 
 import java.util.List;
 
@@ -20,8 +22,4 @@ public interface BckMapper {
     void addIg(Integral integral);
 
     ShouCang querySc(String title);
-
-    List<Sensitivity> querySs();
-
-    Pay payMony(Integer emId);
 }

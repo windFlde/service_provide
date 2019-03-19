@@ -13,8 +13,7 @@ public class Answer {
 
     private String content;
 
-    public Answer(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
+    private Integer userId;
+
+
 }

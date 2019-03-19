@@ -95,8 +95,4 @@
         select * from t_user where id = ${id}
     </select>
 
-    <!--List<Title> getTitleAll();-->
-    <select id="getTitleAll" resultType="title">
-        SELECT * FROM t_tatle WHERE state = 1
-    </select>
 </mapper>

@@ -19,6 +19,4 @@ public class PingLunTwo {
     String img="https://mmb-toutiao.oss-cn-shanghai.aliyuncs.com/toutiaoImage/ee8d0b7e9e8e5a9f390f6be8856b868b.jpeg?x-oss-process=image/resize,w_440";
     String time;
     String huifu="";
-    String aa = "";
-    Integer black;
 }

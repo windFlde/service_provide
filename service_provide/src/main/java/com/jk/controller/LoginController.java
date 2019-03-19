@@ -73,12 +73,7 @@ public class LoginController {
         return "";
     }
 
-    @ResponseBody
-    @RequestMapping("toLoginByQQ")
-    public void toLoginByQQ(HttpSession session,String openId) {
-        User userFormDB = loginService.toLoginByQQ(openId);
-        session.setAttribute("user",userFormDB);
-    }
+
 
 
 }
