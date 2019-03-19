@@ -2,11 +2,16 @@ package com.jk.controller;
 
 import com.jk.bean.*;
 import com.jk.service.WenZHangService;
+import com.jk.util.Constant;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -17,6 +22,8 @@ public class WenZhangController {
     @Resource
     private WenZHangService wenZHangService;
 
+    @Resource
+    private MongoTemplate mongoTemplate;
     //wuyong
 
     @ResponseBody
@@ -111,6 +118,46 @@ public class WenZhangController {
     public List<Order>getUserOrder(Order order) {
         List<Order>or=wenZHangService.getUserOrder(order);
         return or;
+    }
+    @ResponseBody
+    @RequestMapping("queryTitleName")
+    public List<TitleName> queryTitleName() {
+        List<TitleName> titleName=mongoTemplate.find(null,TitleName.class);
+        return titleName;
+    }
+    @ResponseBody
+    @RequestMapping("getTitleCookie")
+    public String getTitleCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(Constant.titleName)) {
+                    String val = cookie.getValue();
+                    if (val.equals("0")) {
+                        return "0";
+                    }else if(val.equals("1")){
+                        return "1";
+                    }
+                }
+            }
+        }
+        return "0";
+    }
+    @ResponseBody
+    @RequestMapping("insertTitleName")
+    public String insertTitleName(HttpServletResponse response) {
+        Cookie cc=new Cookie(Constant.titleName,"1");
+        cc.setMaxAge(0);
+        cc.setPath("/");
+        response.addCookie(cc);
+        return "1";
+    }
+
+    @ResponseBody
+    @RequestMapping("getMoadlContent")
+    public List<MainContent> getMoadlContent() {
+        List<MainContent>list=wenZHangService.getMoadlContent();
+        return list;
     }
 
 

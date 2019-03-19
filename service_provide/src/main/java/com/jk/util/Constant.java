@@ -24,4 +24,6 @@ public class Constant {
 
     public static final String userName = "user_name";
 
+    public static final String titleName="title_name";
+
 }

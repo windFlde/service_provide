@@ -1,9 +1,6 @@
 package com.jk.service;
 
-import com.jk.bean.Order;
-import com.jk.bean.Redeem;
-import com.jk.bean.User;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 
 import java.util.List;
 
@@ -30,4 +27,6 @@ public interface WenZHangService {
     List<Order> getUserOrder(Order order);
 
     void insertIntegral(String feiyong, String name, Integer id);
+
+    List<MainContent> getMoadlContent();
 }

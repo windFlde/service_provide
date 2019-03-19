@@ -1,9 +1,6 @@
 package com.jk.service.impl;
 
-import com.jk.bean.Order;
-import com.jk.bean.Redeem;
-import com.jk.bean.User;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 import com.jk.mapper.WenZHangMapper;
 import com.jk.service.WenZHangService;
 import org.springframework.stereotype.Service;
@@ -71,6 +68,11 @@ public class WenZHangServiceImpl implements WenZHangService {
     @Override
     public void insertIntegral(String feiyong, String name, Integer id) {
         wenZhangMapper.insertIntegral(feiyong,name,id);
+    }
+
+    @Override
+    public List<MainContent> getMoadlContent() {
+        return wenZhangMapper.getMoadlContent();
     }
 
 

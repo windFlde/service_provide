@@ -88,22 +88,26 @@
 <div style="margin-left: 20px">
     <font size="4px"><a href='javascript:void(0)' onclick=toViewName("wenzhang")>返回</a></font>
 </div>
+<div style="margin-left:35%">
 <input type="hidden" id="seTitle" th:value="${session?.wenZhang.title}">
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <div class="row" style="width: 450px;height: 800px;">
     <h3>
-        <div class="panel panel-default" style="margin-top: 5px;margin-left: 25px;width: 450px;height: 30px;">
+        <div class="panel panel-default" style="margin-top: 5px;margin-left: 5px;width: 500px;height: 30px;">
             <div class="panel-heading">
-                <div style="margin-left: 130px">
+                <div style="margin-left: 160px">
                     临床文献
                 </div>
             </div>
         </div>
     </h3>
-    <div style="margin-left: 30px">
+    <div style="border-radius: 10px;margin-left: 10px;background-color:#9acfea;height: 600px;width: 480px;margin-top:10px">
+    <div style="margin-left: 30px;margin-top: 20px;">
         <table id="trtab" width="450px" border="1px">
         </table>
     </div>
+    </div>
+</div>
 </div>
 </body>
 </html>

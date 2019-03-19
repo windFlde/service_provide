@@ -1,10 +1,8 @@
 package com.jk.mapper;
 
-import com.jk.bean.Order;
-import com.jk.bean.Redeem;
-import com.jk.bean.User;
-import com.jk.bean.WenZhang;
+import com.jk.bean.*;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -31,4 +29,7 @@ public interface WenZHangMapper {
     List<Order> getUserOrder(Order order);
 
     void insertIntegral(@Param("feiyong") String feiyong, @Param("name") String name, @Param("id") Integer id);
+
+    @Select("select * from t_main_content")
+    List<MainContent> getMoadlContent();
 }

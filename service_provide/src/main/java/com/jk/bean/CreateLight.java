@@ -13,12 +13,12 @@ public class CreateLight {
     private String questionKey;
     private String keyWhy;
 
-    private String s5c810fb89d72722fdcecef65;
-    private String s5c81149d9d72722fdcecef66;
-    private String s5c8114c49d72722fdcecef67;
-    private String s5c8114cc9d72722fdcecef68;
-    private String s5c8114cc9d72722fdcecef69;
-    private String s5c8114cd9d72722fdcecef6a;
+    private String s5c90590a9d727208e4036a1c;
+    private String s5c90595e9d727208e4036a1d;
+    private String s5c9059979d727208e4036a1e;
+    private String s5c9059af9d727208e4036a1f;
+    private String s5c9059b49d727208e4036a20;
+    private String s5c9059c29d727208e4036a21;
 
     public CreateLight(String question, String answerKey, String questionKey, String keyWhy) {
         this.question = question;

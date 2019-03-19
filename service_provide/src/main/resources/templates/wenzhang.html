@@ -132,6 +132,7 @@
 <body>
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <input type="hidden" id="reUrl2" th:value="${session.user?.username}">
+<div style="margin-left: 30%">
 <div style="margin-left: 20px">
     <font size="4px"><a href='javascript:void(0)' onclick=toViewName("index-home")>返回</a></font>
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
@@ -227,6 +228,6 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
 </div>
-
+</div>
 </body>
 </html>

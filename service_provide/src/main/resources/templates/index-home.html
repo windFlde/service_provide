@@ -3,28 +3,35 @@
 <head>
     <meta charset="UTF-8"/>
     <title>首页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <script src="/js/layer/layer.js"></script>
-
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
+    <script src="/js/layui/layui.js"></script>
 </head>
 <script type="text/javascript">
     var ii = 0;
     $(function (){
         getquanweizhuanjia();
+        getTitleCookie();
+        getMoadlContent();
+        //打开模态框
+        $('#myModal').modal('show')
+
     });
+
+
     function getquanweizhuanjia() {
         /*ajax   start*/
                 $.ajax({
                    url:"/home/getzhuanjia",
-                   beforeSend:function(){
-                          ii = layer.msg('加载中', {
-                          icon: 16
-                          ,shade: 0.01
-                          });
-                    },
                    success:function(a){
                        var i = 0;
                       $.each(a,function (index,obj){
@@ -96,12 +103,131 @@
     function getMorezhuanjia(tmp){
         location.href="/home/to?tmp="+tmp;
     }
-
     function bcklocation(){
         location.href="/home/ToPage?name=bingtong";
     }
+    function getTitleCookie() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/getTitleCookie",
+                       type:"POST",
+                       success:function(a){
+                           if (a=="1") {
+                               $("#idv").hide();
+                           }else if(a=="0"){
+                               queryTitleName();
+                           }
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+    function queryTitleName(){
+        $.ajax({
+            url:"/wenz/queryTitleName",
+            success:function(result){
+                var  info="";
+                var content="";
+                $.each(result, function (index,obj) {
+                    if (index==0) {
+                        content+=""+obj.titleContent;
+                    }
+                });
+                console.log(content);
+                  info+='<li style="font-size: 20px"><font color="red">公告</font>:<b>'+content+'</b></li>';
+                if (content=="" && content==null) {
+                   return ;
+                }else{
+                    $("#hua").append(info);
+                }
+            }
+        })
+    }
+
+    function guan() {
+        /* 确认框start */
+        bootbox.confirm({
+            size: "big",
+            message: "是否关闭广告?",
+            callback: function(result){
+                console.log(result);
+                if(result){
+                    $("#idv").hide();
+                }else{
+
+                }
+            }
+        })
+        /* 确认框end */
+    }
+    function getMoadlContent() {
+            /*ajax   start*/
+                    $.ajax({
+                       url:"/wenz/getMoadlContent",
+                       type:"POST",
+                       beforeSend:function(){
+                              ii = layer.msg('加载中', {
+                              icon: 16
+                              ,shade: 0.01
+                              });
+                        },
+                       success:function(a){
+                           var content="";
+                           $.each(a, function (index, obj) {
+                               if (index==0) {
+                                   content+="<font size='4px'>"+obj.mainContent+"</font>";
+                               }
+                           });
+                           $("#modalContent").html(content);
+                       },
+                       error:function(){
+                          layer.msg("ajax失败");
+                       },complete:function(){
+                             layer.close(ii);
+                        }
+                   });
+                 /*ajax   end*/
+    }
+
 </script>
 <body>
+    <div id="iii">
+        <div  id="idv">
+        <marquee direction="left" onMouseOut="this.start()" onMouseOver="this.stop()" scrollamount="25" style="height: inherit;text-align: left;">
+            <ul style="list-style: none;"  id="hua"></ul>
+        </marquee>
+            <a href="javascript:guan()" >关闭公告</a>
+        </div>
+    </div>
+    <!--模态框 start-->
+    <!-- 模态框（Modal） -->
+    <div class="modal fade"style="width: 80%;height: 80%;margin-left: 10%;margin-top: 10%"  id="myModal"  tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <font size="6px">重大公告</font>
+                    </h4>
+                </div>
+                <!--内容-->
+                <div class="modal-body" id="modalContent">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!--模态框 end-->
     <div class="row" style="width: 600px;height: 800px;">
         <nav style="margin-left: 16px;" class="navbar navbar-default " role="navigation">
             <div class="container-fluid">
@@ -109,9 +235,6 @@
                     <div style="float:left"> <a class="navbar-brand" href="#" id="xuan">&nbsp;&nbsp;微信</a></div>
                     <div style="float:left;margin-left:100px"><a class="navbar-brand" href="#" id="xuan1">美赞臣婴幼儿营养研究院</a></div>
                     <div style="float:left;margin-left:120px"> <a class="navbar-brand" href="#" id="xuan2">...</a></div>
-
-
-
                 </div>
             </div>
         </nav><!--导航条-->

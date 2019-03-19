@@ -55,15 +55,16 @@ public class CreateLightController {
     @RequestMapping("queryTtOrFf")
     public Integer queryTtOrFf(CreateLight createLight, HttpSession session) {
         List arr = new ArrayList();
-        arr.add(createLight.getS5c810fb89d72722fdcecef65());
-        arr.add(createLight.getS5c81149d9d72722fdcecef66());
-        arr.add(createLight.getS5c8114c49d72722fdcecef67());
-        arr.add(createLight.getS5c8114cc9d72722fdcecef68());
-        arr.add(createLight.getS5c8114cc9d72722fdcecef69());
-        arr.add(createLight.getS5c8114cd9d72722fdcecef6a());
+        arr.add(createLight.getS5c90590a9d727208e4036a1c());
+        arr.add(createLight.getS5c90595e9d727208e4036a1d());
+        arr.add(createLight.getS5c9059979d727208e4036a1e());
+        arr.add(createLight.getS5c9059af9d727208e4036a1f());
+        arr.add(createLight.getS5c9059b49d727208e4036a20());
+        arr.add(createLight.getS5c9059c29d727208e4036a21());
         int count = 0;
         listFf = new ArrayList<>();
         List<CreateLight>listFromDb=mongoTemplate.find(null,CreateLight.class);
+
         for (int i =0;i<6;i++){
             if (listFromDb.get(i).getAnswerKey().equals(arr.get(i))) {
                 count++;
