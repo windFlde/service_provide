@@ -1,6 +1,7 @@
 package com.jk.controller;
 
 import com.jk.bean.*;
+import com.jk.client.SearchClient;
 import com.jk.service.BckService;
 import com.jk.service.WenZHangService;
 import com.jk.util.Content;
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -34,6 +36,16 @@ public class BckController {
 
     @Autowired
     MongoTemplate mongoTemplate;
+
+    @Resource
+    SearchClient searchClient;
+
+    @ResponseBody
+    @RequestMapping("getTitle")
+    public List<Example> getTitle(@RequestParam(value = "name")String name){
+        List<Example> title = searchClient.getTitle(name);
+        return title;
+    }
 
     @ResponseBody
     @RequestMapping("addPingLun")
@@ -190,12 +202,12 @@ public class BckController {
     /*使用积分购买收费文章*/
     @ResponseBody
     @RequestMapping("payEx")
-    public String payEx(Integer emId,Integer mony,HttpSession session) {
+    public String payEx(Integer emId,Integer num,HttpSession session) {
         User user = (User)session.getAttribute("user");
-        if(user.getNum()>mony){
+        if(user.getNum()>num){
            /* bckService.addPay(id,emId);*/
-            wenZHangService.updateUserCount(mony,user.getId());
-            wenZHangService.insertIntegral("-"+mony,"购买文章",user.getId());
+            wenZHangService.updateUserCount(num,user.getId());
+            wenZHangService.insertIntegral("-"+num,"购买文章",user.getId());
             redisTemplate.opsForList().leftPush(Content.pay+user.getId()+emId,"aa");
             redisTemplate.expire(Content.pay+user.getId()+emId,30, TimeUnit.MINUTES);
             return "1";
@@ -226,8 +238,6 @@ public class BckController {
     @RequestMapping("queryExampleById")
     public Example queryExampleById(Integer id,HttpSession session) {
         Example example = bckService.queryExampleById(id);
-        String igName = example.getEm_title();
-        session.setAttribute("igName",igName);
         return example;
     }
 
