@@ -25,7 +25,7 @@ public class PlayController {
     PlayService playService;
 
     /**
-     *修改字段
+     *开通会员
      */
     @ResponseBody
     @RequestMapping("kaitongVIP")

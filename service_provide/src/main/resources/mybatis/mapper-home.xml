@@ -97,6 +97,6 @@
 
     <!--List<Title> getTitleAll();-->
     <select id="getTitleAll" resultType="title">
-        SELECT * FROM t_tatle WHERE state = 1
+        SELECT * FROM t_title WHERE state = 1
     </select>
 </mapper>
