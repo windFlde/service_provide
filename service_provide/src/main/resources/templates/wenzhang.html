@@ -138,7 +138,7 @@
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
     <font size="4px">
         <!-- 按钮触发模态框 -->
-        <a href='javascript:void(0)' onclick="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
+        <a href='javascript:void(0)' onclicl="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
 </div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <input type="hidden" id="wzId" th:value="${param?.id}">
@@ -169,7 +169,6 @@
             </h3>
         </div>
         <div id="content" style="margin-top: 5px;margin-left: 15px;margin-right: 10px"></div>
-        <div id="getSite"></div>
     </div>
     <div style="background-color: #D3D3D3;width: 450px;height: 100px;margin-left: 50px">
         <div style="float: left;margin-left: 15px ;margin-top: 15px">

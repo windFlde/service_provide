@@ -38,6 +38,7 @@ function tomyintegral(name) {
     }
 </script>
 <body>
+<div style="margin-left: 475px;">
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <input type="hidden" id="reUrl2" th:value="${session.user?.username}">
 <input type="hidden" id="reUrl3" th:value="${session.user?.img}">
@@ -95,5 +96,6 @@ function tomyintegral(name) {
            </div>
        </div>
 </div>
+    </div>
 </body>
 </html>

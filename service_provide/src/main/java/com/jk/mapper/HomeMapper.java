@@ -32,4 +32,6 @@ public interface HomeMapper {
 
 
     User getNum(@Param("id") String id);
+
+    List<Title> getTitleAll();
 }

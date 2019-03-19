@@ -9,4 +9,6 @@ public interface PlayService {
     User selectUserBalance(Integer id);
 
     void addVIP(User user);
+
+    void updateVIP(Integer userid);
 }
