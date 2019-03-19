@@ -10,13 +10,30 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="/js/bootstrap-bootbox/bootbox.js"></script>
 </head>
+
 <script type="text/javascript">
     var ii = 0;
     $(function () {
         queryWen();
         $("#s1").css("background", "#DCDCDC");
+        alert(IPData[0])
+
     })
     var title = "";
+    /*生成二维码*/
+    function showErWei() {
+        $("#ErWei").show();
+        var data=this.location.href;
+        $.ajax({
+            url:"/wenz/getErwei",
+            data:{data:data},
+            success:function (result) {
+                $("#ErWei").attr("src","data:image/jpg;base64,"+result)
+            }
+        })
+    }
+    /*end*/
+
 
     function queryWen() {
         var titleVal = $("#titleVal").val();
@@ -138,8 +155,8 @@
     <font size="4px"><a href='javascript:void(0)' onclick=addShouCang()>收藏</a></font>
     <font size="4px">
         <!-- 按钮触发模态框 -->
-        <a href='javascript:void(0)' onclicl="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>
-</div>
+        <a href='javascript:void(0)' onclicl="sendEmail()" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">获取文章内容</a></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552976108707&di=760a1f1db8757ce0d6af01017f871780&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic2%2Fcover%2F00%2F34%2F67%2F581177d46eee1_610.jpg" height="20px" width="20px" onclick="showErWei()">
+    <img id="ErWei" hidden></div>
 <input type="hidden" id="titleVal" th:value="${param?.title}">
 <input type="hidden" id="wzId" th:value="${param?.id}">
 <div class="row" style="width: 450px;height: 800px;">

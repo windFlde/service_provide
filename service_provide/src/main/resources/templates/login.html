@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
     <link rel="shortcut icon" type="image/icon" href="/images/jd.ico">
     <link rel="stylesheet" type="text/css" href="/css/login.css">
@@ -54,6 +55,52 @@
             return ;
         }
     }
+
+    QC.Login({
+        btnId:"qqLoginTest",
+    }, function(dt, opts){
+            //登录成功
+            token();
+            QC.Login.fillUserInfo(opts['btnId'], dt);
+            showQCK();
+            QC.Console.log("IN:OO");
+
+        }
+    );
+
+
+    function token() {
+
+        if(QC.Login.check()){//如果已登录
+            QC.Login.getMe(function(openId, accessToken){
+
+                var opens= openId;
+
+                /*ajax   start*/
+                $.ajax({
+                    url:"/login/toLoginByQQ?openId="+opens,
+                    type:"POST",
+                    beforeSend:function(){
+                        ii = layer.msg('加载中', {
+                            icon: 16
+                            ,shade: 0.01
+                        });
+                    },
+                    success:function(a){
+                        window.location.href = "/wenz/toView?viewName=index-home";
+                    },
+                    error:function(){
+                        layer.msg("ajax失败");
+                    },complete:function(){
+                        layer.close(ii);
+                    }
+                });
+                /*ajax   end*/
+            });
+
+        }
+    }
+
     function toLogin() {
         var reUrl=$("#reUrl").val();
             /*ajax   start*/
@@ -465,8 +512,8 @@
                 <div class="blank_01"></div>
                 <div class="blank_01"></div>
                 <div class="box_down">
-                    <div class="box_down_1">京东钱包&nbsp;&nbsp;|&nbsp;&nbsp;QQ
-                        &nbsp;&nbsp;|&nbsp;&nbsp;微信
+                    <div class="box_down_1">
+                        <span id="qqLoginTest"></span>
                     </div>
                 </div>
                 <!--end-->

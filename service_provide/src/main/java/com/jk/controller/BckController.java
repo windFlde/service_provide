@@ -216,6 +216,17 @@ public class BckController {
         }
     }
 
+    /*使用支付宝支付*/
+    @ResponseBody
+    @RequestMapping("zfbPlay")
+    public String zfbPlay(Integer emId,HttpSession session,Integer mony) {
+        User user = (User)session.getAttribute("user");
+        wenZHangService.insertIntegral("-￥"+mony,"购买文章",user.getId());
+        redisTemplate.opsForList().leftPush(Content.pay+user.getId()+emId,"aa");
+        redisTemplate.expire(Content.pay+user.getId()+emId,30, TimeUnit.MINUTES);
+        return "1";
+    }
+
     /*查看每篇收费文章的价格*/
     @ResponseBody
     @RequestMapping("payMony")
