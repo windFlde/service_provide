@@ -7,6 +7,7 @@
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
 
     <script type="text/javascript">
 
@@ -26,7 +27,7 @@
 
                              conent+="<li style='width:50%;float:left'>NO"+(number+1)+".我是"+obj.username+"&nbsp;&nbsp;&nbsp;&nbsp;共闯关"+obj.count+"次</li>  ";
                              number++;
-                             /*console.log(number);*/
+
 
                          })
 
@@ -40,14 +41,82 @@
 
                      })
 
+            queryImg()
+
 
 
         })
+
+        function wenJuan() {
+
+            var userid=$("#userid").val()
+            if (userid == null || userid == "") {
+
+                var htmlUrl=document.documentURI;
+                /* 确认框start */
+                bootbox.confirm({
+                    size: "small",
+                    message: "您没有登录,是否登录?",
+                    callback: function (result) {
+                        console.log(result);
+                        if (result) {
+                            /*ajax   start*/
+                            $.ajax({
+                                url: "/wenz/toLogin",
+                                type: "POST",
+                                data: {htmlUrl: htmlUrl},
+                                beforeSend: function () {
+                                    ii = layer.msg('加载中', {
+                                        icon: 16
+                                        , shade: 0.01
+                                    });
+                                },
+                                success: function (a) {
+                                    window.location.href = "/wenz/toView?viewName=login";
+                                },
+                                error: function () {
+                                    layer.msg("ajax失败");
+                                }, complete: function () {
+                                    layer.close(ii);
+                                }
+                            });
+                            /*ajax   end*/
+                        }
+                    }
+                })
+
+                return ;
+            }else{
+
+                location.href = "/home/ToPage?name=diaocha";
+            }
+
+        }
 
         function back() {
 
             window.location.href="/home/ToPage?name=index-home";
 
+        }
+
+        function queryImg() {
+
+             $.ajax({
+                     url:'/query/queryImg',
+                     type:'post',
+                     data:{id:2},
+                     success:function (data) {
+
+                         var conent="";
+                         conent+=" <img src="+data.img+" height='160' width='548'>";
+                         $(".load_div1").html(conent);
+
+
+                     },error:function () {
+                         alert("ajax访问失败,请查看控制台");
+                     }
+
+                     })
         }
 
 
@@ -83,60 +152,70 @@
 
 
 </head>
-
+    <!--广告页面引入-->
+    <head th:replace="left :: head"></head>
+    <head th:replace="right :: head"></head>
 <body>
-<div style="width:550px;height:80px">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:back()">返回</a>
+<div style="margin-left:500px">
+    <div style="width:550px;height:80px">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="javascript:back()">返回</a>
+                </div>
+                <div>
+                    <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">冲浪闯关</font></p>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">...</a></li>
+                </ul>
             </div>
-            <div>
-                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">冲浪闯关</font></p>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">...</a></li>
-            </ul>
+        </nav>
+    </div>
+    <input type="hidden" id="userid" th:value="${session.user?.id}">
+    <div id="content" class="load_divs">
+       <div class='load_div1' style='background-color:#FFFFFF;width:548px;height:150px'>
+
         </div>
-    </nav>
+        <div id="chuangguan" class='load_div2' style='background-color:#F5DEB3;width:548px;height:150px;margin-top:20px'>
+
+        </div>
+        <div id="load_div" style='margin-top:20px'>
+            <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px; '>
+                <div style="position:relative;margin-top:22px;margin-left:22px;">
+                   <a href='/home/ToPage?name=createLight'><img src="/img/8c86eede20cc31a6b62e8f062bdae44c.jpg" height='140' width='180' ></a><br>
+                    <div style="position:absolute; z-index:2; left:40px; top:60px"><a href='/home/ToPage?name=createLight'><font size='4' color="#1e90ff">产品疾病知识</font></a></div>
+                </div>
+            </div>
+            <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px; '>
+                <div style="position:relative;margin-top:22px;margin-left:22px;">
+                    <a href='javascript:wenJuan()'><img src="/img/134092401.jpg" height='140' width='180' ></a><br>
+                    <div style="position:absolute; z-index:2; left:50px; top:60px"><a href='javascript:wenJuan()'><font size='4' color="#1e90ff">问卷调查</font></a></div>
+                </div>
+            </div>
+            <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px;margin-top:20px '>
+                <div style="position:relative;margin-top:22px;margin-left:22px;">
+                   <a href=''><img src="/img/tim6.jfif" height='140' width='180' ></a><br>
+                    <div style="position:absolute; z-index:2; left:50px; top:60px"><a href=''><font size='4' color="#1e90ff">互动游戏</font></a></div>
+                </div>
+            </div>
+            <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px;margin-top:20px '>
+                <div style="position:relative;margin-top:22px;margin-left:22px;">
+                    <a href=''><img src="/img/t01fe4cd62538dc8515.jpg" height='140' width='180' ></a><br>
+                    <div style="position:absolute; z-index:2; left:70px; top:60px"><a href=''><font size='4' color="#1e90ff">暂无</font></a></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
-<div id="content" class="load_divs">
-   <div class='load_div1' style='background-color:#FFFFFF;width:548px;height:150px'>
-       <img src='/img/U3593P28T3D2475025F346DT20090416003316.jpg' height='160' width='548'>
+
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 220px;border-radius: 10px; margin-top: 220px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
     </div>
-    <div id="chuangguan" class='load_div2' style='background-color:#F5DEB3;width:548px;height:150px;margin-top:20px'>
-
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1120px;border-radius: 10px; margin-top: 200px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
     </div>
-    <div id="load_div" style='margin-top:20px'>
-        <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px; '>
-            <div style="position:relative;margin-top:22px;margin-left:22px;">
-               <a href='/home/ToPage?name=createLight'><img src="/img/8c86eede20cc31a6b62e8f062bdae44c.jpg" height='140' width='180' ></a><br>
-                <div style="position:absolute; z-index:2; left:40px; top:60px"><a href='/home/ToPage?name=createLight'><font size='4' color="#1e90ff">产品疾病知识</font></a></div>
-            </div>
-        </div>
-        <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px; '>
-            <div style="position:relative;margin-top:22px;margin-left:22px;">
-              <a href='/home/ToPage?name=diaocha'><img src="/img/134092401.jpg" height='140' width='180' ></a><br>
-                <div style="position:absolute; z-index:2; left:50px; top:60px"><a href='/home/ToPage?name=diaocha'><font size='4' color="#1e90ff">问卷调查</font></a></div>
-            </div>
-        </div>
-        <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px;margin-top:20px '>
-            <div style="position:relative;margin-top:22px;margin-left:22px;">
-               <a href=''><img src="/img/tim6.jfif" height='140' width='180' ></a><br>
-                <div style="position:absolute; z-index:2; left:50px; top:60px"><a href=''><font size='4' color="#1e90ff">互动游戏</font></a></div>
-            </div>
-        </div>
-        <div  class="load_div" style='background-color:#00CED1;float:left;margin-left:30px;margin-top:20px '>
-            <div style="position:relative;margin-top:22px;margin-left:22px;">
-                <a href=''><img src="/img/t01fe4cd62538dc8515.jpg" height='140' width='180' ></a><br>
-                <div style="position:absolute; z-index:2; left:70px; top:60px"><a href=''><font size='4' color="#1e90ff">暂无</font></a></div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
 
 </body>
 </html>

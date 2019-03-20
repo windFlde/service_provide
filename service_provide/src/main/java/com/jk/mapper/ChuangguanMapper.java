@@ -8,4 +8,5 @@ public interface ChuangguanMapper {
 
     List<User> queryChuangguan();
 
+    void upateCount(User user);
 }

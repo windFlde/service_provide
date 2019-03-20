@@ -92,6 +92,7 @@
                 url: '/bck/queryPingLun2',
                 data:{id:id},
                 success: function (result) {
+                    console.log(result);
                     $.each(result, function (index, obj) {
                         contt += "<div  class='article' style='width: 600px;height: 110px'>";
                        contt += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
@@ -160,27 +161,37 @@
     </style>
 
 </head>
-
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <body>
-<div style='height: 80px;width: 600px'>
-    <nav class="navbar navbar-default " role="navigation">
+<div style="margin-left:450px;">
+    <div style='height: 80px;width: 600px'>
+        <nav class="navbar navbar-default " role="navigation">
 
-        <div class="container-fluid">
-            <div class="navbar-header">
-               <div style="margin-left: 50px"></div>
-
-                <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;热点资讯</font></a>
-                <a class="navbar-brand" href="javascript:void(0)" onclick="addShoucang()">收藏</a>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                   <div style="margin-left: 50px"></div>
+                    <a class="navbar-brand" href="javascript:void(0)" onclick="back()">返回</a>
+                    <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;热点资讯</font></a>
+                    <a class="navbar-brand" href="javascript:void(0)" onclick="addShoucang()">收藏</a>
+                </div>
             </div>
-        </div>
-    </nav>
-</div>
-<input type="hidden" id="id"  th:value="${param?.id}">
-<div id="content">
+        </nav>
+    </div>
+    <input type="hidden" id="id"  th:value="${param?.id}">
+    <div id="content">
+
+    </div>
+    <div id="aa" class="load_div">
+
+    </div>
 
 </div>
-<div id="aa" class="load_div">
-
-</div>
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 220px;border-radius: 10px; margin-top: 200px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
+    </div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1050px;border-radius: 10px; margin-top: 200px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
+    </div>
 </body>
 </html>

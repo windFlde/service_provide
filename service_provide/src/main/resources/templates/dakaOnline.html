@@ -10,10 +10,6 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
 </head>
-
-<!--广告页面引入-->
-<head th:replace="left :: head"></head>
-<head th:replace="right :: head"></head>
 <script type="text/javascript">
     var ii = 0;
     $(function (){
@@ -68,7 +64,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a id="href1" class="navbar-brand" href="/home/ToPage?name=zjzja">&nbsp;&nbsp;&nbsp;返回</a>
+                <a id="href1" class="navbar-brand" href="http://192.168.1.166:2001/home/ToPage?name=zjzja">&nbsp;&nbsp;&nbsp;返回</a>
             </div>
             <div class="collapse navbar-collapse" id="example-navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -105,12 +101,6 @@
     <div style="margin-left: 388px;border-radius: 10px; margin-top: 35px;"><input class="btn btn-primary btn-sm"style="border-radius: 80px;margin-left: 29px;"type='button'value='提交分享'></div>
 
 </div>
-</div>
-<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -730px;position: fixed" >
-    <div id="div001"  th:replace="left :: left" ></div>
-</div>
-<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -730px;position: fixed">
-    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>

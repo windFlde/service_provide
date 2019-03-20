@@ -7,9 +7,15 @@
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
+
 <script type="text/javascript">
-    
+
+    var ii = 0;
     $(function(){
         queryGunadian();
         queryLiuyanFive()
@@ -42,11 +48,51 @@
 
         var id=$("#id").val();
         var text=$("#text").val();
+        var userid=$("#userid").val();
         if (text==null||text=="") {
 
             layer.msg("内容不能为空");
             return ;
         }
+        if (userid == null || userid == "") {
+            var htmlUrl=document.documentURI;
+            /* 确认框start */
+            bootbox.confirm({
+                size: "small",
+                message: "您没有登录,是否登录?",
+                callback: function(result){
+                    console.log(result);
+                    if(result){
+                        /*ajax   start*/
+                        $.ajax({
+                            url:"/wenz/toLogin",
+                            type:"POST",
+                            data:{htmlUrl:htmlUrl},
+                            beforeSend:function(){
+                                ii = layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
+                            },
+                            success:function(a){
+                                window.location.href="/wenz/toView?viewName=login";
+                            },
+                            error:function(){
+                                layer.msg("ajax失败");
+                            },complete:function(){
+                                layer.close(ii);
+                            }
+                        });
+                        /*ajax   end*/
+                    }
+                }
+            })
+            return;
+
+
+        }
+
+        /* 确认框end */
 
          $.ajax({
                  url:'/addLiuyanFive',
@@ -58,12 +104,11 @@
                      $("#text").val("");
                      queryLiuyanFive();
 
-
                  },error:function () {
                      alert("ajax访问失败,请查看控制台");
                  }
 
-                 })
+                 });
 
     }
 
@@ -75,15 +120,15 @@
                  type:'post',
                  data:{id:id},
                  success:function (data) {
-
+                     console.log(data);
                      var conent = "";
                      for (var i = 0; i <data.length; i++) {
                          conent += "<div  class='article' style='width: 600px;height: 110px'>";
                          conent += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+data[i].img+"'></div>";
-                         conent += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font></p><p><font size='4'>"+data[i].content+"</font></p></div><br>";
+                         conent += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data[i].time+"</p><p><font size='4'>"+data[i].content+"</font></p></div><br>";
                          conent += "</div><br>";
                      }
-                     $("#abc").html(conent);
+                     $("#abc").append(conent);
 
 
                  },error:function () {
@@ -101,39 +146,49 @@
 
 </script>
 <body>
-<div style="width:550px;height:80px">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:fanhui()">返回</a>
+<div style="margin-left: 500px">
+    <div style="width:550px;height:80px">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="javascript:fanhui()">返回</a>
+                </div>
+                <div>
+                    <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">会议直播</font></p>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">...</a></li>
+                </ul>
             </div>
-            <div>
-                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">会议直播</font></p>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">...</a></li>
-            </ul>
+        </nav>
+    </div>
+    <input type="hidden" id="id" th:value="${param?.id}">
+    <input type="hidden" id="userid" th:value="${session.user?.id}">
+    <div id="conent">
+        <div style='margin-top: 10px;margin-left:40px'><font size='5px' id='gd_title'></font></div>
+        <div style='margin-top: 10px;margin-left:20px;float:left'><font size='3px' id='gd_createtime'></font></div>
+        <div style='margin-top: 10px;margin-left:150px'><font size='3px' id='gd_browse'></font></div>
+        <div style='margin-top: 10px;margin-left:20px;width:450px'><font size='4px' id='gd_gd'></font></div>
+        <div style='margin-top: 10px;margin-left:70px'><img src="" id="gd_img" width="400px" height="200px"></div>
+        <div style='margin-top: 10px;margin-left:20px;width:440px'><font id="gd_content"></font></div>
+        <div>
+            <div style="margin-top: 30px;margin-left: 20px"><font>写留言</font></div>
+                <div style="margin-left: 45px;margin-top: 10px"><textarea style="width:350px;height: 100px" id="text" class="form-control" placeholder="|我要留言"></textarea></div>
+                <div style="margin-left: 45px;margin-top: 10px">送勋章⭐⭐⭐⭐⭐</div>
+                <div style="width:548px;margin-left:450px;margin-top: 10px"><button type="button" onclick="addLiuyan()" class="btn btn-primary btn-sm">提交留言</button></div>
         </div>
-    </nav>
-</div>
-<input type="hidden" id="id" th:value="${param?.id}">
-<div id="conent">
-    <div style='margin-top: 10px;margin-left:40px'><font size='5px' id='gd_title'></font></div>
-    <div style='margin-top: 10px;margin-left:20px;float:left'><font size='3px' id='gd_createtime'></font></div>
-    <div style='margin-top: 10px;margin-left:150px'><font size='3px' id='gd_browse'></font></div>
-    <div style='margin-top: 10px;margin-left:20px;width:450px'><font size='4px' id='gd_gd'></font></div>
-    <div style='margin-top: 10px;margin-left:70px'><img src="" id="gd_img" width="400px" height="200px"></div>
-    <div style='margin-top: 10px;margin-left:20px;width:440px'><font id="gd_content"></font></div>
-    <div>
-        <div style="margin-top: 30px;margin-left: 20px"><font>写留言</font></div>
-            <div style="margin-left: 45px;margin-top: 10px"><textarea style="width:350px;height: 100px" id="text" class="form-control" placeholder="|我要留言"></textarea></div>
-            <div style="margin-left: 45px;margin-top: 10px">送勋章⭐⭐⭐⭐⭐</div>
-            <div style="width:548px;margin-left:450px;margin-top: 10px"><button type="button" onclick="addLiuyan()" class="btn btn-primary btn-sm">提交留言</button></div>
+    </div>
+    <div id="abc">
+
+
     </div>
 </div>
-<div id="abc">
 
-
-</div>
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -1000px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
+    </div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -1000px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
+    </div>
 </body>
 </html>

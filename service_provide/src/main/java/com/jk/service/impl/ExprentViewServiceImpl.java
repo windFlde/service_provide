@@ -36,7 +36,7 @@ public class ExprentViewServiceImpl implements ExprentViewService {
 
     @Override
     public void addBaoming(Baoming baoming) {
-        exprentViewMapper.addBaoming();
+        exprentViewMapper.addBaoming(baoming);
     }
 
     @Override
@@ -57,6 +57,11 @@ public class ExprentViewServiceImpl implements ExprentViewService {
     @Override
     public void updatePeopleTwo(String id) {
         exprentViewMapper.updatePeopleTwo(id);
+    }
+
+    @Override
+    public Img queryImg(Integer id) {
+        return exprentViewMapper.queryImg(id);
     }
 
 }

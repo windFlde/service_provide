@@ -19,5 +19,9 @@ public class ChuangguanServiceImpl implements ChuangguanService {
         return chuangguanMapper.queryChuangguan();
     }
 
+    @Override
+    public void upateCount(User user) {
+        chuangguanMapper.upateCount(user);
+    }
 
 }

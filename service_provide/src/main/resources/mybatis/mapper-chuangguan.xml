@@ -6,12 +6,14 @@
         <!-- List<User> queryChuangguan();-->
     <select id="queryChuangguan" resultType="User">
 
-        select username ,count as count from t_user order by count desc;
+        select username,count  from t_user order by count desc;
 
     </select>
 
+    <!--void upateCount(User user);-->
+    <update id="upateCount">
 
-
-
+        update t_user set count=count+1,num=num+200 where id=#{id}
+    </update>
 
 </mapper>

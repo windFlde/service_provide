@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
 
 
@@ -49,61 +52,69 @@
     }
 </style>
 <body>
-<div style='height: 80px;width: 600px'>
-    <nav class="navbar navbar-default " role="navigation">
+<div style="margin-left: 450px">
+    <div style='height: 80px;width: 600px'>
+        <nav class="navbar navbar-default " role="navigation">
 
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse"
-                        data-target="#example-navbar-collapse">
-                    <span class="sr-only">切换导航</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="javascript:void(0)" onclick="back()">返回</a>
-                <a class="navbar-brand" href="#"><font size='5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专属客服</font></a>
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#example-navbar-collapse">
+                        <span class="sr-only">切换导航</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="javascript:void(0)" onclick="back()">返回</a>
+                    <a class="navbar-brand" href="#"><font size='5'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;专属客服</font></a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">...</a></li>
+                </ul>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">...</a></li>
-            </ul>
+        </nav>
+    </div>
+    <input type="hidden" id="id" th:value="${session.user?.id}">
+    <input type="hidden" id="username" th:value="${session.user?.username}">
+    <input type="hidden" id="img" th:value="${session.user?.img}">
+    <div id="conent">
+        <div class="load_div" style='background-color:#F3F3F3'>
+
+            <div style="margin-left:520px;margin-top: 15px;"><a id="biaoqian">未登录</a></div>
+            <div style="margin-left:230px;margin-top: 15px;">
+                <img id="tupian" src="/images/20190107164001.jpg" width="100" height="100" class="img-circle">
+            </div>
+            <div style="margin-left:230px;margin-top:15px;">
+                <div><font size="4">昵称:<span id="span1">游客状态</span></font></div>
+                <div><font size="4"> ID:<span id="span2">00000</span></font></div>
+
+            </div>
+
+
         </div>
-    </nav>
-</div>
-<input type="hidden" id="id" th:value="${session.user?.id}">
-<input type="hidden" id="username" th:value="${session.user?.username}">
-<input type="hidden" id="img" th:value="${session.user?.img}">
-<div id="conent">
-<div class="load_div" style='background-color:#F3F3F3'>
+        <div class="load_div2">
 
-    <div style="margin-left:520px;margin-top: 15px;"><a id="biaoqian">未登录</a></div>
-    <div style="margin-left:230px;margin-top: 15px;">
-        <img id="tupian" src="/images/20190107164001.jpg" width="100" height="100" class="img-circle">
-    </div>
-    <div style="margin-left:230px;margin-top:15px;">
-        <div><font size="4">昵称:<span id="span1">游客状态</span></font></div>
-        <div><font size="4"> ID:<span id="span2">00000</span></font></div>
+        </div>
+        <div  class="load_div3">
 
-    </div>
+            <div style="margin-left:200px;margin-top: 15px;">
+                <img src="/img/9ad59c44c3ee16d2.png" width="200px" height="100" class="img-rounded">
+            </div>
+            <div style="margin-left:200px;margin-top: 15px;">
+            188-1212-3214 <button type="button" class="btn btn-primary btn-sm">点击拨打</button>
+            </div>
+            <div style="margin-left:200px;margin-top: 15px;">
+           <button type="button" class="btn btn-primary btn-lg ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线留言&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+            </div>
+        </div>
 
-
-</div>
-<div class="load_div2">
-
-</div>
-<div  class="load_div3">
-
-    <div style="margin-left:200px;margin-top: 15px;">
-        <img src="/img/9ad59c44c3ee16d2.png" width="200px" height="100" class="img-rounded">
-    </div>
-    <div style="margin-left:200px;margin-top: 15px;">
-    188-1212-3214 <button type="button" class="btn btn-primary btn-sm">点击拨打</button>
-    </div>
-    <div style="margin-left:200px;margin-top: 15px;">
-   <button type="button" class="btn btn-primary btn-lg ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在线留言&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
     </div>
 </div>
-
-</div>
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 200px;border-radius: 10px; margin-top: 100px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
+    </div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1150px;border-radius: 10px; margin-top: 100px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
+    </div>
 </body>
 </html>

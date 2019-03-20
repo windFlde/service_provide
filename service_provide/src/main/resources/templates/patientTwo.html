@@ -7,7 +7,11 @@
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
 
 
@@ -15,7 +19,7 @@
 
         queryHuanzejiaoyu();
         queryLiuyan();
-        huifu();
+
     })
 
     var number=1;
@@ -60,10 +64,48 @@
 
         var id = $("#id").val();
         var text = $("#text").val();
+        var userid = $("#userid").val();
         if (text == null || text == "") {
 
-            layer.msg("请输入内容");
-            return;
+            layer.msg("内容不能为空");
+            return ;
+
+        }
+        if (userid == null || userid == "") {
+            var htmlUrl=document.documentURI;
+           /!* 确认框start *!/
+           bootbox.confirm({
+               size: "small",
+               message: "您没有登录,是否登录?",
+               callback: function(result){
+                   console.log(result);
+                   if(result){
+                       /!*ajax   start*!/
+                       $.ajax({
+                           url:"/wenz/toLogin",
+                           type:"POST",
+                           data:{htmlUrl:htmlUrl},
+                           beforeSend:function(){
+                               ii = layer.msg('加载中', {
+                                   icon: 16
+                                   ,shade: 0.01
+                               });
+                           },
+                           success:function(a){
+                               window.location.href="/wenz/toView?viewName=login";
+                           },
+                           error:function(){
+                               layer.msg("ajax失败");
+                           },complete:function(){
+                               layer.close(ii);
+                           }
+                       });
+                       /!*ajax   end*!/
+                   }
+               }
+           })
+           return;
+
         }
          $.ajax({
                  url:'/addLiuyanTwo',
@@ -99,12 +141,13 @@
                      for (var i = 0; i <data.length ; i++) {
                          cotor += "<div  class='article' style='width: 600px;height: 110px'>";
                          cotor += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+data[i].img+"'></div>";
-                         cotor += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font>&nbsp;&nbsp;<a href='javascript:huifu("+obj._id+","+i+")'>回复</a></p>" +
-                             "<p><font size='4'>"+data[i].content+"</font></p><input type='text' id='conent' placeholder='请输入内容'></div><br>";
+                         cotor += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+data[i].name+"</font>&nbsp;&nbsp;&nbsp;&nbsp;"+data[i].time+"</p>" +
+                             "<p><font size='4'>"+data[i].content+"</font></p><p>"+data[i].aa+"</p><p>"+data[i].huifu+"</p><input type='text' id='conentss' placeholder='请输入内容'><a href='javascript:void(0)' onclick=huifu('"+data[i]._id+"',"+i+")>回复</a></div><br>";
                          cotor += "</div><br>";
                      }
 
-                     $("#aa").html(cotor);
+                     $("#aa").append(cotor);
+                     /*huifu();*/
 
 
                  },error:function () {
@@ -115,23 +158,52 @@
 
    }
 
-   function huifu(_id,i) {
-       console.log(_id,i);
 
-        var conent=$("#conent").val();
-       if (conent == null || conent == "") {
 
-           layer.msg("回复内容不能为空");
-           return;
+   /*function huifu(_id,i) {
+
+       var userid = $("#userid").val();
+       if (userid == null||userid=="") {
+
+           layer.msg("请先登录");
+           location.href="/home/ToPage?name=login"
+           return ;
+       }else{
+
+           var conentss=$("#conentss").val();
+           if (conentss == null || conentss == "") {
+
+               layer.msg("回复内容不能为空");
+               return;
+           }
+           $.ajax({
+               url:'/huifu',
+               type:'post',
+               data:{_id:_id,huifu:conentss},
+               success:function () {
+
+                   layer.msg("回复成功");
+                   $("#conentss").val("");
+
+
+               },error:function () {
+                   alert("ajax访问失败,请查看控制台");
+               }
+
+           })
        }
 
 
-   }
+   }*/
 
 
     
     function back() {
         location.href="/home/ToPage?name=patient"
+    }
+
+    function zaiXian() {
+        location.href="/home/ToPage?name=zhuanjiaOnline"
     }
 
 </script>
@@ -156,6 +228,7 @@
     }
 </style>
 <body>
+<div style="margin-left: 500px">
 <div style="width:550px;height:80px">
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -172,6 +245,7 @@
     </nav>
 </div>
 <input type="hidden" id="id" th:value="${param?.id}">
+<input type="hidden" id="userid" th:value="${session.user?.id}">
 <div>
     <div style="margin-left: 20px;margin-top: 10px"><font size="5px" id="video_name"></font></div>
     <div style="margin-left: 20px;margin-top: 10px">
@@ -183,7 +257,7 @@
     <div style="margin-left: 30px;margin-top: 20px"><font id="numbers" size="4px"></font></div>
     <div style="margin-left: 100px;margin-top: 10px">
         <button type="button" class="btn btn-primary">点击查看pdf课件内容</button>
-        <button type="button" class="btn btn-primary">专家在线答疑</button>
+        <button type="button" class="btn btn-primary" onclick="zaiXian()">专家在线答疑</button>
     </div>
     <div style="background-color:#00ee00;margin-top:10px;width:548px;height: 250px" id="kenr">
     </div>
@@ -200,7 +274,13 @@
     </div>
 
 </div>
+</div>
 
-
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: 200px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: 200px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
+</div>
 </body>
 </html>

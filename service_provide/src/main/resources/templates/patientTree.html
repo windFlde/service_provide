@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
     function back() {
         location.href="/home/ToPage?name=patient"
@@ -84,6 +87,7 @@
 
 </script>
 <body>
+<div style="margin-left: 500px">
 <div style="width:550px;height:80px">
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -126,6 +130,13 @@
         <button type="button" class="btn btn-primary" onclick="fsYouxiang()">提交邮箱</button>
     </div>
 
+</div>
+</div>
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -600px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -600px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>

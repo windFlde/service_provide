@@ -9,93 +9,6 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script type="text/javascript">
 
-        /*var i = 1;
-        var a = 3;
-        var seeHeight = null;
-        var scrollTop = null;
-        var totalHeight = null;
-        $(function(){
-            var  number=0;
-            $.ajax({
-                url:'/findItme?page='+i+'&rows='+a+'',
-                async:false,
-                success:function(result){
-                    var cont = "";
-                    $.each(result,function (index,obj) {
-                        cont += "<br>";
-                        cont += "<div class='load_div2' style='background-color:#F3F3F3;width:548px;height:150px'>";
-                        cont += "<br/>&nbsp;&nbsp;"+(number+1)+".<font size='2'>" + obj.title + "</font><br><br>";
-                        cont += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio'><font size='1'>" + obj.content + "</font><br><br>";
-                        cont+="</div>"
-                        number++;
-                    })
-                    cont += "<div id='tt'></div>";
-                    $("#content").html(cont);
-                    seeHeight = $(window).height();//浏览器可视窗口高度
-                    /!*var thisBodyHeight = $(document.body).height();//浏览器当前窗口文档body的高度
-                    var totalBodyHeight = $(document.body).outerHeight(true);//浏览器当前窗口文档body的总高度 包括border padding margin
-                    var thisWidth = $(window).width(); //浏览器当前窗口可视区域宽度
-                    var thisDocumentWidth = $(document).width();//浏览器当前窗口文档对象宽度
-                    var thisBodyWidth = $(document.body).width();//浏览器当前窗口文档body的宽度
-                    var totalBodyWidth = $(document.body).outerWidth(true);//浏览器当前窗口文档body的总宽度 包括border padding margin*!/
-                    scrollTop= $(window).scrollTop();//浏览器可视窗口顶端距离网页顶端的高度（垂直偏移）
-                    totalHeight = $(document).height();//整个文档高度
-
-                },
-                error:function(){
-                    alert("失败");
-                }
-
-            })
-
-
-        })
-
-
-
-        // console.log(totalHeight,seeHeight,thisBodyHeight,totalBodyHeight,thisWidth,thisDocumentWidth,thisBodyWidth,totalBodyWidth,scrollTop);
-        //添加滚动事件
-        $(window).scroll(function(){
-            scrollTop = $(window).scrollTop();
-            totalHeight = $(document).height();
-            //console.log(scrollTop,seeHeight,totalHeight)
-            if(scrollTop+seeHeight+50>totalHeight){
-                i = i+1;
-               var  number=0;
-                $.ajax({
-                    url: '/findItme?page=' + i + '&rows=' + a + '',
-                    success: function (result) {
-                        var conntt="";
-                        if(result ==null){
-                            $('#tt').append(conntt);
-                        }else {
-
-                            $.each(result, function (index, obj) {
-                                conntt += "<br>";
-                                conntt += "<div class='load_div2' style='background-color:#F3F3F3;width:548px;height:150px'>";
-                                conntt += "<br/>&nbsp;&nbsp;"+(number+1)+".<font size='2'>" + obj.title + "</font><br><br>";
-                                conntt += "&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio'><font size='1'>" + obj.content + "</font><br><br>";
-                                conntt+="</div>";
-                                number++;
-                                console.log(obj.content);
-                                console.log(number);
-                            })
-
-
-                            $('#tt').append(conntt);
-                        }
-
-
-                    },
-                    error: function () {
-                        alert("失败");
-                    }
-                })
-            }
-
-
-        })*/
-
         $(function(){
 
             var  digit=1;
@@ -130,9 +43,6 @@
                          conntt+="</button></center>";
                          conntt+="</div>";
                          conntt+="<form>";
-
-
-
                          $("#content").html(conntt);
 
 
@@ -146,26 +56,11 @@
 
         function commitPaper() {
 
-
-            var item = $(":radio:checked");
-            console.log(item);
-            var len=item.length;
-            console.log(item);
-            if(len<=0){
-
-                layer.alert('您还有选项没有选择', {
-                    skin: 'layui-layer-molv' //样式类名
-                    ,closeBtn: 0
-                })
-
-            }else{
-
-
-                $.ajax({
+               /* $.ajax({
                         url:'/AddAnswer',
                         type:'post',
                         data:$("form").serialize(),
-                        success:function () {
+                        success:function () {*/
 
                             layer.open({
                                 type: 1,
@@ -173,32 +68,45 @@
                                 closeBtn: 0,
                                 shadeClose: true,
                                 area: ['400px', '300px'], //宽高,
-                                content:'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/img_1.jpg" width="340" height="80px"><br> <br><center>感谢你的参与，您将获得200积</center><br><center>分,积分可兑换奖品</center><br> <center><button  onclick="history.go(-1)"  type="button" class="btn btn-primary btn-lg active">返回</button></center>'
+                                content:'<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/img_1.jpg" width="340" height="80px"><br> <br><center>感谢你的参与，您将获得200积</center><br><center>分,积分可兑换奖品</center><br> <center><button  onclick="upateCount()"  type="button" class="btn btn-primary btn-lg active">返回</button></center>'
 
                             });
 
 
-                        },error:function () {
+                     /*   },error:function () {
                             alert("ajax访问失败,请查看控制台");
                         }
 
-                        })
+                        })*/
 
-            }
-
-
+        }
 
 
+      function upateCount() {
 
+            var userid=$("#userid").val();
+             $.ajax({
+                     url:'/upateCount',
+                     type:'post',
+                     data:{id:userid},
+                     success:function (data) {
 
+                      location.href="/home/ToPage?name=chuangguan";
+
+                     },error:function () {
+                         alert("ajax访问失败,请查看控制台");
+                     }
+
+                     })
 
         }
 
         function back() {
 
-            window.location.href="/home/ToPage?name=chuangguan";
+            location.href="/home/ToPage?name=chuangguan";
 
         }
+
 
 
 
@@ -206,25 +114,36 @@
 
 </head>
 
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <body>
-<div style="width:550px;height:80px">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:back()">返回</a>
+<div style="margin-left: 500px">
+    <div style="width:550px;height:80px">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="javascript:back()">返回</a>
+                </div>
+                <div>
+                    <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">闯关测试一</font></p>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">...</a></li>
+                </ul>
             </div>
-            <div>
-                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">闯关测试一</font></p>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">...</a></li>
-            </ul>
-        </div>
-    </nav>
-</div>
-<div id="content">
+        </nav>
+    </div>
+    <input type="hidden" id="userid" th:value="${session.user?.id}">
+    <div id="content">
 
+    </div>
 </div>
-
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 200px;border-radius: 10px; margin-top: 0px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
+    </div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1150px;border-radius: 10px; margin-top: 0px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
+    </div>
 </body>
 </html>

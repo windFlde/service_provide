@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
+    <!--广告页面引入-->
+    <head th:replace="left :: head"></head>
+    <head th:replace="right :: head"></head>
 <script type="text/javascript">
 
 
@@ -85,36 +88,44 @@
     }
 </style>
 <body>
-<div style="width:550px;height:80px">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:back()">返回</a>
-            </div>
-            <div>
-                <div style="margin-left:170px">
-                    <p class="navbar-text"><font size="5px">学分课程</font></p>
-                    <p class="navbar-text"><font size="5px"><a href="javacript:addShoucang()">收藏</a></font></p>
+<div style="margin-left: 500px">
+        <div style="width:550px;height:80px">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="javascript:back()">返回</a>
+                    </div>
+                    <div>
+                        <div style="margin-left:170px">
+                            <p class="navbar-text"><font size="5px">学分课程</font></p>
+                            <p class="navbar-text"><font size="5px"><a href="javacript:addShoucang()">收藏</a></font></p>
+                        </div>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">...</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="load_div" style="background-color:#F3F3F3">
+            <div style="position:relative;margin-top:25px;margin-left:18px;">
+                <a href='#'><img src="/img/134092401.jpg" height='180' width='500' ></a>
+                <div style="position:absolute; z-index:2; left:150px; top:70px">
+                    <font size="5px" color="black">学课程&nbsp;&nbsp;&nbsp;&nbsp;赢学分</font>
                 </div>
             </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">...</a></li>
-            </ul>
         </div>
-    </nav>
-</div>
 
-<div class="load_div" style="background-color:#F3F3F3">
-    <div style="position:relative;margin-top:25px;margin-left:18px;">
-        <a href='#'><img src="/img/134092401.jpg" height='180' width='500' ></a>
-        <div style="position:absolute; z-index:2; left:150px; top:70px">
-            <font size="5px" color="black">学课程&nbsp;&nbsp;&nbsp;&nbsp;赢学分</font>
+        <div class="load_divss" style="margin-top: 20px;">
+
         </div>
+</div>
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: 200px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
     </div>
-</div>
-
-<div class="load_divss" style="margin-top: 20px;">
-
-</div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: 200px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
+    </div>
 </body>
 </html>

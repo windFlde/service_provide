@@ -7,7 +7,10 @@
     <script src="/js/layer/layer.js"></script>
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-bootbox/bootbox.js"></script>
 </head>
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
     $(function(){
 
@@ -50,17 +53,15 @@
 
                  })
     }
-    
+
 
     /*新增报名开始*/
     function addBaoming() {
-        var formDate =new FormData($("#form")[0])
+
          $.ajax({
                  url:'/query/addBaoming',
                  type:'post',
-                 data:formDate,
-                 processData:false,
-                 contentType:false,
+                 data:$("#form").serialize(),
                  success:function () {
 
                      layer.msg("报名成功");
@@ -81,20 +82,60 @@
 
         var content=$("#content").val();
         var id=$("#id").val();
+        var userid=$("#userid").val();
         if (content == null || content == "") {
 
             layer.msg("请输入留言内容");
             return;
         }
+        if (userid == null || userid == "") {
+            var htmlUrl=document.documentURI;
+            /* 确认框start */
+            bootbox.confirm({
+                size: "small",
+                message: "您没有登录,是否登录?",
+                callback: function (result) {
+                    console.log(result);
+                    if (result) {
+                        /*ajax   start*/
+                        $.ajax({
+                            url: "/wenz/toLogin",
+                            type: "POST",
+                            data: {htmlUrl: htmlUrl},
+                            beforeSend: function () {
+                                ii = layer.msg('加载中', {
+                                    icon: 16
+                                    , shade: 0.01
+                                });
+                            },
+                            success: function (a) {
+                                window.location.href = "/wenz/toView?viewName=login";
+                            },
+                            error: function () {
+                                layer.msg("ajax失败");
+                            }, complete: function () {
+                                layer.close(ii);
+                            }
+                        });
+                        /*ajax   end*/
+                    }
+                }
+            })
+
+                return ;
+        }
+
          $.ajax({
                  url:'/addLiu',
                  type:'post',
                  data:{content:content,em_id:id},
                  success:function () {
 
-                     layer.msg("留言成功");
-                     $("#content").val("");
-                     queryLiuyan();
+
+                         layer.msg("留言成功");
+                         $("#content").val("");
+                         queryLiuyan();
+
 
 
                  },error:function () {
@@ -108,19 +149,19 @@
     /*查询留言开始*/
     function queryLiuyan() {
         var id=$("#id").val();
-        /*var userId=$("#userId").val();*/
          $.ajax({
                  url:'/queryLiuyan',
                  type:'post',
                  data:{id:id},
                  success:function (data) {
+                     console.log(data);
                      var conent = "";
                      $.each(data,function (index,obj) {
                          conent+="<div style='width: 450px;background-color:#F3F3F3;height: 180px;margin-left:40px'>"
                          conent+="<div style='margin-left: 30px;float:left;'><br>"
                          conent+="<img src="+obj.img+" width='100px' height='100px'class='img-circle'>"
                          conent+="</div><br>"
-                         conent+="<div style='margin-left:150px;margin-top:5px'><font size='4px'>"+obj.name+"</font><br><br>"
+                         conent+="<div style='margin-left:150px;margin-top:5px'><font size='4px'>"+obj.name+"</font>&nbsp;&nbsp;&nbsp;&nbsp;"+obj.time+"<br><br>"
                          conent+="<font size='3px'>"+obj.content+"</font>"
                          conent+="</div>"
                          conent+="</div>"
@@ -194,55 +235,65 @@
 
 </script>
 <body>
-<div style="width:550px;height:80px">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:fanhui()">返回</a>
+<div style="margin-left: 500px">
+    <div style="width:550px;height:80px">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="javascript:fanhui()">返回</a>
+                </div>
+                <div>
+                    <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">会议直播</font></p>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">...</a></li>
+                </ul>
             </div>
-            <div>
-                <p class="navbar-text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size="5px">会议直播</font></p>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">...</a></li>
-            </ul>
+        </nav>
+    </div>
+    <input type="hidden" id="id" th:value="${param?.id}">
+    <input type="hidden" id="userid" th:value="${session.user?.id}">
+    <!--<input type="hidden" id="userId" th:value="${session.user?.id}">-->
+    <div id="conent">
+        <div id="divconent">
+
         </div>
-    </nav>
-</div>
-<input type="hidden" id="id" th:value="${param?.id}">
-<!--<input type="hidden" id="userId" th:value="${session.user?.id}">-->
-<div id="conent">
-    <div id="divconent">
+        <div style="margin-left:30px;margin-top: 10px;" >我要报名</div>
+        <div style="margin-left:50px;margin-top: 10px;" >
 
-    </div>
-    <div style="margin-left:30px;margin-top: 10px;" >我要报名</div>
-    <div style="margin-left:50px;margin-top: 10px;" >
+            <form  id="form">
+                名称 <input type="text" style="width: 250px"  name="name" placeholder="请输入姓名"><br><br>
+                医院 <input type="text" style="width: 250px" name="hospital" placeholder="请输入医院"><br><br>
+                科室 <input type="text"  style="width: 250px"  name="desk" placeholder="请输入科室"><br><br>
+                电话<input type="text"  style="width: 250px"  name="work" placeholder="请输入电话"><br><br>
+                <div style="width: 548px;margin-left: 100px">
+                    <button type="button" onclick="addBaoming()" class="btn btn-default">&nbsp;&nbsp;&nbsp;提交信息&nbsp;&nbsp;&nbsp;</button>
+                </div>
+            </form>
 
-        <form  id="form">
-            名称 <input type="text" style="width: 250px"  name="name" placeholder="请输入姓名"><br><br>
-            医院 <input type="text" style="width: 250px" name="hospital" placeholder="请输入医院"><br><br>
-            科室 <input type="text"  style="width: 250px"  name="desk" placeholder="请输入科室"><br><br>
-            电话<input type="text"  style="width: 250px"  name="work" placeholder="请输入电话"><br><br>
-            <div style="width: 548px;margin-left: 100px">
-                <button type="button" onclick="addBaoming()" class="btn btn-default">&nbsp;&nbsp;&nbsp;提交信息&nbsp;&nbsp;&nbsp;</button>
-            </div>
-        </form>
+        </div>
+        <div style="margin-left:30px;margin-top: 10px;" > 留言</div>
+        <div  style="width:500px;margin-left:30px;margin-top: 10px;" >
+            <form id="add_form" >
+                <textarea class="form-control"  name="content" id="content"></textarea>
+                <div style="margin-top:10px;float: right" >
+                <button type="button" onclick="addLiu()" class="btn btn-primary btn-sm">提交留言</button>
+                </div>
+            </form>
+        </div>
+        <div id="divtwo" style="margin-top: 50px">
 
-    </div>
-    <div style="margin-left:30px;margin-top: 10px;" > 留言</div>
-    <div  style="width:500px;margin-left:30px;margin-top: 10px;" >
-        <form id="add_form" >
-            <textarea class="form-control"  name="content" id="content"></textarea>
-            <div style="margin-top:10px;float: right" >
-            <button type="button" onclick="addLiu()" class="btn btn-primary btn-sm">提交留言</button>
-            </div>
-        </form>
-    </div>
-    <div id="divtwo" style="margin-top: 50px">
-
+        </div>
     </div>
 
 </div>
+</div>
 
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -850px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -850px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
+</div>
 </body>
 </html>

@@ -1,7 +1,9 @@
 package com.jk.mapper;
 
+import com.jk.bean.Baoming;
 import com.jk.bean.DaKa;
 import com.jk.bean.Guandian;
+import com.jk.bean.Img;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public interface ExprentViewMapper {
 
     DaKa queryZhibo(Integer id);
 
-    void addBaoming();
+    void addBaoming(Baoming baoming);
 
     DaKa queryZhiboTwo(Integer id);
 
@@ -24,4 +26,6 @@ public interface ExprentViewMapper {
     void updatePeople(String id);
 
     void updatePeopleTwo(String id);
+
+    Img queryImg(Integer id);
 }
