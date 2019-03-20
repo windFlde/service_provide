@@ -164,4 +164,10 @@ public class HomeController {
     public List<Advert> getGuanGao(){
         return homeService.getGuanGao();
     }
+
+    @ResponseBody
+    @RequestMapping("getVIPInfo")
+    public List<VipInfo> getVIPInfo(){
+        return homeService.getVIPInfo();
+    }
 }

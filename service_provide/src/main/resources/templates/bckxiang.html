@@ -13,6 +13,10 @@
 <script type="text/javascript">
     var title = "";
     $(function() {
+        var userId = $("#userId").val();
+        if(userId==""){
+            location.href="/home/ToPage?name=login"
+        }
         query();
         getPingLun();
     })
@@ -25,7 +29,7 @@
             data:{id:id},
             success: function (result) {
                 title += ""+result.em_title+"";
-                cont += "<div class='load_div'>";
+                cont += "<div style='width: 600px'>";
                 cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='6'>"+result.em_title+"</font><br>";
                 cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='4'>"+result.em_createtime+"&nbsp;&nbsp;&nbsp;&nbsp;共浏览:&nbsp;&nbsp;&nbsp;&nbsp;"+result.em_browse+"</font><br><br>";
                 cont += "<div style='margin-left: 10px' >" +
@@ -35,10 +39,10 @@
                 cont += "<div style='margin-left: 10px'><font size='5'>"+result.em_content+"</font><div><br><br><br>";
                 cont += "<div style='width: 550px;height: 50px;background-color: #F3F3F3;margin-left: 10px'><font>*感谢您的阅读，如您有任何问题，点击文末右侧留言提问按钮，留下您的问题，作者奖尽快回复您。</font></div>"
                 cont += "</div><br><br><br>";
-                cont +="<div class='load_div'><div style='width: 550px;height: 150px;margin-left: 10px'><textarea id='name' rows='6' cols='60'></textarea></div>"
+                cont +="<div style='width: 600px'><div style='width: 550px;height: 150px;margin-left: 10px'><textarea id='name' rows='6' cols='60'></textarea></div>"
                 cont +="<div>" +
-                    "<div style='margin-left: 10px;width: 500px;height: 80px;float: left'><font size='5'>精品留言</font></div>" +
-                    "<div style='margin-left: 10px;height: 80px;float: left'><a onclick='pinglun()'><font size='4'>留言</font></a></div>" +
+                    "<div style='margin-left: 10px;width: 500px;height: 50px;float: left'><font size='5'>精品留言</font></div>" +
+                    "<div style='margin-left: 10px;height: 30px;float: left'><a onclick='pinglun()'><font size='4'>留言</font></a></div>" +
                     "</div>"
                 $('#content').html(cont);
             },
@@ -67,8 +71,13 @@
                     layer.msg('等待审核!!', {time:1000, icon:1});
                 }else if(a=="0"){
                     layer.msg('留言成功!!', {time:1000, icon:1});
-                }else {
+                }else if(a=="2"){
                     layer.msg('最多留言5条!!', {time:1000, icon:2});
+                }else if(a=="3"){
+                    layer.msg('请去登录', {time:1000, icon:2});
+                    location.href="/home/ToPage?name=login"
+                }else {
+                    layer.msg('你被禁言了!!', {time:1000, icon:2});
                 }
                 $('#aa').html("");
                 
@@ -87,7 +96,7 @@
             data:{id:id},
             success: function (result) {
                 $.each(result, function (index, obj) {
-                    contt += "<div style='width: 600px;height: 110px' id='"+obj._id+"'>";
+                    contt += "<div style='width: 600px;height: 120px;margin-top: 30px' id='"+obj._id+"'>";
                     contt += "<div style='width: 100px;margin-left: 20px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
                     contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p>"
                         contt+="<p><font size='4' color='#a9a9a9'>"+obj.aa+"</font></p>"
@@ -161,6 +170,7 @@
 </style>
 <input type="hidden" id="id" th:value="${session.user?.id}">
 <input type="hidden" id="vip" th:value="${session.user?.vip}">
+<div style="margin-left: 460px;width: 600px;height: 1000px">
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">
 
@@ -197,8 +207,9 @@
 <div id="content">
 
 </div>
-<div id="aa" class="load_div">
+<div id="aa" style="width: 600px">
 
+</div>
 </div>
 </body>
 </html>

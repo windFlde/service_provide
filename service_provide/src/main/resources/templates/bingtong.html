@@ -27,7 +27,10 @@
                         $.each(result,function (index,obj) {
                             cont += "<br>";
                             cont += "<div class='load_div' style='background-color:#F3F3F3'>";
-                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>"+obj.em_title+"</a></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
+                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>"+obj.em_title+"</a></font><br><br>" ;
+                            if(obj.pay==1){
+                                cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
+                            }
                             cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>"+obj.dt_name+"&nbsp;·&nbsp;"+obj.dt_addr+"</font><br><br>";
                             cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>"+obj.em_createtime+"&nbsp;&nbsp;&nbsp;          "+obj.em_browse+"人观看&nbsp;&nbsp;&nbsp;          获得"+obj.em_medal+"枚奖章</font><br><br>";
                             cont += "<center><img src='"+obj.em_img+"'width='500px' height='300px'></center>"
@@ -70,7 +73,10 @@
                             $.each(result, function (index, obj) {
                                 conntt += "<br>";
                                 conntt += "<div class='load_div2' style='background-color:#F3F3F3'>";
-                                conntt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>" + obj.em_title + "</a></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
+                                conntt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing("+obj.id+")'>" + obj.em_title + "</a></font><br><br>" ;
+                                if(obj.pay==1){
+                                    conntt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
+                                }
                                 conntt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>" + obj.dt_name + "&nbsp;·&nbsp;" + obj.dt_addr + "</font><br><br>";
                                 conntt += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>" + obj.em_createtime + "&nbsp;&nbsp;&nbsp;          " + obj.em_browse + "人观看&nbsp;&nbsp;&nbsp;          获得" + obj.em_medal + "枚奖章</font><br><br>";
                                 conntt += "<center><img  src='" + obj.em_img + "'width='500px' height='300px'></center>"
@@ -121,67 +127,77 @@
                    });
                  /*ajax   end*/
         }
-        function xiangqing(id){
-                var vip = $("#vip").val();
-                var id2 = $("#id").val();
-                if(id2==""){
-                    location.href="/home/ToPage?name=login"
-                }else {
-                    if(vip==0){
-                        $.ajax({
-                            url: '/bck/paySuccess',
-                            data: {emId:id},
-                            success: function (a) {
-                                if(a=="1"){
-                                    $.ajax({
-                                        url:'/bck/updateById',
-                                        data:{id:id},
-                                        success:function() {
-                                            window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
-                                        },
-                                        error: function () {
-                                            alert("失败");
-                                        }
-                                    })
-                                }else {
-                                    /* payMony*/
-                                    $.ajax({
-                                        url: '/bck/payMony',
-                                        data: {emId:id},
-                                        success: function (ruslt) {
-                                            mony = ruslt.mony;
-                                            num = ruslt.num
-                                            layer.tab({
-                                                area: ['600px', '300px'],
-                                                tab: [{
-                                                    title: '查看文章',
-                                                    content: "<br><br><div><font color='#6495ed'>购买文章"+ruslt.mony+"元</font>  <input onclick='goumai("+id+")' class='btn btn-primary ' value='点击购买' style='margin-left: 105px;'></div><br>" +
-                                                        "<div><font color='#6495ed'>开通会员</font><input onclick='kaitongVIP()' class='btn btn-success'  value='点击开通'style='margin-left: 150px;' ></div><br>" +
-                                                        "<div><font color='#6495ed'>消费"+ruslt.num+"积分兑换（<font color='red'>时效30分钟</font>）<input onclick='duihuan("+id+")' class='btn btn-default'  value='点击兑换' ></font></div>"
-                                                }]
-                                            });
+        function xiangqing(id) {
+            var vip = $("#vip").val();
+            var id2 = $("#id").val();
+            if(id2==""){
+                location.href="/home/ToPage?name=login"
+            }else {
+                $.ajax({
+                    url: '/bck/queryExampleById',
+                    data: {id:id},
+                    success: function (result) {
+                        if(result.pay==0){
+                            window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                        }else {
+                            if(vip==0){
+                                $.ajax({
+                                    url: '/bck/paySuccess',
+                                    data: {emId:id},
+                                    success: function (a) {
+                                        if(a=="1"){
+                                            $.ajax({
+                                                url:'/bck/updateById',
+                                                data:{id:id},
+                                                success:function() {
+                                                    window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                                                },
+                                                error: function () {
+                                                    alert("失败");
+                                                }
+                                            })
+                                        }else {
+                                            /!* payMony*!/
+                                            $.ajax({
+                                                url: '/bck/payMony',
+                                                data: {emId:id},
+                                                success: function (ruslt) {
+                                                    mony = ruslt.mony;
+                                                    num = ruslt.num
+                                                    layer.tab({
+                                                        area: ['600px', '300px'],
+                                                        tab: [{
+                                                            title: '查看文章',
+                                                            content: "<br><br><div><font color='#6495ed'>购买文章"+ruslt.mony+"元</font>  <input onclick='goumai("+id+")' class='btn btn-primary ' value='点击购买' style='margin-left: 105px;'></div><br>" +
+                                                                "<div><font color='#6495ed'>开通会员</font><input onclick='kaitongVIP()' class='btn btn-success'  value='点击开通'style='margin-left: 150px;' ></div><br>" +
+                                                                "<div><font color='#6495ed'>消费"+ruslt.num+"积分兑换（<font color='red'>时效30分钟</font>）<input onclick='duihuan("+id+")' class='btn btn-default'  value='点击兑换' ></font></div>"
+                                                        }]
+                                                    });
 
+                                                }
+                                            })
                                         }
-                                    })
-                                }
-                            }
-                        })
+                                    }
+                                })
 
-                    }else {
-                        $.ajax({
-                            url:'/bck/updateById',
-                            data:{id:id},
-                            success:function() {
-                                window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
-                            },
-                            error: function () {
-                                alert("失败");
+                            }else {
+                                $.ajax({
+                                    url:'/bck/updateById',
+                                    data:{id:id},
+                                    success:function() {
+                                        window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                                    },
+                                    error: function () {
+                                        alert("失败");
+                                    }
+                                })
                             }
-                        })
+                        }
                     }
-                }
+                })
+            }
+
         }
-        
         
         function duihuan(id) {
             $.ajax({
@@ -210,7 +226,10 @@
                     $.each(result, function (index, obj) {
                         cont += "<br>";
                         cont += "<div class='load_div' style='background-color:#F3F3F3'>";
-                        cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing(" + obj.id + ")'>" + obj.em_title + "</a></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
+                        cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='5'><a href='javascript:void(0)' onclick='xiangqing(" + obj.id + ")'>" + obj.em_title + "</a></font><br><br>";
+                        if(obj.pay==1){
+                            cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3' color='red'>付费会员专享</font><br><br>";
+                        }
                         cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>" + obj.dt_name + "&nbsp;·&nbsp;" + obj.dt_addr + "</font><br><br>";
                         cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='3'>" + obj.em_createtime + "&nbsp;&nbsp;&nbsp;          " + obj.em_browse + "人观看&nbsp;&nbsp;&nbsp;          获得" + obj.em_medal + "枚奖章</font><br><br>";
                         cont += "<center><img src='" + obj.em_img + "'width='500px' height='300px'></center>"

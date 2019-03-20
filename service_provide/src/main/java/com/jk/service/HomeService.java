@@ -32,4 +32,6 @@ public interface HomeService {
     List<Title> getTitleAll();
 
     List<Advert> getGuanGao();
+
+    List<VipInfo> getVIPInfo();
 }

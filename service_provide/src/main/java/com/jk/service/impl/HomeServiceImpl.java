@@ -89,5 +89,10 @@ public class HomeServiceImpl implements HomeService {
         return homeMapper.getGuanGao();
     }
 
+    @Override
+    public List<VipInfo> getVIPInfo() {
+        return homeMapper.getVIPInfo();
+    }
+
 
 }

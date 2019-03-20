@@ -112,4 +112,9 @@
             ) * RAND() + (SELECT MIN(id) FROM t_advert)
         LIMIT 1
     </select>
+
+    <!--List<VipInfo> getVIPInfo();-->
+    <select id="getVIPInfo" resultType="VipInfo">
+        select * from t_vip_info
+    </select>
 </mapper>

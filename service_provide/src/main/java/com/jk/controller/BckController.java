@@ -56,12 +56,18 @@ public class BckController {
         Integer id = null;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd");
         String format = simpleDateFormat.format(new Date());
+        if(user == null){
+            return "3";
+        }
         if(user!=null){
             pingLun.setName(user.getUsername());
             pingLun.setImg(user.getImg());
             pingLun.setTime(format);
             pingLun.setUserId(user.getId());
             id = user.getId();
+            if(user.getStop()==0){
+                return "4";
+            }
         }
         List<Sensitivity> list = bckService.querySs();
         boolean contains = false;

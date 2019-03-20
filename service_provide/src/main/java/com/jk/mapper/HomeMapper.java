@@ -36,4 +36,6 @@ public interface HomeMapper {
     List<Title> getTitleAll();
 
     List<Advert> getGuanGao();
+
+    List<VipInfo> getVIPInfo();
 }

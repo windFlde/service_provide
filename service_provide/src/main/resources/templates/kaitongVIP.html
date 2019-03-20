@@ -12,6 +12,7 @@
 <script type="text/javascript">
         var ii = 0;
     $(function (){
+            getdata();
             var name = $("#reUrl2").val();
             if (name != "" ){
                 $("#username").html(name);}
@@ -42,6 +43,40 @@
            layer.msg("请先登录！！！");
         }
     }
+    function getdata() {
+        /*ajax   start*/
+                $.ajax({
+                   url:"/home/getVIPInfo",
+                   beforeSend:function(){
+                          ii = layer.msg('加载中', {
+                          icon: 16
+                          ,shade: 0.01
+                          });
+                    },
+                   success:function(a){
+                        var content = "";
+                       var q = 0;
+                        $.each(a, function(index,obj){
+                            q++;
+                            content += (q-1)%3==0?"<div class='row'>":" ";
+                            content += "<div class='col-md-4' style='border-radius: 10px;background-color: #c5c8ea;width: 150px;height: 210px;margin-left: 25px;margin-top: 25px;'>";
+                            content += "<center><br><font size='4'>"+obj.vipone+"</font><br>";
+                            content += "<b><font size='2' color='#e4ea1b'>￥</font><font size='6' color='#e4ea1b'>"+obj.vipmoney+"</font></b><br>";
+                            content += "<font size='3' color='#c3eae5'>"+obj.vipthree+"</font><br>";
+                            content += "<font size='3' color='#c3eae5'>"+obj.vipfour+"</font><br>";
+                            content += "<input type='radio' name='money' value='"+obj.info+"'></center></div>";
+                            content += q%3==0?"</div>":" ";
+                        });
+                        $("#info").html(content);
+                    },
+                   error:function(){
+                      layer.msg("ajax失败");
+                   },complete:function(){
+                         layer.close(ii);
+                    }
+               });
+             /*ajax   end*/
+    }
 </script>
 <body>
 <center>
@@ -54,61 +89,15 @@
             <font color="#6495ed" size="4">账户:</font><font id="username"  color="red" size="4">游客000000</font><br>
         </div>
     </div>
+    <div style="margin-top: 15px;">
+        <input type="button" class="btn btn-success btn-lg" onclick="kaitongVIP()"  value="立即开通">
+    </div>
     <form id="form">
         <input type="hidden" name="userid" id="reUrl1" th:value="${session.user?.id}">
         <div style="width: 577px">
-            <div style="margin-left: 20px;margin-top: 25px;">
-                <div style="border-radius: 10px;background-color: #c5c8ea;width: 150px;height: 210px;margin-left: -355px; margin-top: 10px;">
-                    <center><br><font size="4">连续包月</font><br>
-                        <b><font size="2" color="#e4ea1b">￥</font><font size="6" color="#e4ea1b">15</font></b><br>
-                        <font size="3" color="#c3eae5">每月自动续费</font><br>
-                        <font size="3" color="#c3eae5">可随时关闭</font><br>
-                        <input type="radio" name="money" value="15//@//%//&//30//@//%//&//1">
-                    </center>
-                </div>
-                <div style="border-radius: 10px;background-color: #ea8cc4;width: 150px;height: 210px;margin-left: -15px;margin-top: -210px;" >
-                    <center><br><font size="4">连续包季</font><br>
-                        <b><font size="2" color="#e4ea1b">￥</font><font size="6" color="#e4ea1b">45</font></b><br>
-                        <font size="3" color="#c3eae5">每季自动续费</font><br>
-                        <font size="3" color="#c3eae5">可随时关闭</font><br>
-                        <input type="radio" name="money" value="45//@//%//&//90//@//%//&//1">
-                    </center>
-                </div>
-                <div style="border-radius: 10px;background-color: #63cbea;width: 150px;height: 210px;margin-top: -210px;margin-left: 330px;" >
-                    <center><br><font size="4">连续包年</font><br>
-                        <b><font size="2" color="#e4ea1b">￥</font><font size="6" color="#e4ea1b">178</font></b><br>
-                        <font size="3" color="#c3eae5">每年自动续费</font><br>
-                        <font size="3" color="#c3eae5">可随时关闭</font><br>
-                        <input type="radio" name="money" value="178//@//%//&//365//@//%//&//1">
-                    </center>
-                </div>
-            </div>
+            <div id="info" style="margin-left: 28px;margin-top: -10px;">
+             </div>
         </div>
-        <div style="width: 577px">
-            <div style="margin-left: 20px;margin-top: 25px;">
-                <div style="border-radius: 10px;background-color: #63cbea;width: 150px;height: 210px;margin-left: -355px; margin-top: 10px;">
-                    <center><br><font size="4">1个月</font><br>
-                        <b><font size="2" color="#e4ea1b">￥</font><font size="6" color="#e4ea1b">20</font></b><br><br>
-                        <input type="radio" name="money" value="20//@//%//&//30">
-                    </center>
-                </div>
-                <div style="border-radius: 10px;background-color: #c5c8ea;width: 150px;height: 210px;margin-left: -15px;margin-top: -210px;" >
-                    <center><br><font size="4">3个月</font><br>
-                        <b><font size="2" color="#e4ea1b">￥</font><font size="6" color="#e4ea1b">48</font></b><br>
-                        <font size="3" color="#c3eae5">19.3元/月</font><br>
-                        <input type="radio" name="money" value="48//@//%//&//90">
-                    </center>
-                </div>
-                <div style="border-radius: 10px;background-color: #ea8cc4;width: 150px;height: 210px;margin-top: -210px;margin-left: 330px;" >
-                    <center><br><font size="4">年费</font><br>
-                        <b><font size="2" color="#e4ea1b">￥</font><font size="6" color="#e4ea1b">198</font></b><br>
-                        <font size="3" color="#c3eae5">16.5元/月</font><br>
-                        <input type="radio" name="money" value="198//@//%//&//365">
-                    </center>
-                </div>
-                <div style=" margin-top: 30px;">
-                    <input type="button" class="btn btn-success btn-lg" onclick="kaitongVIP()"  value="立即开通">
-                </div> </div> </div>
     </form>
 
 </center>
