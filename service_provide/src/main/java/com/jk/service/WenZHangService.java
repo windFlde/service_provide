@@ -29,4 +29,6 @@ public interface WenZHangService {
     void insertIntegral(String feiyong, String name, Integer id);
 
     List<MainContent> getMoadlContent();
+
+    MainContent queryTitleNameTime(String date);
 }

@@ -32,4 +32,7 @@ public interface WenZHangMapper {
 
     @Select("select * from t_main_content")
     List<MainContent> getMoadlContent();
+
+    @Select("select * from t_main_content where cdate = #{date}")
+    MainContent queryTitleNameTime(String date);
 }
