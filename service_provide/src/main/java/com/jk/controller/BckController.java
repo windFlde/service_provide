@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.jk.bean.*;
 import com.jk.client.SearchClient;
 import com.jk.service.BckService;
+import com.jk.service.LoginService;
 import com.jk.service.WenZHangService;
 import com.jk.util.Content;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class BckController {
 
     @Resource
     SearchClient searchClient;
+
+    @Resource
+    private LoginService loginService;
 
     @ResponseBody
     @RequestMapping("getTitle")
@@ -210,7 +214,9 @@ public class BckController {
     @RequestMapping("payEx")
     public String payEx(Integer emId,Integer num,HttpSession session) {
         User user = (User)session.getAttribute("user");
-        if(user.getNum()>num){
+        User userFromDB=loginService.toLogin(user);
+        session.setAttribute("user",userFromDB);
+        if(userFromDB.getNum()>num){
            /* bckService.addPay(id,emId);*/
             wenZHangService.updateUserCount(num,user.getId());
             wenZHangService.insertIntegral("-"+num,"购买文章",user.getId());

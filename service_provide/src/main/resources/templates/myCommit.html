@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
-</head>
+
 <script type="text/javascript">
     var ii = 0;
     var tname = "";
@@ -52,6 +52,9 @@
         /*ajax   end*/
     }
 </script>
+</head>
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <body>
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
 <div style="margin-left: 460px">
@@ -90,6 +93,12 @@
         </table>
     </div>
 </div>
+</div>
+<div id="div1" style="width: 240px;height: 610px;margin-left: 200px;border-radius: 10px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1090px;border-radius: 10px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>

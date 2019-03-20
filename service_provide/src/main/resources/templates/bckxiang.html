@@ -9,7 +9,7 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <link rel="stylesheet" href="/js/layui/css/layui.css">
 
-</head>
+
 <script type="text/javascript">
     var title = "";
     $(function() {
@@ -96,7 +96,7 @@
             data:{id:id},
             success: function (result) {
                 $.each(result, function (index, obj) {
-                    contt += "<div style='width: 600px;height: 120px;margin-top: 30px' id='"+obj._id+"'>";
+                    contt += "<div style='width: 600px;height: 110px' id='"+obj._id+"'>";
                     contt += "<div style='width: 100px;margin-left: 20px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
                     contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p>"
                         contt+="<p><font size='4' color='#a9a9a9'>"+obj.aa+"</font></p>"
@@ -147,6 +147,9 @@
     }
 
 </script>
+</head>
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <body>
 <style type="text/css">
     body,div{
@@ -207,9 +210,15 @@
 <div id="content">
 
 </div>
-<div id="aa" style="width: 600px">
+<div id="aa" style="width: 600px;margin-top: 50px">
 
 </div>
+</div>
+<div id="div1" style="width: 240px;height: 610px;margin-left: 200px;border-radius: 10px; margin-top: 100px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1090px;border-radius: 10px; margin-top: 100px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>

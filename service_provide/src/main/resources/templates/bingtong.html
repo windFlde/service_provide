@@ -203,8 +203,12 @@
             $.ajax({
                 url:'/bck/payEx',
                 data:{emId:id,num:num},
-                success:function() {
-                    window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                success:function(a) {
+                    if(a=="1"){
+                        window.location.href = "/home/ToPage?name=bckxiang&id=" + id;
+                    }else {
+                        layer.msg('您的积分不足', {time:1000, icon:2});
+                    }
                 },
                 error: function () {
                     alert("失败");
@@ -246,8 +250,8 @@
     </script>
 
 </head>
-
-
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <style type="text/css">
              body,div{
                      margin:0;
@@ -323,6 +327,12 @@
  <div id="content">
 
  </div>
+ </div>
+ <div id="div1" style="width: 240px;height: 610px;margin-left: 15px;border-radius: 10px; margin-top: 100px;position: fixed" >
+     <div id="div001"  th:replace="left :: left" ></div>
+ </div>
+ <div id="div2" style="width: 240px;height: 610px;margin-left: 870px;border-radius: 10px; margin-top: 100px;position: fixed">
+     <div id="div002"  th:replace="right :: right" ></div>
  </div>
  </body>
 </html>
