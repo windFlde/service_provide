@@ -75,5 +75,10 @@ public class WenZHangServiceImpl implements WenZHangService {
         return wenZhangMapper.getMoadlContent();
     }
 
+    @Override
+    public MainContent queryTitleNameTime(String date) {
+       return  wenZhangMapper.queryTitleNameTime(date);
+    }
+
 
 }

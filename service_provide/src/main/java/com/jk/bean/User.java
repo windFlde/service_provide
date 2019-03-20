@@ -37,6 +37,7 @@ public class User implements Serializable {
     Date endtime;    //到期时间
     Integer fasong = 0;
     Integer xufei ;
+    Integer stop;
 }
 
 

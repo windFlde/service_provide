@@ -31,11 +31,16 @@
             console.log("-=====>"+cookie)
             var cookieList=cookie.split(";");
             var content="";
+            var count=0;
             $.each(cookieList, function (index,obj) {
-                if (obj.substr(0,3)=="pwd") {
+                if (obj.trim().substr(0,3)=="pwd") {
                     content=obj;
+                    count++;
                 }
             });
+            if (count==0) {
+                return ;
+            }
             var sp=content.split("=");
             var sp1=sp[1];
             var x=decodeURIComponent(sp1);

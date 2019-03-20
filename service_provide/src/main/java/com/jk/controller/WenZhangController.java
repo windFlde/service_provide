@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -248,5 +250,18 @@ public class WenZhangController {
         return result;
     }
 
+    //查询重大公告的发布时间
+    @ResponseBody
+    @RequestMapping("queryTitleNameTime")
+    public String queryTitleNameTime() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("当前时间为:"+date);
+        MainContent mainContent=wenZHangService.queryTitleNameTime( sdf.format(date));
+        if (mainContent!=null) {
+            return "ok";
+        }
+        return "no";
+    }
 
 }
