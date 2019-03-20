@@ -10,6 +10,9 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <body>
 <div style="margin-left: 475px;">
 <div style="width:550px;height:80px">
@@ -45,6 +48,12 @@
     </div>
     <div class="Sbox">
     </div>
+</div>
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -365px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -365px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 <script>
