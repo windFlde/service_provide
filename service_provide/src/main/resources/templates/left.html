@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title>左广告</title>
+    <script src="/js/layer/layer.js"></script>
+    <script src="/js/tooltip.js"></script>
+<script type="text/javascript">
+    var ii = 0;
+$(function (){
+    getGuanGao();
+});
+function getGuanGao() {
+/*ajax   start*/
+        $.ajax({
+           url:"/home/getGuanGao",
+           beforeSend:function(){
+                  ii = layer.msg('加载中', {
+                  icon: 16
+                  ,shade: 0.01
+                  });},
+           success:function(a){
+               var content = "";
+                $.each(a,function (index,obj){
+                    content += "<a onclick='closeqwe1()'><font size='4' style='margin-left: 185px;'>X</font></a><br><a href='"+obj.url+"' title='"+obj.ggName+"'>";
+                    content += "<img style='margin-left: 4px;margin-top: 4px;' width='230px' height='600px' src='"+obj.imgUrl+"'></a>";
+                });
+                $("#div001").html(content);
+           },
+           error:function(){
+              layer.msg("ajax失败");
+           },complete:function(){
+                 layer.close(ii);
+            }
+       });
+     /*ajax   end*/
+}
+    function closeqwe1() {
+        $("#div001").hide();
+    }
+</script>
+</head>
+<body>
+<div th:fragment="left" id="div001" >
+
+</div>
+</body>
+</html>

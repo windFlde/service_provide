@@ -30,4 +30,6 @@ public interface HomeService {
     Integer getNum(String id);
 
     List<Title> getTitleAll();
+
+    List<Advert> getGuanGao();
 }

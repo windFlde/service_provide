@@ -34,4 +34,6 @@ public interface HomeMapper {
     User getNum(@Param("id") String id);
 
     List<Title> getTitleAll();
+
+    List<Advert> getGuanGao();
 }

@@ -26,6 +26,13 @@
 
     <dependencies>
 
+        <!--二维码-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
         <!--支付宝-->
         <dependency>
             <groupId>com.alipay.sdk</groupId>

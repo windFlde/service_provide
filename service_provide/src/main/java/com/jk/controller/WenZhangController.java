@@ -1,8 +1,10 @@
 package com.jk.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.*;
 import com.jk.service.WenZHangService;
 import com.jk.util.Constant;
+import com.jk.util.HttpClient;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +15,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("wenz")
@@ -29,7 +35,13 @@ public class WenZhangController {
     @ResponseBody
     @RequestMapping("queryWen")
     public WenZhang queryWen(WenZhang wenZhang) {
+
         WenZhang wen = wenZHangService.queryWen(wenZhang);
+        String localhostIP = getLocalHostIP();
+
+        String ProjectURL = getProjectURL(localhostIP);
+        System.out.println(ProjectURL);
+
         return wen;
     }
 
@@ -187,6 +199,54 @@ public class WenZhangController {
         return "0";
     }
 
+
+    @ResponseBody
+    @RequestMapping("getErwei")
+    public String maps(String data) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("key", "8de4433d4771d8486ca8baff5cd8d8c0");
+        params.put("text",data);
+        String allresult = HttpClient.sendGet("http://apis.juhe.cn/qrcode/api", params);
+        JSONObject jsonObject = JSONObject.parseObject(allresult);
+        JSONObject result = jsonObject.getJSONObject("result");
+        String base64_image = result.getString("base64_image");
+        return base64_image;
+    }
+
+
+
+    //获取当前内网IP地址
+    public static String getLocalHostIP(){
+        String result = null;
+
+        try {
+
+            InetAddress IP = Inet4Address.getLocalHost();
+            String ip = IP.toString();
+
+            int index = ip.indexOf('/');
+
+            result = ip.substring(index+1, ip.length());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public static String getProjectURL(String IP){
+        String result = "http://";
+
+        result += IP;
+        result += ":8080/";
+
+        String proPath = System.getProperty("user.dir");
+        String proName = proPath.substring(proPath.lastIndexOf("\\")+1, proPath.length());
+
+        result += proName;
+
+        return result;
+    }
 
 
 }
