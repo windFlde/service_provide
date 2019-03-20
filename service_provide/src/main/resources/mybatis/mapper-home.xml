@@ -99,4 +99,17 @@
     <select id="getTitleAll" resultType="title">
         SELECT * FROM t_title WHERE state = 1
     </select>
+
+    <!-- List<Advert> getGuanGao();-->
+    <select id="getGuanGao" resultType="Advert">
+        SELECT
+            *
+        FROM
+            t_advert
+        WHERE
+            id >= (
+                (SELECT MAX(id) FROM t_advert) - (SELECT MIN(id) FROM t_advert)
+            ) * RAND() + (SELECT MIN(id) FROM t_advert)
+        LIMIT 1
+    </select>
 </mapper>

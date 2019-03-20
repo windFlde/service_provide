@@ -158,4 +158,10 @@ public class HomeController {
         List<Title> titles = homeService.getTitleAll();
         return titles;
     }
+
+    @ResponseBody
+    @RequestMapping("getGuanGao")
+    public List<Advert> getGuanGao(){
+        return homeService.getGuanGao();
+    }
 }

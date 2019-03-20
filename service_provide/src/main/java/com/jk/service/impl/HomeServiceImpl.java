@@ -84,5 +84,10 @@ public class HomeServiceImpl implements HomeService {
         return homeMapper.getTitleAll();
     }
 
+    @Override
+    public List<Advert> getGuanGao() {
+        return homeMapper.getGuanGao();
+    }
+
 
 }

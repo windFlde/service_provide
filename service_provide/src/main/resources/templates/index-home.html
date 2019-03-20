@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <script src="/js/tooltip.js"></script>
+
+    <!--<script src="/js/tooltip.js"></script>-->
+    <!--<script src="/js/jquery.mousewheel.js"></script>-->
     <script src="/js/bootstrap-bootbox/bootbox.js"></script>
 </head>
 <script type="text/javascript">
@@ -21,6 +26,7 @@
         getTitleCookie();
         getMoadlContent();
         getMainModalCookie();
+        getGuanGao();
 
     });
 
@@ -287,6 +293,62 @@
                    });
                  /*ajax   end*/
     }
+    function closeqwe1() {
+        $("#div1").hide();
+    }
+    function closeqwe2() {
+        $("#div2").hide();
+    }
+    function getGuanGao() {
+        /*ajax   start*/
+        $.ajax({
+            url:"/home/getGuanGao",
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });},
+            success:function(a){
+                var content = "";
+               var asd = $("#hidden1").val();
+                $.each(a,function (index,obj){
+                    content += "<a onclick='closeqwe1()'><font size='4' style='margin-left: 185px;'>X</font></a><br><a href='"+obj.url+"' title='"+obj.ggName+"'>";
+                        content += "<img style='margin-left: 4px;margin-top: 4px;' width='230px' height='600px' src='"+obj.imgUrl+"'></a>";
+                        $("#div1").html(content);
+                });
+            },
+            error:function(){
+                layer.msg("ajax失败");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+        /*ajax   start*/
+        $.ajax({
+            url:"/home/getGuanGao",
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });},
+            success:function(a){
+                var content = "";
+                var asd = $("#hidden1").val();
+                $.each(a,function (index,obj){
+                    content += "<a onclick='closeqwe2()'><font size='4'  style='margin-left: 185px;'>X</font></a><br><a href='"+obj.url+"' title='"+obj.ggName+"'>";
+                    content += "<img style='margin-left: 4px;margin-top: 4px;' width='230px' height='600px' src='"+obj.imgUrl+"'></a>";
+                    $("#div2").html(content);
+                });
+            },
+            error:function(){
+                layer.msg("ajax失败");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+    }
     /*xjw end*/
 </script>
 <body>
@@ -421,6 +483,12 @@
             </div>
         </div>
     </center>
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 210px;border-radius: 10px; margin-top: -670px;position: fixed">
+
+    </div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -670px;position: fixed">
+
+    </div>
 </div>
 </body>
 </html>
