@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
     var img = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4101395094,4199371826&fm=26&gp=0.jpg";
     var img2 = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4101395094,4199371826&fm=26&gp=0.jpg";
@@ -16,7 +19,7 @@
     var ii = 0;
     $(function (){
         var tmp = $("#tmp").val();
-        $("#href1").prop("href","http://192.168.1.166:2001/home/todaka?id="+tmp);
+        $("#href1").prop("href","/home/todaka?id="+tmp);
 
         var asd2 = "<sapn><div style='background-color: #b8eecf;width: 200px;margin-left: 70px; margin-top: 15px; border-radius: 10px;padding-block-start: 10px;padding-block-end: 5px;padding-left: 15px;'>";
         asd2 +="<font  size='3'>请说您想问的？老铁帮你一一解答</font></div>";
@@ -114,6 +117,12 @@
         </form>
     </div>
 </div>
+</div>
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -730px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -730px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>

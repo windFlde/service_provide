@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
     var ii = 0;
 $(function (){
@@ -30,7 +33,7 @@ function getneirong() {
                success:function(a){
                    var tmp = $("#tmp").val();
                    var id = $("#id1").val();
-                   $("#href1").prop("href","http://192.168.1.166:2001/home/towenzhang?id="+a.zeid+"&tmp="+tmp);
+                   $("#href1").prop("href","/home/towenzhang?id="+a.zeid+"&tmp="+tmp);
 
                  $("#title1").html(a.title);
                  $("#shijian").html(a.creaTime +"&nbsp;&nbsp;&nbsp;共浏览:"+a.browse+"次");
@@ -86,7 +89,7 @@ function getneirong() {
 
 </script>
 <body>
-
+<div style="margin-left: 450px;">
 <style type="text/css">
     body,div{
         margin:0;
@@ -107,7 +110,6 @@ function getneirong() {
         border:1px solid #FFFFFF;
     }
 </style>
-
 <input type="hidden" th:value="${id}" id="id1"/>
 <input type="hidden" th:value="${tmp}" id="tmp"/>
 <div class="row" style="width: 600px;height: 700px;">
@@ -154,7 +156,13 @@ function getneirong() {
     </div>
 </div>
 <div id="aa" class="load_div">
-
+</div>
+</div>
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -730px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -730px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>

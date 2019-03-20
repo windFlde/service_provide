@@ -10,6 +10,11 @@
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 
 </head>
+
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
+
 <script type="text/javascript">
     var ii = 0;
     $(function (){
@@ -51,7 +56,7 @@
                         content +="<div><input class=\"btn btn-primary btn-sm\"style=\"border-radius: 10px;margin-left: 29px;\" onclick='getJJ("+obj.id+","+$("#tmp2").val()+")' type='button'value='个人简介'><input style=\"border-radius: 10px;\" onclick='getwenzhang("+obj.id+","+$("#tmp2").val()+")' class=\"btn btn-default btn-sm\" type='button' value=\"精选文章\"></div>";
                         content +="</div></div></div>";
                         content += q%2==0?"</div>":" ";
-                        $("#div1").html(content);
+                        $("#div").html(content);
                     })
                    },
                    error:function(){
@@ -103,10 +108,16 @@
     <div>
         <font size="6" id="font1"></font><br/><br/>
     </div>
-    <div id="div1" style="width: 550px;height: 800px;margin-left: 30px;">
+    <div id="div" style="width: 550px;height: 800px;margin-left: 30px;">
     </div>
 </div>
 </center>
+    <div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -730px;position: fixed" >
+        <div id="div001"  th:replace="left :: left" ></div>
+    </div>
+    <div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -730px;position: fixed">
+        <div id="div002"  th:replace="right :: right" ></div>
+    </div>
 </div>
 </body>
 </html>

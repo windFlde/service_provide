@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
     <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
 </head>
+<!--广告页面引入-->
+<head th:replace="left :: head"></head>
+<head th:replace="right :: head"></head>
 <script type="text/javascript">
     var ii = 0;
 $(function (){
@@ -17,7 +20,7 @@ $(function (){
 function getjingxuanwenzhang(){
     var tmp = $("#tmp").val();
     var id = $("#id1").val();
-    $("#href1").prop("href","http://192.168.1.166:2001/home/to?tmp="+tmp);
+    $("#href1").prop("href","/home/to?tmp="+tmp);
     /*ajax   start*/
             $.ajax({
                url:"/home/getGoodsWord",
@@ -35,15 +38,15 @@ function getjingxuanwenzhang(){
                            ,closeBtn: 0
                            ,anim: 4 //动画类型
                        },function () {
-                           location.href="http://192.168.1.166:2001/home/to?tmp="+tmp;
+                           location.href="/home/to?tmp="+tmp;
                        });
                    }
                    var content = "";
                 $.each(a,function(index,obj){
                     content += "<div style='border-radius: 10px;background-color: #b8eecf;width:520px;height: 325px;margin-left: 55px;margin-top: 20px;'>";
-                    content +="<a href='javascript:updateBrowse("+obj.id+","+tmp+")'><img style='border-radius: 10px;margin-top: 19px;margin-left: 61px;' src='"+obj.img+"' height='200px' width=400px/></a>";
-                    content +="<div style='margin-left: 80px; margin-top: 24px;'><a href='javascript:updateBrowse("+obj.id+","+tmp+")'  ><font size='5'>"+obj.title+"</font></a></div>";
-                    content +="<div style='margin-top: 3px;margin-left:  80px;'><font size='3' color='#5f9ea0'>"+obj.creaTime+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+obj.browse+"人观看&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;奖章数</font></div></div>";
+                    content +="<a href='javascript:updateBrowse("+obj.id+","+tmp+")'><img style='border-radius: 10px;margin-top: 19px' src='"+obj.img+"' height='200px' width=400px/></a>";
+                    content +="<div style=margin-top: 24px;'><a href='javascript:updateBrowse("+obj.id+","+tmp+")'  ><font size='5'>"+obj.title+"</font></a></div>";
+                    content +="<div style='margin-top: 3px;'><font size='3' color='#5f9ea0'>"+obj.creaTime+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+obj.browse+"人观看&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;奖章数</font></div></div>";
                     $("#span1").html(content);
                 });
                },
@@ -78,6 +81,8 @@ function getjingxuanwenzhang(){
     }
 </script>
 <body>
+<center>
+
 <input type="hidden" th:value="${id}" id="id1"/>
 <input type="hidden" th:value="${tmp}" id="tmp"/>
 <div class="row" style="width: 600px;height: 800px;">
@@ -117,6 +122,15 @@ function getjingxuanwenzhang(){
         <font size="6">精选文章</font><br/>
     </div>
     <span id="span1"></span>
+</div>
+
+</center>
+
+<div id="div1" style="width: 240px;height: 610px;margin-left: 230px;border-radius: 10px; margin-top: -730px;position: fixed" >
+    <div id="div001"  th:replace="left :: left" ></div>
+</div>
+<div id="div2" style="width: 240px;height: 610px;margin-left: 1100px;border-radius: 10px; margin-top: -730px;position: fixed">
+    <div id="div002"  th:replace="right :: right" ></div>
 </div>
 </body>
 </html>
