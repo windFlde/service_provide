@@ -71,10 +71,40 @@
     }
 
     function jiesuan() {
-       var a= $("#jiesuan").val();
+        var a= $("#jiesuan").val();
+        addUserJiFen(a*2);
         var content="恭喜你答对了<font color='red'>"+a+"</font>道,获得积分"+a*2+"!";
         $("#content").html(content);
     }
+
+    function addUserJiFen(jifen) {
+        var userId=$("#userId").val();
+        if (jifen==0) {
+            return ;
+        }
+        /*ajax   start*/
+        $.ajax({
+            url:"/wenz/addUserJiFen",
+            type:"POST",
+            data:{jifen:jifen,userId:userId},
+            beforeSend:function(){
+                ii = layer.msg('加载中', {
+                    icon: 16
+                    ,shade: 0.01
+                });
+            },
+            success:function(a){
+                layer.msg("已经将获得的积分加入您的账户")
+            },
+            error:function(){
+                layer.msg("ajax失败");
+            },complete:function(){
+                layer.close(ii);
+            }
+        });
+        /*ajax   end*/
+    }
+
 
     function toCg() {
         window.location.href="/wenz/toView?viewName=createLight";
@@ -85,6 +115,8 @@
 
 <input id="listFf" type="hidden" th:value="${session?.listFf}">
 <input type="hidden" id="jiesuan"  th:value="${param?.a}">
+<input id="userId" type="hidden" th:value="${session.user?.id}">
+
 <div style="margin-left: 30%">
 <div class="row" style="width: 600px;height: 800px;">
     <h2>

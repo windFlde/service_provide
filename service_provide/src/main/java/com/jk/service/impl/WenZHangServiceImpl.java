@@ -98,4 +98,9 @@ public class WenZHangServiceImpl implements WenZHangService {
 
     }
 
+    @Override
+    public void addUserJiFen(Integer jifen, Integer userId) {
+        wenZhangMapper.addUserJiFen(jifen,userId);
+    }
+
 }

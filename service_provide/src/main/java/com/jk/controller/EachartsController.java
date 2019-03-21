@@ -17,15 +17,15 @@ public class EachartsController {
     private EachartsService eachartsService;
 
     @RequestMapping("queryEcharts")
-    public HashMap<String, Object> queryEcharts() {
+    public HashMap<String, Object> queryEcharts(Integer id) {
 
         HashMap<String, Object> param = new HashMap<>();
         ArrayList<Object> name = new ArrayList<>();
         ArrayList<Object> value = new ArrayList<>();
-        List<Echarts> list=eachartsService.queryEcharts();
+        List<Echarts> list=eachartsService.queryEcharts(id);
         for (Echarts echarts : list) {
-            name.add(echarts.getName());
-            value.add(echarts.getValue());
+            name.add(echarts.getValue());
+            value.add(echarts.getName());
         }
 
         param.put("ename",name);

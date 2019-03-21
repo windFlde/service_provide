@@ -127,6 +127,11 @@ public class BckController {
                 break;
             }
         }
+        Integer em_id = pingLun.getEm_id();
+        List<PingLun> pingLuns = queryPingLunCiShu(id,em_id);
+        if(pingLuns.size()> 5){
+            return "2";
+        }
         if(contains){
             pingLun.setBlack(0);
             mongoTemplate.save(pingLun);
@@ -134,15 +139,11 @@ public class BckController {
         }else {
             pingLun.setBlack(1);
             mongoTemplate.save(pingLun);
-            Integer em_id = pingLun.getEm_id();
-            List<PingLun> pingLuns = queryPingLun(em_id);
-            if(id != null&&pingLuns.size()<=5){
+            if(id != null){
                 bckService.addCount(id);
                 integral.setIgName("留言");
                 integral.setUserId(id);
                 bckService.addIg(integral);
-            }else {
-                return "2";
             }
             return "0";
         }

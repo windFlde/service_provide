@@ -3,24 +3,37 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+
     <script src="/js/echarts.js"></script>
     <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <link rel="stylesheet" href="/js/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/js/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/js/layui/css/layui.css">
 </head>
 
 <body>
+<input type="hidden" id="reUrl1" th:value="${session.user?.id}">
+<!--
+<button type="button" class="layui-btn layui-btn-radius layui-btn-normal" onclick="queryZhu()">柱状图·折线图</button>
+-->
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <center>
     <div id="main" style="width: 1000px;height:400px;"></div>
     <div id="main1" ></div>
 </center>
-<button type="button" class="btn btn-success" onclick="queryZhu()">柱状图·折线图</button>
-<button type="button" class="btn btn-success" onclick="queryBing()">饼状图</button>
+
+
 <script type="text/javascript">
 
+    $(function () {
+        queryZhu();
+    })
 
     function queryZhu() {
+        var id = $("#reUrl1").val();
         $.ajax({
-            url:'/queryEcharts',
+            url:'/queryEcharts?id='+id,
             type:'post',
             success:function (data) {
 

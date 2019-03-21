@@ -37,4 +37,6 @@ public interface WenZHangService {
     void insertVistis(Visits visitsForDB);
 
     void addvistis(Visits visits);
+
+    void addUserJiFen(Integer jifen, Integer userId);
 }

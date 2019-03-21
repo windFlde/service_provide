@@ -68,27 +68,64 @@
     }
 
     function toCg() {
+        var userId=$("#userId").val();
+        if (userId==""||userId==null) {
+            var htmlUrl=document.documentURI;
+            /* 确认框start */
+            bootbox.confirm({
+                size: "small",
+                message: "您没有登录,是否登录?",
+                callback: function(result){
+                    console.log(result);
+                    if(result){
+                        /*ajax   start*/
+                        $.ajax({
+                            url:"/wenz/toLogin",
+                            type:"POST",
+                            data:{htmlUrl:htmlUrl},
+                            beforeSend:function(){
+                                ii = layer.msg('加载中', {
+                                    icon: 16
+                                    ,shade: 0.01
+                                });
+                            },
+                            success:function(a){
+                                window.location.href="/wenz/toView?viewName=login";
+                            },
+                            error:function(){
+                                layer.msg("ajax失败");
+                            },complete:function(){
+                                layer.close(ii);
+                            }
+                        });
+                        /*ajax   end*/
+                    }
+                }
+            })
+            /* 确认框end */
+        }else{
             /*ajax   start*/
-                    $.ajax({
-                       url:"/cg/queryTtOrFf",
-                       type:"POST",
-                       data:$("#form").serialize(),
-                       beforeSend:function(){
-                              ii = layer.msg('加载中', {
-                              icon: 16
-                              ,shade: 0.01
-                              });
-                        },
-                       success:function(a){
-                           window.location.href="/wenz/toView?viewName=jiesuanPage&a="+a;
-                       },
-                       error:function(){
-                          layer.msg("ajax失败");
-                       },complete:function(){
-                             layer.close(ii);
-                        }
-                   });
-                 /*ajax   end*/
+            $.ajax({
+                url:"/cg/queryTtOrFf",
+                type:"POST",
+                data:$("#form").serialize(),
+                beforeSend:function(){
+                    ii = layer.msg('加载中', {
+                        icon: 16
+                        ,shade: 0.01
+                    });
+                },
+                success:function(a){
+                    window.location.href="/wenz/toView?viewName=jiesuanPage&a="+a;
+                },
+                error:function(){
+                    layer.msg("ajax失败");
+                },complete:function(){
+                    layer.close(ii);
+                }
+            });
+            /*ajax   end*/
+        }
     }
 
     function toViewName(indexView) {
@@ -96,6 +133,7 @@
     }
 </script>
 <body>
+<input id="userId" type="hidden" th:value="${session.user?.id}">
 <div style="margin-left: 20px">
     <font size="4px"><a href='javascript:void(0)' onclick=toViewName("chuangguan")>返回</a></font>
 </div>

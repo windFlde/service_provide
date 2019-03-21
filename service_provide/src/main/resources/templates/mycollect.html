@@ -55,11 +55,15 @@ function getCollectData() {
         var sum = tname.substring(1);
         var arr = sum.split(",");
         var vip = $("#vip").val();
-        if(vip==1){
+
             for (var i = 0;i<arr.length;i++){
                 if(arr[aa]=="病例荟萃"){
+                    if(vip==1){
                     location.href="ToPage?name=bckxiang&id="+id;
                     break;
+                    }else {
+                        layer.msg('您的会员过期,续费后可继续观看', {time:1000, icon:2});
+                    }
                 }else if(arr[aa]=="热点文章") {
                     location.href = "ToPage?name=wenzhang&title="+title;
                     break;
@@ -67,9 +71,6 @@ function getCollectData() {
 
                 }
             }
-        }else {
-            layer.msg('您的会员过期,续费后可继续观看', {time:1000, icon:2});
-        }
     }
 </script>
 </head>

@@ -5,9 +5,12 @@
     <!--List<Echarts> queryEcharts();-->
     <select id="queryEcharts" resultType="Echarts">
 
-        select num value,username name from t_user  group by username
-
-        /*DATE_FORMAT(createtime,"%Y-%m-%d");*/
+        SELECT
+    i.count as name ,
+    DATE_FORMAT(createtime, '%Y-%m-%d') AS value
+FROM
+    t_integral i
+where i.userId = #{id}
 
     </select>
 

@@ -3,6 +3,7 @@ package com.jk.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.jk.bean.User;
 import com.jk.service.LoginService;
+import com.jk.service.PhoneLoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,8 @@ public class LoginController {
     @Resource
     private LoginService loginService;
 
+    @Resource
+    private PhoneLoginService phoneLoginService;
 
     @ResponseBody
     @RequestMapping("toLogin")
@@ -31,7 +34,10 @@ public class LoginController {
             return "1";
         }
         session.setAttribute("user",userFromDB);
-
+        Integer blackUser=phoneLoginService.queryUserBlack(userFromDB.getId());
+        if (blackUser>=1) {
+            return "blackUser";
+        }
 
         //正确
         //判断有没有记住密码

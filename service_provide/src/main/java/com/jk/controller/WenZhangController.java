@@ -277,4 +277,11 @@ public class WenZhangController {
         return "no";
     }
 
+    @ResponseBody
+    @RequestMapping("addUserJiFen")
+    public String addUserJiFen(Integer jifen,Integer userId) {
+        wenZHangService.addUserJiFen(jifen,userId);
+        return "";
+    }
+
 }

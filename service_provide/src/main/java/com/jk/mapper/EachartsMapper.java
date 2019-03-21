@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EachartsMapper {
 
-    List<Echarts> queryEcharts();
+    List<Echarts> queryEcharts(Integer id);
 
     ArrayList<Echarts> queryEchartsTwo();
 }

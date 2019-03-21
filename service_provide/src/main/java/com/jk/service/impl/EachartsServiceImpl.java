@@ -15,8 +15,8 @@ public class EachartsServiceImpl implements EachartsService {
     @Resource
     private EachartsMapper eachartsMapper;
     @Override
-    public List<Echarts> queryEcharts() {
-        return eachartsMapper.queryEcharts();
+    public List<Echarts> queryEcharts(Integer id) {
+        return eachartsMapper.queryEcharts(id);
     }
 
     @Override

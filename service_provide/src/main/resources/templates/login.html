@@ -149,6 +149,9 @@
                            }else if (a==1) {
                                layer.msg("账号或密码错误");
                                return ;
+                           }else if (a=="blackUser") {
+                               layer.msg("您的账号已经在黑名单中");
+                               return ;
                            }
                           
                        },

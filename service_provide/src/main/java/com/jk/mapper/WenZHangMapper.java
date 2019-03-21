@@ -45,4 +45,7 @@ public interface WenZHangMapper {
     void insertVistis(Visits visitsForDB);
 
     void addvistis(Visits visits);
+
+    @Update("update t_user set num=num+ #{jifen} where id = #{id}")
+    void addUserJiFen(@Param("jifen") Integer jifen, @Param("id") Integer id);
 }
