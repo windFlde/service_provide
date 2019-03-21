@@ -38,6 +38,7 @@ public class User implements Serializable {
     Integer fasong = 0;
     Integer xufei ;
     Integer stop;
+    Integer daoqi = 1;
 }
 
 

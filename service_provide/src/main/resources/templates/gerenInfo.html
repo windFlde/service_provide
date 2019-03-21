@@ -14,16 +14,19 @@
     var ii = 0;
     $(function (){
         var id = $("#reUrl1").val();
-        if (id == " "){
-            $("#biaoqian").html("未登录");
-        }
         var img2 = $("#reUrl3").val();
         if (img2 != "" ){
             $("#tupian").prop("src",img2);
         }
+
         var name = $("#reUrl2").val();
-        $("#span2").html("0000"+id);
-        $("#span1").html(name);
+        if (name != ""){
+            $("#biaoqian").html("已登录");
+            $("#span2").html("0000"+id);
+            $("#span1").html(name);
+        }else{
+            $("#denglu").html("<a href='/home/ToPage?name=login'><font size='4'>请先登录</font></a>");
+        }
 
         var jf = $("#reUr15").val()
         var balance = $("#reUr17").val()
@@ -34,13 +37,12 @@
         }else {
             vip="普通"
         }
-
-        $("#span3").html(jf);
-        $("#span4").html(balance);
-        $("#span5").html(phone);
-        $("#span6").html(vip);
-
-
+        if (name != ""){
+            $("#span3").html(jf);
+            $("#span4").html(balance);
+            $("#span5").html(phone);
+            $("#span6").html(vip);
+        }
     });
     /*支付*/
     function SendBlance() {
@@ -96,7 +98,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="http://localhost:2001/home/ToPage?name=index-home#">返回</a>
+                <a class="navbar-brand" href="/home/ToPage?name=myprefecture">返回</a>
                 <a class="navbar-brand" href="#"><font size='6'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;个人信息</font></a>
             </div>
 
@@ -121,7 +123,7 @@
         </div>
     </nav><!--导航栏-->
     <div style="background-color: #56eed2;width: 600px;height: 320px;margin-top: -20px;">
-        <div style="margin-left:520px;padding-top:15px;"><font size="3" color="#ffe4c4" ><a id="biaoqian">已登录</a></font></div>
+        <div style="margin-left:520px;padding-top:15px;"><font size="3" color="#ffe4c4" ><a id="biaoqian">未登录</a></font></div>
         <div style="margin-top: 15px;"><img id="tupian" class="img-circle" src="https://erp-impw123.oss-cn-beijing.aliyuncs.com/images/601a697e22974e1ead4036cc8dd2c2da.gif?Expires=4705628597&OSSAccessKeyId=LTAI0TzZsFR2VLsN&Signature=VKklLIraMd2fW%2BIdpJsNP2ul3Tg%3D" width="160px" height="160px"></div>
         <div style="margin-top: 15px;">
             <div><font size="4" >昵称：</font><font size="4"><span id="span1">游客状态</span></font></div>
@@ -131,24 +133,27 @@
 
     <div style="width: 600px;height: 320px;margin-top: 41px;">
         <div>
-            <center><font size="4">尊敬的<span id="span6"></span>用户</font>
-                <a href="/home/ToPage?name=kaitongVIP"><font size="4" color="red">(开通会员)</font></a>
+            <center>
+                <div id="denglu">
+                    <font size="4">尊敬的<span id="span6"></span>用户</font>
+                    <a href="/home/ToPage?name=kaitongVIP"><font size="4" color="red">(开通会员)</font></a>
+                </div>
             </center>
         </div>
         <div style="margin-left: 30px">
 
             <table  class="table">
                 <tr>
-                    <td><font size="4">积分：<span id="span3">000000</span></font></td>
+                    <td><font size="4">积分：</font></td>
                     <td><font size="4"><span id="span3">000000</span></font></td>
                 </tr>
                 <tr>
-                    <td><font size="4">账户余额：<span id="span4">000000</span></font></td>
+                    <td><font size="4">账户余额：</font></td>
                     <td><font size="4"><span id="span4">000000</span></font>
                         <a style="border-radius: 10px;" href='javascript:void(0)'class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal">充值</a></td>
                 </tr>
                 <tr>
-                    <td><font size="4">注册手机号：<span id="span5">000000</span></font></td>
+                    <td><font size="4">注册手机号：</font></td>
                     <td><font size="4"><span id="span5">000000</span></font></td>
                 </tr>
             </table>
@@ -180,5 +185,6 @@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
+</div>
 </body>
 </html>

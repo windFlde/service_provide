@@ -13,14 +13,16 @@
             starttime,
             endtime,
             xufei,
-            fasong
+            fasong,
+            daoqi
         )
         VALUES
           ( #{userid},
             #{starttime},
             #{endtime},
             #{xufei},
-            #{fasong} )
+            #{fasong} ,
+            #{daoqi})
     </insert>
     <select id="selectUserBalance" resultType="user">
         select * from t_user where id = #{id}
