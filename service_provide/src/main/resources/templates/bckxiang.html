@@ -129,7 +129,8 @@
     function addShouCang() {
         var wzId = $("#nameVal").val();
         var tname = "病例荟萃";
-
+        var vip =  $("#vip").val();
+        if(vip==1){
             $.ajax({
                 url: '/bck/addShouCang',
                 data:{wzId:wzId,tname:tname,title:title},
@@ -144,6 +145,10 @@
                     }
                 }
             })
+        }else {
+            layer.msg('对不起,付费文章只能vip才能收藏', {time:1000, icon:2});
+        }
+
     }
 
 </script>

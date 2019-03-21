@@ -81,6 +81,11 @@ public class BckController {
                 break;
             }
         }
+        Integer em_id = pingLun.getEm_id();
+        List<PingLun> pingLuns = queryPingLunCiShu(id,em_id);
+        if(pingLuns.size()> 5){
+            return "2";
+        }
         if(contains){
             pingLun.setBlack(0);
             mongoTemplate.save(pingLun);
@@ -88,15 +93,11 @@ public class BckController {
         }else {
             pingLun.setBlack(1);
             mongoTemplate.save(pingLun);
-            Integer em_id = pingLun.getEm_id();
-            List<PingLun> pingLuns = queryPingLun(em_id);
-            if(id != null&&pingLuns.size()<=5){
+            if(id != null){
                 bckService.addCount(id);
                 integral.setIgName("留言");
                 integral.setUserId(id);
                 bckService.addIg(integral);
-            }else {
-                return "2";
             }
             return "0";
         }
@@ -145,6 +146,18 @@ public class BckController {
             }
             return "0";
         }
+    }
+
+    @ResponseBody
+    @RequestMapping("queryPingLunCiShu")
+    public List<PingLun> queryPingLunCiShu(Integer id,Integer em_id){
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(id));
+        query.addCriteria(Criteria.where("em_id").is(em_id));
+        query.addCriteria(Criteria.where("black").is(1));
+        List<PingLun> pingLuns = mongoTemplate.find(query,PingLun.class);
+        return pingLuns;
     }
 
     @ResponseBody

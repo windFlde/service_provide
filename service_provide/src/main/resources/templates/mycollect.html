@@ -54,19 +54,22 @@ function getCollectData() {
     function locatinB(id,aa,title) {
         var sum = tname.substring(1);
         var arr = sum.split(",");
+        var vip = $("#vip").val();
+        if(vip==1){
+            for (var i = 0;i<arr.length;i++){
+                if(arr[aa]=="病例荟萃"){
+                    location.href="ToPage?name=bckxiang&id="+id;
+                    break;
+                }else if(arr[aa]=="热点文章") {
+                    location.href = "ToPage?name=wenzhang&title="+title;
+                    break;
+                }else {
 
-        for (var i = 0;i<arr.length;i++){
-            if(arr[aa]=="病例荟萃"){
-                location.href="ToPage?name=bckxiang&id="+id;
-                break;
-            }else if(arr[aa]=="热点文章") {
-                location.href = "ToPage?name=wenzhang&title="+title;
-                break;
-            }else {
-
+                }
             }
+        }else {
+            layer.msg('您的会员过期,续费后可继续观看', {time:1000, icon:2});
         }
-
     }
 </script>
 </head>
@@ -74,6 +77,7 @@ function getCollectData() {
 <head th:replace="right :: head"></head>
 <body>
 <input type="hidden" id="reUrl1" th:value="${session.user?.id}">
+<input type="hidden" id="vip" th:value="${session.user?.vip}">
 <div style="margin-left: 460px">
 <div style='height: 80px;width: 600px'>
     <nav class="navbar navbar-default " role="navigation">

@@ -39,18 +39,18 @@
                             console.log(content);
                         }
                     }
-                    cont += "<div class='load_div'>";
+                    cont += "<div style='width: 600px'>";
                     cont += "&nbsp;&nbsp;&nbsp;&nbsp;<font size='6'>"+result.rd_title+"</font><br>";
                     cont += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font size='4'>"+result.rd_createtime+"&nbsp;&nbsp;&nbsp;&nbsp;共浏览:&nbsp;"+result.rd_browse+"次</font><br><br>";
                     cont += "<center><img  src='" + result.rd_img + "'width='500px' height='300px'></center>"
                     cont += "<br><br><center><audio controls='controls' style='width: 550px'  src='"+result.rd_mp3+"'></audio></center><br>";
-                    cont += "<div style='margin-left: 10px'><font size='5'>"+result.rd_content+"</font><div><br><br><br>";
+                    cont += "<div style='width: 600px'><font size='5'>"+result.rd_content+"</font><div><br><br><br>";
                     cont += "<div style='width: 550px;height: 50px;background-color: #F3F3F3;margin-left: 10px'>*感谢您的阅读，如您有任何问题，点击文末右侧留言提问按钮，留下您的问题，作者奖尽快回复您。</div>"
                     cont += "</div><br><br><br>";
-                    cont +="<div class='load_div'><div style='width: 550px;height: 150px;margin-left: 10px'><textarea id='name' rows='6' cols='60'></textarea></div>"
+                    cont +="<div style='width: 600px'><div style='width: 550px;height: 150px;margin-left: 10px'><textarea id='name' rows='6' cols='60'></textarea></div>"
                     cont +="<div>" +
-                        "<div style='margin-left: 10px;width: 500px;height: 80px;float: left'><font size='5'>精品留言</font></div>" +
-                        "<div style='margin-left: 10px;height: 80px;float: left'><a  onclick='pinglun()'><font size='4'>留言</font></a></div>" +
+                        "<div style='margin-left: 10px;width: 500px;height: 50px;float: left'><font size='5'>精品留言</font></div>" +
+                        "<div style='margin-left: 10px;height: 30px;float: left'><a  onclick='pinglun()'><font size='4'>留言</font></a></div>" +
                         "</div>"
                     $('#content').html(cont);
 
@@ -94,8 +94,8 @@
                 success: function (result) {
                     console.log(result);
                     $.each(result, function (index, obj) {
-                        contt += "<div  class='article' style='width: 600px;height: 110px'>";
-                       contt += "<div style='width: 100px;margin-left: 50px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
+                        contt += "<div style='width: 600px;height: 110px'>";
+                       contt += "<div style='width: 100px;margin-left: 10px;float: left'><img width='100px' height='100px' class='img-circle' src='"+obj.img+"'></div>";
                         contt += "<div style='width: 400px;float: left;margin-left: 20px'><p><font size='5' color='#a9a9a9'>"+obj.name+"</font></p><p><font size='4'>"+obj.content+"</font></p></div><br>";
                         contt += "</div><br>";
                     })
@@ -182,7 +182,7 @@
     <div id="content">
 
     </div>
-    <div id="aa" class="load_div">
+    <div id="aa" style="width: 600px;margin-top: 50px">
 
     </div>
 

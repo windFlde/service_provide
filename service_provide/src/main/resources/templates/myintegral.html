@@ -76,10 +76,9 @@ $(function (){
         window.location.href="/wenz/toView?viewName="+v;
     }
     function asd(){
-        var loginacct=$("#reUrl3").val();
+        var loginacct=$("#reUrl1").val();
         console.log(loginacct);
         if (loginacct == null||loginacct=="") {
-
             var htmlUrl=document.documentURI;
             /* 确认框start */
             bootbox.confirm({
@@ -113,12 +112,11 @@ $(function (){
                 }
             })
             return;
-        }/*else{
+        }else{
 
             location.href="/home/ToPage?name=eacharts";
         }
 
-        location.href="/wenz/toView?viewName="+v;*/
     }
 </script>
 <body>

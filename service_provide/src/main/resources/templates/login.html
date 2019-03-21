@@ -92,7 +92,12 @@
                         });
                     },
                     success:function(a){
-                        window.location.href = "/wenz/toView?viewName=index-home";
+                        if (a != null) {
+                            window.location.href = "/wenz/toView?viewName=index-home";
+                        } else {
+                            layer.msg("您的QQ号还没有与本网站关联");
+                        }
+
                     },
                     error:function(){
                         layer.msg("ajax失败");
