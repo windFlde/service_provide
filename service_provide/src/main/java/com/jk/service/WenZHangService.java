@@ -31,4 +31,10 @@ public interface WenZHangService {
     List<MainContent> getMoadlContent();
 
     MainContent queryTitleNameTime(String date);
+
+    Visits queryVistis();
+
+    void insertVistis(Visits visitsForDB);
+
+    void addvistis(Visits visits);
 }

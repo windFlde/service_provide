@@ -3,7 +3,9 @@ package com.jk.mapper;
 import com.jk.bean.*;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import java.util.Date;
 import java.util.List;
 
 public interface WenZHangMapper {
@@ -35,4 +37,12 @@ public interface WenZHangMapper {
 
     @Select("select * from t_main_content where cdate = #{date}")
     MainContent queryTitleNameTime(String date);
+
+    @Select("SELECT * FROM `t_vistis` WHERE createTime = curdate() ;")
+    Visits queryVistis(Date date);
+
+    @Update("update t_vistis set count = #{count} where id=#{id}")
+    void insertVistis(Visits visitsForDB);
+
+    void addvistis(Visits visits);
 }

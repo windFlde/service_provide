@@ -48,7 +48,20 @@ public class WenZhangController {
     }
 
     @RequestMapping("toView")
-    public String toView(String viewName) {
+    public String toView(String viewName,HttpServletRequest request) {
+        Visits visitsForDB = wenZHangService.queryVistis();
+        if (visitsForDB != null) {
+            visitsForDB.setCount(visitsForDB.getCount()+1);
+            wenZHangService.insertVistis(visitsForDB);
+        } else {
+            Visits visits = new Visits();
+            visits.setCreateTime(new Date());
+            visits.setUserIp(request.getLocalAddr());
+            visits.setUserbrowser(request.getHeader("user-agent"));
+            visits.setCount(1);
+            wenZHangService.addvistis(visits);
+        }
+
         return viewName;
     }
 

@@ -6,6 +6,7 @@ import com.jk.service.WenZHangService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -80,5 +81,21 @@ public class WenZHangServiceImpl implements WenZHangService {
        return  wenZhangMapper.queryTitleNameTime(date);
     }
 
+    @Override
+    public Visits queryVistis() {
+        Date date = new Date();
+        return wenZhangMapper.queryVistis(date);
+    }
+
+    @Override
+    public void insertVistis(Visits visitsForDB) {
+        wenZhangMapper.insertVistis(visitsForDB);
+    }
+
+    @Override
+    public void addvistis(Visits visits) {
+        wenZhangMapper.addvistis(visits);
+
+    }
 
 }

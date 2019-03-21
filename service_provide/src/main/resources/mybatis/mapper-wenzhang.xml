@@ -84,4 +84,21 @@
                 );
     </insert>
 
+    <!--void addvistis(Visits visits);-->
+    <insert id="addvistis">
+    INSERT INTO t_vistis (
+            `count`,
+            `createTime`,
+            `userIp`,
+            `userbrowser`)
+            values
+            (
+            #{count},
+            #{createTime},
+            #{userIp},
+            #{userbrowser}
+            );
+</insert>
+
+
 </mapper>
