@@ -23,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("bck")
@@ -76,7 +78,12 @@ public class BckController {
         List<Sensitivity> list = bckService.querySs();
         boolean contains = false;
         for (Sensitivity sensitivity : list) {
-            contains = pingLun.getContent().contains(sensitivity.getContent());
+            String sensitivityContent = pingLun.getContent();
+            String regEx = "[_`~☆★!@#$%^&*()+=|{}':;,\\[\\]》·.<>/?~！@#￥%……（）——+|{}【】‘；：”“’。，、？-]";
+            Pattern compile = Pattern.compile(regEx);
+            Matcher matcher = compile.matcher(sensitivityContent);
+            String replace = matcher.replaceAll("").trim().replace(" ", "").replace("\\", "");
+            contains = replace.contains( sensitivity.getContent());
             if(contains){
                 break;
             }
